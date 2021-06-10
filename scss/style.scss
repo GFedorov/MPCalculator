@@ -1,0 +1,46 @@
+$color-dark-green: #0d1b02;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: $color-dark-green;
+  color: white;
+}
+
+.stepper {
+  height: 70px;
+  &__container {
+    width: 900px;
+    margin: 0 auto;
+  }
+}
+
+.field-wrapper {
+  height: 600px;
+  display: flex;
+  &__sidebar {
+    flex: 1;
+    &_left {
+    }
+    &_right {
+    }
+  }
+  &__main {
+    width: 900px;
+    border: 1px solid whitesmoke;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.main {
+  &__field {
+    flex: 1;
+  }
+  &__question {
+    flex: 1;
+  }
+}
