@@ -2,19 +2,30 @@ import Stepper from "../components/Stepper";
 import Question from "../components/Question";
 import { useState } from "react";
 import { scenario, scenarioAnswers } from "../data/steps";
+import Debug from "../components/Debug";
+import RootField from "../components/field/Root";
 
 const IndexPage = () => {
   const [choosenScenario, setChoosenScenario] = useState(null);
   const [scenarioInfo, setScenarioInfo] = useState([]);
-  const [steps, setSteps] = useState(null);
+  const [chosenSettings, setChosenSettings] = useState({});
+  const [steps, setSteps] = useState([]);
   const [stepIndex, setStepIndex] = useState(0);
   let questions = [scenario];
   let chooseAnswer = (choosenScenario) => {
     setChoosenScenario(choosenScenario);
     setSteps(scenarioAnswers[choosenScenario]);
   };
+  console.log({
+    choosenScenario,
+    scenarioInfo,
+    steps,
+    stepIndex,
+  });
 
-  if (steps) {
+  let disabled = true;
+
+  if (steps.length) {
     let step = steps[stepIndex];
     questions = step.questions;
     chooseAnswer = (answer, index) => {
@@ -23,11 +34,22 @@ const IndexPage = () => {
         prevScenarionInfo[stepIndex] = [];
       }
       prevScenarionInfo[stepIndex][index] = answer;
-      console.log(prevScenarionInfo);
+      // console.log(steps[stepIndex].questions[index].name, answer);
+      setChosenSettings({
+        ...chosenSettings,
+        [steps[stepIndex].questions[index].name]: answer,
+      });
       setScenarioInfo(prevScenarionInfo);
       // @todo: все ли вопросы текущего шага отвечены
       // если да, то setStepIndex(stepIndex+1)
     };
+    if (
+      scenarioInfo[stepIndex] &&
+      scenarioInfo[stepIndex].filter((answer) => !!answer).length ===
+        steps[stepIndex].questions.length
+    ) {
+      disabled = false;
+    }
   }
 
   return (
@@ -39,22 +61,36 @@ const IndexPage = () => {
         </div>
         <div className="field-wrapper__main main">
           <div className="main__field">
-            <p>(здесь будут растения)</p>
-            {/* <pre>{JSON.stringify(info, null, 2)}</pre> */}
+            <RootField settings={chosenSettings} />
           </div>
           <div className="main__question">
             {questions.map((question, index) => {
               return (
                 <Question
-                  key={index}
+                  key={question.name}
                   item={question}
                   setAnswer={(answer) => chooseAnswer(answer, index)}
                 />
               );
             })}
+            {!disabled && (
+              <button
+                onClick={() => {
+                  if (!!steps[stepIndex + 1]) {
+                    setStepIndex(stepIndex + 1);
+                  } else {
+                    alert(" перейти в корзину");
+                  }
+                }}
+              >
+                Далее
+              </button>
+            )}
           </div>
         </div>
-        <div className="field-wrapper__sidebar field-wrapper__sidebar_right"></div>
+        <div className="field-wrapper__sidebar field-wrapper__sidebar_right">
+          <Debug steps={steps} scenarioInfo={scenarioInfo} />
+        </div>
       </div>
     </div>
   );

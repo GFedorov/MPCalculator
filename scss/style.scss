@@ -1,4 +1,4 @@
-$color-dark-green: #0d1b02;
+$color-dark-green: #0e1c03;
 
 * {
   box-sizing: border-box;
@@ -8,6 +8,7 @@ body {
   margin: 0;
   background-color: $color-dark-green;
   color: white;
+  font-family: "Montserrat", sans-serif;
 }
 
 .stepper {
@@ -42,5 +43,88 @@ body {
   }
   &__question {
     flex: 1;
+  }
+}
+.question {
+  font-weight: bold;
+  font-size: 21px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #65ac2d;
+  &__answer {
+    color: #fff;
+  }
+  &__btn {
+    background-color: #0c8200;
+    display: inline-block;
+    margin-top: 55px;
+    margin-right: 10px;
+
+    font-size: 10px;
+    cursor: pointer;
+    padding: 5px;
+
+    width: 150px;
+    height: 150px;
+    text-align: center;
+
+    text-transform: uppercase;
+    &__text {
+      width: 60px;
+      margin-top: 80px;
+
+      margin-left: 35px;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    &__desc {
+      margin: 0;
+      text-transform: none;
+      font-weight: 400;
+      font-size: 8px;
+    }
+  }
+  &__btn:first-of-type {
+    background-image: url("../src/img/rootBtn.png");
+    background-repeat: no-repeat;
+    background-position: center 20%;
+  }
+  &__btn:nth-of-type(2n) {
+    background-image: url("../src/img/beltBtn.png");
+    background-repeat: no-repeat;
+    background-position: center 20%;
+  }
+  &__btn:last-of-type {
+    background-image: url("../src/img/treeBtn.png");
+    background-repeat: no-repeat;
+    background-position: center 20%;
+  }
+  &__btn:hover {
+    border-radius: 50%;
+    background-color: #65ac2d;
+    transition: all 0.2s;
+  }
+}
+
+.field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rows {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: grey;
+  &__item {
+    position: relative;
+    background-color: lightgrey;
+  }
+  &__blocker {
+    position: absolute;
+    left: -100px;
   }
 }
