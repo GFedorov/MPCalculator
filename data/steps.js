@@ -15,7 +15,7 @@ const rootSteps = [
       },
       {
         name: "dlina_posadki",
-        text: "Длина посадки растений",
+        text: "Длина ряда",
         description: "Длина предполагаемой грядки",
         type: "number",
         validation: (val) => {
@@ -28,21 +28,21 @@ const rootSteps = [
           return [true];
         },
       },
-      {
-        name: "shirina_posadki",
-        text: "Ширина посадки",
-        description: "Именно ширина между крайними растениями ряда",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Ширина не может быть < 0"];
-          }
-          if (val > 3) {
-            return [false, "Ширина не может быть > 3"];
-          }
-          return [true];
-        },
-      },
+      // {
+      //   name: "shirina_posadki",
+      //   text: "Ширина посадки",
+      //   description: "Именно ширина между крайними растениями ряда",
+      //   type: "number",
+      //   validation: (val) => {
+      //     if (val < 0) {
+      //       return [false, "Ширина не может быть < 0"];
+      //     }
+      //     if (val > 3) {
+      //       return [false, "Ширина не может быть > 3"];
+      //     }
+      //     return [true];
+      //   },
+      // },
       {
         name: "shirina_ryadov",
         text: "Ширина между рядами",
@@ -60,7 +60,7 @@ const rootSteps = [
       },
       {
         name: "kolvo_ryadov",
-        text: "Количество рядов растений",
+        text: "Количество рядов",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -568,16 +568,19 @@ export const scenario = {
   options: [
     {
       name: "root",
+      extraClasses: "question__btn_root pt-70",
       text: "Прикорневой полив",
       description: ["Для доставки воды непосредственно к корню "],
     },
     {
       name: "belt",
+      extraClasses: "question__btn_belt pt-70",
       text: "Ленточный полив",
       description: ["Орошение по всей длине грядки от бочки"],
     },
     {
       name: "tree",
+      extraClasses: "question__btn_tree pt-70",
       text: "Трубчатый полив",
       description: ["Подходит для кустарников и деревьев"],
     },

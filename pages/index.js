@@ -27,6 +27,7 @@ const IndexPage = () => {
 
   if (steps.length) {
     let step = steps[stepIndex];
+
     questions = step.questions;
     chooseAnswer = (answer, index) => {
       const prevScenarionInfo = [...scenarioInfo];
@@ -34,7 +35,7 @@ const IndexPage = () => {
         prevScenarionInfo[stepIndex] = [];
       }
       prevScenarionInfo[stepIndex][index] = answer;
-      // console.log(steps[stepIndex].questions[index].name, answer);
+      //console.log(steps[stepIndex].questions[index].name, answer);
       setChosenSettings({
         ...chosenSettings,
         [steps[stepIndex].questions[index].name]: answer,
@@ -60,32 +61,61 @@ const IndexPage = () => {
           левая часть (здесь будет бочка)
         </div>
         <div className="field-wrapper__main main">
+          <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
           <div className="main__field">
             <RootField settings={chosenSettings} />
           </div>
-          <div className="main__question">
-            {questions.map((question, index) => {
-              return (
-                <Question
-                  key={question.name}
-                  item={question}
-                  setAnswer={(answer) => chooseAnswer(answer, index)}
-                />
-              );
-            })}
-            {!disabled && (
+          <div className="main__question grid">
+            <div className="grid__row grid__row_center">
+              {questions.map((question, index) => {
+                return (
+                  <div
+                    className={question.type === "buttons" ? "" : "grid__col-6"}
+                  >
+                    <Question
+                      key={question.name}
+                      item={question}
+                      currentAnswer={
+                        scenarioInfo[stepIndex]
+                          ? scenarioInfo[stepIndex][index]
+                          : null
+                      }
+                      setAnswer={(answer) => chooseAnswer(answer, index)}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="btnWrapper">
               <button
                 onClick={() => {
                   if (!!steps[stepIndex + 1]) {
-                    setStepIndex(stepIndex + 1);
+                    setStepIndex(stepIndex - 1);
                   } else {
                     alert(" перейти в корзину");
                   }
                 }}
+                className="stepBtn"
               >
-                Далее
+                <span></span> Назад
               </button>
-            )}
+
+              {!disabled && (
+                <button
+                  onClick={() => {
+                    if (!!steps[stepIndex + 1]) {
+                      setStepIndex(stepIndex + 1);
+                    } else {
+                      alert(" перейти в корзину");
+                    }
+                  }}
+                  className="stepBtn"
+                >
+                  Следующий шаг <span></span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
         <div className="field-wrapper__sidebar field-wrapper__sidebar_right">

@@ -1,3 +1,5 @@
+import SvgField from "./Svg";
+
 const RootField = ({ settings }) => {
   const {
     razmer_posadki = "1", //
@@ -29,10 +31,9 @@ const RootField = ({ settings }) => {
 
   return (
     <>
-      <p>(здесь будут растения)</p>
-      <pre>{JSON.stringify(settings, null, 2)}</pre>
-
-      <div className="field">
+      <SvgField {...{ kolvo_rasteniy, need_perekritie_vodi, dlina_posadki }} />
+      {/* <pre>{JSON.stringify(settings, null, 2)}</pre> */}
+      {/* <div className="field">
         <div
           className="rows"
           style={{ height: `${fullHeight}px`, width: `${fullWidth}px` }}
@@ -48,7 +49,7 @@ const RootField = ({ settings }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

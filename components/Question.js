@@ -1,4 +1,4 @@
-const Question = ({ item, setAnswer }) => {
+const Question = ({ item, setAnswer, currentAnswer }) => {
   return (
     <div className="question">
       <div className="question__text">{item.text}</div>
@@ -9,8 +9,13 @@ const Question = ({ item, setAnswer }) => {
               <span
                 onClick={() => setAnswer(option.name)}
                 key={option.name}
-                className="question__btn"
+                className={`question__btn ${
+                  !!option.extraClasses ? option.extraClasses : ""
+                } ${
+                  currentAnswer === option.name ? "question__btn_active" : ""
+                }`}
               >
+                <span className="question__btn__check"></span>
                 <p className="question__btn__text">{option.text}</p>
 
                 <p className="question__btn__desc">{option.description}</p>
