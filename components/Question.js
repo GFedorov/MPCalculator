@@ -1,7 +1,9 @@
 const Question = ({ item, setAnswer, currentAnswer }) => {
   return (
     <div className="question">
-      <div className="question__text">{item.text}</div>
+      <div className={`question__text question__text_${item.type} `}>
+        {item.text}
+      </div>
       <div className="question__answer">
         {item.type === "buttons" &&
           item.options.map((option) => (

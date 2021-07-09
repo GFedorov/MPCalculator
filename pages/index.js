@@ -6,25 +6,30 @@ import Debug from "../components/Debug";
 import RootField from "../components/field/Root";
 
 const IndexPage = () => {
+  // выбранный сценарий, появляется после нажатия на первую кнопку
   const [choosenScenario, setChoosenScenario] = useState(null);
+  // массив из шагов и вопросов с ответами [['1','12','yes']]
   const [scenarioInfo, setScenarioInfo] = useState([]);
+  // объект из конечных ответов вида <название-настройки>-<ответ-пользователя>
   const [chosenSettings, setChosenSettings] = useState({});
+  // все шаги выбранного сценария
   const [steps, setSteps] = useState([]);
+  // выбранный шаг (номер шага)
   const [stepIndex, setStepIndex] = useState(0);
+  // уведомление об ошибке
+  const [error, setError] = useState("");
+
+  // переменные, в случае, если это первый экран
   let questions = [scenario];
   let chooseAnswer = (choosenScenario) => {
     setChoosenScenario(choosenScenario);
     setSteps(scenarioAnswers[choosenScenario]);
   };
-  console.log({
-    choosenScenario,
-    scenarioInfo,
-    steps,
-    stepIndex,
-  });
 
+  // переход к следующему шагу заблокирован
   let disabled = true;
 
+  // переменные, в случае, если это уже не первый экран
   if (steps.length) {
     let step = steps[stepIndex];
 
@@ -63,9 +68,16 @@ const IndexPage = () => {
         <div className="field-wrapper__main main">
           <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
           <div className="main__field">
-            <RootField settings={chosenSettings} />
+            <RootField
+              settings={chosenSettings}
+              choosenScenario={choosenScenario}
+            />
           </div>
+
           <div className="main__question grid">
+            <div className="main__question_title">
+              {steps[stepIndex] ? steps[stepIndex].text : ""}{" "}
+            </div>
             <div className="grid__row grid__row_center">
               {questions.map((question, index) => {
                 return (
@@ -87,9 +99,21 @@ const IndexPage = () => {
               })}
             </div>
 
+            {!!error && <div className="alertError">{error}</div>}
+
             <div className="btnWrapper">
               <button
                 onClick={() => {
+                  if (stepIndex === 0) {
+                    if (confirm(" Подтвердить возврат? ")) {
+                      setSteps([]);
+                      setChoosenScenario(null);
+                      setScenarioInfo([]);
+                      setChosenSettings({});
+                    }
+                    return;
+                  }
+
                   if (!!steps[stepIndex + 1]) {
                     setStepIndex(stepIndex - 1);
                   } else {
@@ -101,20 +125,26 @@ const IndexPage = () => {
                 <span></span> Назад
               </button>
 
-              {!disabled && (
-                <button
-                  onClick={() => {
-                    if (!!steps[stepIndex + 1]) {
-                      setStepIndex(stepIndex + 1);
-                    } else {
-                      alert(" перейти в корзину");
-                    }
-                  }}
-                  className="stepBtn"
-                >
-                  Следующий шаг <span></span>
-                </button>
-              )}
+              <button
+                onClick={() => {
+                  // показывать кнопку всегда, но если disabled, отображать ошибку
+                  if (disabled) {
+                    setError("Пожалуйста заполните все поля");
+                    setTimeout(() => {
+                      setError("");
+                    }, 6000);
+                    return;
+                  }
+                  if (!!steps[stepIndex + 1]) {
+                    setStepIndex(stepIndex + 1);
+                  } else {
+                    alert(" перейти в корзину");
+                  }
+                }}
+                className="stepBtn"
+              >
+                Следующий шаг <span></span>
+              </button>
             </div>
           </div>
         </div>

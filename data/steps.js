@@ -1,18 +1,7 @@
 const rootSteps = [
   {
-    text: "Укажите характеристики",
+    text: "Размер посадки в метрах",
     questions: [
-      {
-        name: "razmer_posadki",
-        text: "Размер посадки в метрах",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Размер посадки не может быть < 0"];
-          }
-          return [true];
-        },
-      },
       {
         name: "dlina_posadki",
         text: "Длина ряда",
@@ -28,6 +17,35 @@ const rootSteps = [
           return [true];
         },
       },
+
+      {
+        name: "shirina_mejdu_ryadov",
+        text: "Ширина между рядами",
+        description: "Расстояние между рядами",
+        type: "number",
+        validation: (val) => {
+          if (val < 0) {
+            return [false, "Ширина не может быть < 0"];
+          }
+          if (val > 20) {
+            return [false, "Ширина не может быть > 3"];
+          }
+          return [true];
+        },
+      },
+
+      {
+        name: "shirina_between_plant",
+        text: "Ширина между растениями",
+        type: "number",
+        validation: (val) => {
+          if (val < 0) {
+            return [false, "Размер посадки не может быть < 0"];
+          }
+          return [true];
+        },
+      },
+
       // {
       //   name: "shirina_posadki",
       //   text: "Ширина посадки",
@@ -43,21 +61,7 @@ const rootSteps = [
       //     return [true];
       //   },
       // },
-      {
-        name: "shirina_ryadov",
-        text: "Ширина между рядами",
-        description: "Расстояние между рядами",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Ширина не может быть < 0"];
-          }
-          if (val > 20) {
-            return [false, "Ширина не может быть > 3"];
-          }
-          return [true];
-        },
-      },
+
       {
         name: "kolvo_ryadov",
         text: "Количество рядов",
@@ -75,7 +79,7 @@ const rootSteps = [
     ],
   },
   {
-    text: "Возможность перекрытия воды",
+    text: "",
     questions: [
       {
         name: "need_perekritie_vodi",
@@ -99,7 +103,7 @@ const rootSteps = [
     questions: [
       {
         name: "kolvo_rasteniy",
-        text: "Укажите количество растений",
+        text: "Количество растений",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -568,18 +572,21 @@ export const scenario = {
   options: [
     {
       name: "root",
+      type: "pomodoro",
       extraClasses: "question__btn_root pt-70",
       text: "Прикорневой полив",
       description: ["Для доставки воды непосредственно к корню "],
     },
     {
       name: "belt",
+      type: "belt",
       extraClasses: "question__btn_belt pt-70",
       text: "Ленточный полив",
       description: ["Орошение по всей длине грядки от бочки"],
     },
     {
       name: "tree",
+      type: "tree",
       extraClasses: "question__btn_tree pt-70",
       text: "Трубчатый полив",
       description: ["Подходит для кустарников и деревьев"],
