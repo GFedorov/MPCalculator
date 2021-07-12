@@ -2,16 +2,18 @@ import SvgField from "./Svg";
 
 const RootField = ({ settings, choosenScenario }) => {
   const {
-    razmer_posadki = "1", //
-    dlina_posadki = "2", //длинна грядки по горизонтали
-    shirina_posadki = "2", //высота грядки
-    shirina_ryadov = "3",
-    kolvo_ryadov = "10",
-    need_perekritie_vodi = "yes",
-    kolvo_rasteniy = "10",
-    rasstoyanie_do_vodi = "5",
-    shirina_mejdu_ryadov = "2",
-    shirina_between_plant = "1",
+    razmer_posadki = "0", //
+    dlina_posadki = "0", //длинна грядки по горизонтали
+    shirina_posadki = "0", //высота грядки
+    shirina_ryadov = "0",
+    kolvo_ryadov = "0",
+    need_perekritie_vodi = "no",
+    kolvo_rasteniy = "0",
+    rasstoyanie_do_vodi = "0",
+    shirina_mejdu_ryadov = "0",
+    shirina_between_plant = "0",
+    need_filter = "no",
+    need_timer = "no",
   } = settings;
 
   const widthK = 300; // коэффициент ширины, во сколько раз нужно увеличить dlina_posadki, чтобы получилась ширина
@@ -41,6 +43,8 @@ const RootField = ({ settings, choosenScenario }) => {
           shirina_mejdu_ryadov,
           shirina_between_plant,
           kolvo_ryadov,
+          need_filter,
+          need_timer,
           type,
         }}
       />

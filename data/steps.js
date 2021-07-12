@@ -115,11 +115,11 @@ const rootSteps = [
     ],
   },
   {
-    text: "Расстояние до воды",
+    text: "",
     questions: [
       {
         name: "rasstoyanie_do_vodi",
-        text: "Укажите расстояние до источника воды",
+        text: "Расстояние до источника воды",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -127,6 +127,29 @@ const rootSteps = [
           }
           return [true];
         },
+      },
+      {
+        name: "podkluchenie_k_vode",
+        text: "Тип подключения?",
+        type: "select",
+        options: [
+          {
+            name: "1_2f",
+            text: "1/2 внутренная",
+          },
+          {
+            name: "1_2m",
+            text: "1/2 внешняя",
+          },
+          {
+            name: "3_4f",
+            text: "3_4 внутренная",
+          },
+          {
+            name: "3_4m",
+            text: "3_4 внешняя",
+          },
+        ],
       },
     ],
   },
@@ -179,7 +202,7 @@ const rootSteps = [
     ],
   },
   {
-    text: "Нужен таймер",
+    text: "",
     questions: [
       {
         name: "need_timer",
@@ -262,7 +285,7 @@ const beltSteps = [
     ],
   },
   {
-    text: "Возможность перекрытия воды",
+    text: "",
     questions: [
       {
         name: "need_perekritie_vodi",

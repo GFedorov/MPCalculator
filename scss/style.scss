@@ -25,6 +25,7 @@ body {
 .field-wrapper {
   height: 600px;
   display: flex;
+  justify-content: center;
   &__sidebar {
     flex: 1;
     &_left {
@@ -40,7 +41,7 @@ body {
   }
 }
 .btnWrapper {
-  margin-top: 100px;
+  margin-top: 50px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -93,16 +94,25 @@ body {
   }
   &__question {
     flex: 1;
+    &_title {
+      font-weight: bold;
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      color: rgba(101, 172, 45, 1);
+      text-transform: uppercase;
+      font-size: 21px;
+    }
   }
   &__title {
+    font-weight: 400;
     font-size: 16px;
-    width: 350px;
+    width: 330px;
     text-align: center;
   }
 }
 
 .question {
-  margin-top: 40px;
   font-weight: bold;
   font-size: 21px;
   display: flex;
@@ -112,11 +122,35 @@ body {
   &__answer {
     color: #fff;
     display: flex;
+
+    input {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 400;
+      color: white;
+      width: 226px;
+      margin-top: 6px;
+      box-sizing: border-box;
+      background-color: rgba(14, 28, 3, 1);
+      border: 1px solid rgba(101, 172, 45, 1);
+    }
+    select {
+      margin-top: 6px;
+      text-align-last: center;
+      background-color: rgba(14, 28, 3, 1);
+      color: white;
+      width: 226px;
+      border: 1px solid rgba(101, 172, 45, 1);
+      font-size: 12px;
+      font-weight: 400;
+      background-image: url(/public/img/Polygon.png);
+    }
   }
   &__text {
-    &_number {
+    &_number,
+    &_select {
       font-weight: 400;
-      font-size: 16px;
+      font-size: 12px;
       width: 330px;
       text-align: center;
       color: white;
@@ -253,6 +287,7 @@ body {
   &__row {
     display: flex;
     flex-wrap: wrap;
+
     &_center {
       justify-content: center;
     }

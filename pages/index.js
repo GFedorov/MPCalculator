@@ -62,9 +62,7 @@ const IndexPage = () => {
     <div className="page">
       {/* <Stepper step={step} /> */}
       <div className="field-wrapper">
-        <div className="field-wrapper__sidebar field-wrapper__sidebar_left">
-          левая часть (здесь будет бочка)
-        </div>
+        {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_left"></div> */}
         <div className="field-wrapper__main main">
           <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
           <div className="main__field">
@@ -148,9 +146,9 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
-        <div className="field-wrapper__sidebar field-wrapper__sidebar_right">
+        {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_right">
           <Debug steps={steps} scenarioInfo={scenarioInfo} />
-        </div>
+        </div> */}
       </div>
     </div>
   );
