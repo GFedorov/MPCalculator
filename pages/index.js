@@ -4,6 +4,7 @@ import { useState } from "react";
 import { scenario, scenarioAnswers } from "../data/steps";
 import Debug from "../components/Debug";
 import RootField from "../components/field/Root";
+import Cart from "../components/Cart";
 
 const IndexPage = () => {
   // выбранный сценарий, появляется после нажатия на первую кнопку
@@ -70,12 +71,19 @@ const IndexPage = () => {
               settings={chosenSettings}
               choosenScenario={choosenScenario}
             />
-          </div>
-
-          <div className="main__question grid">
-            <div className="main__question_title">
-              {steps[stepIndex] ? steps[stepIndex].text : ""}{" "}
+            <div className="cart-wrapper">
+              <Cart settings={chosenSettings} />
             </div>
+          </div>
+          <div className="stepper-wrapper">
+            <Stepper step={+stepIndex + 1} totStep={6} />
+          </div>
+          <div className="main__question grid">
+            {!!steps[stepIndex] && !!steps[stepIndex].text && (
+              <div className="main__question_title">
+                {steps[stepIndex].text}
+              </div>
+            )}
             <div className="grid__row grid__row_center">
               {questions.map((question, index) => {
                 return (

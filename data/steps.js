@@ -115,7 +115,7 @@ const rootSteps = [
     ],
   },
   {
-    text: "",
+    text: "Источник воды",
     questions: [
       {
         name: "rasstoyanie_do_vodi",
@@ -134,33 +134,10 @@ const rootSteps = [
         type: "select",
         options: [
           {
-            name: "1_2f",
-            text: "1/2 внутренная",
+            name: "",
+            text: "Выберете тип",
           },
-          {
-            name: "1_2m",
-            text: "1/2 внешняя",
-          },
-          {
-            name: "3_4f",
-            text: "3_4 внутренная",
-          },
-          {
-            name: "3_4m",
-            text: "3_4 внешняя",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    text: "Какое подключение к источнику воды",
-    questions: [
-      {
-        name: "podkluchenie_k_vode",
-        text: "Какое нужно подключение к источнику воды?",
-        type: "buttons",
-        options: [
+
           {
             name: "1_2f",
             text: "1/2 внутренная",
@@ -171,22 +148,23 @@ const rootSteps = [
           },
           {
             name: "3_4f",
-            text: "3_4 внутренная",
+            text: "3/4 внутренная",
           },
           {
             name: "3_4m",
-            text: "3_4 внешняя",
+            text: "3/4 внешняя",
           },
         ],
       },
     ],
   },
+
   {
-    text: "Нужен фильтр",
+    text: "",
     questions: [
       {
         name: "need_filter",
-        text: "Нужна ли фильтр для очистки воды?",
+        text: "Нужен ли фильтр для воды?",
         type: "buttons",
         options: [
           {

@@ -25,18 +25,13 @@ const Question = ({ item, setAnswer, currentAnswer }) => {
             </>
           ))}
         {item.type === "number" && (
-          <input type="text" onChange={(e) => setAnswer(e.target.value)} />
+          <input type="number" onChange={(e) => setAnswer(e.target.value)} />
         )}
         {item.type === "select" && (
-          <select>
+          <select onChange={(e) => setAnswer(e.target.value)}>
             {" "}
             {item.options.map((option) => (
-              <option
-                onChange={() => setAnswer(this.target.value)}
-                key={option.name}
-              >
-                {option.text}
-              </option>
+              <option key={option.name}>{option.text}</option>
             ))}
           </select>
         )}
