@@ -8,7 +8,7 @@ const Stepper = ({ step, totStep }) => {
           left: Math.round((100 * (step - 1)) / totStep, 2) + "%",
         }}
       >
-        Шаг ({step}/{totStep})
+        Шаг {step}/{totStep}
       </div>
     </div>
   );

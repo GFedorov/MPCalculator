@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Plant from "./Plant";
 import { scenario, scenarioAnswers } from "../../data/steps";
+import { Q_NEED_FILTER } from "../../data/steps";
 
 const coords = [];
 let y = 30;
@@ -13,18 +14,19 @@ for (let i = 0; i < 4; i++) {
   y += 86;
 }
 
-const SvgField = ({
-  kolvo_rasteniy,
-  kolvo_ryadov,
-  need_perekritie_vodi,
-  shirina_mejdu_ryadov,
-  dlina_posadki,
-  shirina_between_plant,
-  rasstoyanie_do_vodi,
-  need_filter,
-  need_timer,
-  type = "hole",
-}) => {
+const SvgField = (props) => {
+  const {
+    kolvo_rasteniy,
+    kolvo_ryadov,
+    need_perekritie_vodi,
+    shirina_mejdu_ryadov,
+    dlina_posadki,
+    shirina_between_plant,
+    rasstoyanie_do_vodi,
+    // need_filter,
+    need_timer,
+    type = "hole",
+  } = props;
   const [choosenScenario, setChoosenScenario] = useState(null);
   return (
     <svg
@@ -119,7 +121,7 @@ const SvgField = ({
             stroke="white"
             strokeWidth={2}
           />
-          {need_filter === "yes" && (
+          {props[Q_NEED_FILTER] === "yes" && (
             <rect
               id="Rectangle 40"
               x="66.208"
@@ -274,7 +276,7 @@ const SvgField = ({
               </svg>
             </g>
           )}
-          {need_filter === "yes" && (
+          {props[Q_NEED_FILTER] === "yes" && (
             <path
               id="Line 56"
               d="M49.8839 110.116L49 109.232L47.2322 111L48.1161 111.884L49.8839 110.116ZM62.1161 125.884C62.6043 126.372 63.3957 126.372 63.8839 125.884C64.372 125.396 64.372 124.604 63.8839 124.116L62.1161 125.884ZM48.1161 111.884L62.1161 125.884L63.8839 124.116L49.8839 110.116L48.1161 111.884Z"

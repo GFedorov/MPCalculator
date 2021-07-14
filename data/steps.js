@@ -1,3 +1,6 @@
+export const Q_NEED_FILTER = "need_filter";
+export const Q_KOLVO_RYADOV = "kolvo_ryadov";
+
 const rootSteps = [
   {
     text: "Размер посадки в метрах",
@@ -63,7 +66,7 @@ const rootSteps = [
       // },
 
       {
-        name: "kolvo_ryadov",
+        name: Q_KOLVO_RYADOV,
         text: "Количество рядов",
         type: "number",
         validation: (val) => {
@@ -163,7 +166,7 @@ const rootSteps = [
     text: "",
     questions: [
       {
-        name: "need_filter",
+        name: Q_NEED_FILTER,
         text: "Нужен ли фильтр для воды?",
         type: "buttons",
         options: [

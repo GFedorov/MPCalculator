@@ -3,8 +3,8 @@ import Question from "../components/Question";
 import { useState } from "react";
 import { scenario, scenarioAnswers } from "../data/steps";
 import Debug from "../components/Debug";
-import RootField from "../components/field/Root";
 import Cart from "../components/Cart";
+import SvgField from "../components/field/Svg";
 
 const IndexPage = () => {
   // выбранный сценарий, появляется после нажатия на первую кнопку
@@ -67,10 +67,7 @@ const IndexPage = () => {
         <div className="field-wrapper__main main">
           <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
           <div className="main__field">
-            <RootField
-              settings={chosenSettings}
-              choosenScenario={choosenScenario}
-            />
+            <SvgField settings={{ ...chosenSettings, type: choosenScenario }} />
             <div className="cart-wrapper">
               <Cart settings={chosenSettings} />
             </div>

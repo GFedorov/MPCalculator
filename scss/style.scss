@@ -45,6 +45,9 @@ body {
       width: 25px;
       height: 25px;
       background-image: url("/img/item.png");
+      img {
+        max-width: 100%;
+      }
     }
     &__text {
       width: 50px;
@@ -59,10 +62,15 @@ body {
   width: 500px;
 }
 .stepper {
+  margin-top: 20px;
   position: relative;
-  height: 70px;
+  height: 30px;
   border-top: 2px solid #233e0d;
+  font-size: 8px;
+  font-weight: 400px;
+  text-align: center;
   &__segment {
+    padding-top: 7px;
     width: 16.66%;
     border-top: 2px solid #65ac2d;
     position: absolute;
@@ -91,7 +99,7 @@ body {
   }
 }
 .btnWrapper {
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -145,7 +153,7 @@ body {
     position: relative;
   }
   &__question {
-    min-height: 400px;
+    min-height: 300px;
 
     display: flex;
     flex-direction: column;
@@ -227,7 +235,7 @@ body {
     flex-direction: column;
     justify-content: center;
 
-    margin: 55px 5px 0 5px;
+    margin: 20px 5px 0 5px;
     font-size: 10px;
     cursor: pointer;
     padding: 5px 28px;
