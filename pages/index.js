@@ -67,7 +67,13 @@ const IndexPage = () => {
         <div className="field-wrapper__main main">
           <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
           <div className="main__field">
-            <SvgField settings={{ ...chosenSettings, type: choosenScenario }} />
+            <SvgField
+              {...{
+                ...chosenSettings,
+                type: choosenScenario,
+                choosenScenario,
+              }}
+            />
             <div className="cart-wrapper">
               <Cart settings={chosenSettings} />
             </div>
@@ -85,10 +91,10 @@ const IndexPage = () => {
               {questions.map((question, index) => {
                 return (
                   <div
+                    key={question.name ? question.name : index}
                     className={question.type === "buttons" ? "" : "grid__col-6"}
                   >
                     <Question
-                      key={question.name}
                       item={question}
                       currentAnswer={
                         scenarioInfo[stepIndex]
