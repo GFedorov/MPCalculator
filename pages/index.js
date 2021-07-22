@@ -41,7 +41,7 @@ const IndexPage = () => {
         prevScenarionInfo[stepIndex] = [];
       }
       prevScenarionInfo[stepIndex][index] = answer;
-      //console.log(steps[stepIndex].questions[index].name, answer);
+      console.log(choosenScenario);
       setChosenSettings({
         ...chosenSettings,
         [steps[stepIndex].questions[index].name]: answer,
@@ -59,29 +59,65 @@ const IndexPage = () => {
     }
   }
 
+  const width = 481;
+  const height = 363;
+  let stepScenario;
+  if (choosenScenario === "root") {
+    stepScenario = 6;
+  } else if (choosenScenario === "belt") {
+    stepScenario = 5;
+  } else if (choosenScenario === "tree") {
+    stepScenario = 2;
+  } else {
+    stepScenario = 1;
+  }
+
   return (
     <div className="page">
+      <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
       {/* <Stepper step={step} /> */}
       <div className="field-wrapper">
         {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_left"></div> */}
         <div className="field-wrapper__main main">
-          <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
-          <div className="main__field">
+          <div
+            className="main__field "
+            style={{
+              maxHeight:
+                +chosenSettings.kolvo_ryadov === 1 ? 250 + "px" : height + "px",
+              transition: "0.3s",
+            }}
+          >
             <SvgField
               {...{
                 ...chosenSettings,
                 type: choosenScenario,
                 choosenScenario,
+                width,
+                height,
               }}
             />
             <div className="cart-wrapper">
-              <Cart settings={chosenSettings} />
+              <Cart
+                settings={chosenSettings}
+                choosenScenario={choosenScenario}
+              />
             </div>
           </div>
-          <div className="stepper-wrapper">
-            <Stepper step={+stepIndex + 1} totStep={6} />
+          <div
+            className="stepper-wrapper"
+            style={{
+              display: !choosenScenario ? "none" : "block",
+            }}
+          >
+            <Stepper step={+stepIndex + 1} totStep={stepScenario} />
           </div>
-          <div className="main__question grid">
+          <div
+            className="main__question grid"
+            style={{
+              order: !choosenScenario ? -1 : 1,
+              height: "200px",
+            }}
+          >
             {!!steps[stepIndex] && !!steps[stepIndex].text && (
               <div className="main__question_title">
                 {steps[stepIndex].text}
@@ -110,7 +146,12 @@ const IndexPage = () => {
 
             {!!error && <div className="alertError">{error}</div>}
 
-            <div className="btnWrapper">
+            <div
+              className="btnWrapper"
+              style={{
+                display: !choosenScenario ? "none" : "flex",
+              }}
+            >
               <button
                 onClick={() => {
                   if (stepIndex === 0) {

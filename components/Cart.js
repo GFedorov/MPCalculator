@@ -1,12 +1,12 @@
 import { getGoods } from "../data/goods";
 
-const Cart = ({ settings }) => {
+const Cart = ({ settings, choosenScenario }) => {
   // const {
   //   need_perekritie_vodi = "no",
   //   need_filter = "no",
   //   need_timer = "no",
   // } = settings;
-  const goods = getGoods(settings);
+  const goods = getGoods(settings, choosenScenario);
   return (
     <div className="cart">
       <div className="cart__title"> Корзина</div>

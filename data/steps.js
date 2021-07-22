@@ -1,5 +1,6 @@
 export const Q_NEED_FILTER = "need_filter";
 export const Q_KOLVO_RYADOV = "kolvo_ryadov";
+export const Q_NEED_PEREKRITIE = "need_perekritie_vodi";
 
 const rootSteps = [
   {
@@ -7,7 +8,7 @@ const rootSteps = [
     questions: [
       {
         name: "dlina_posadki",
-        text: "Длина ряда",
+        text: "Длина ряда (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
         validation: (val) => {
@@ -15,7 +16,7 @@ const rootSteps = [
             return [false, "Длина не может быть < 0"];
           }
           if (val > 20) {
-            return [false, "Длина не может быть > 20"];
+            return [false, "Длина не может быть > 100"];
           }
           return [true];
         },
@@ -23,14 +24,14 @@ const rootSteps = [
 
       {
         name: "shirina_mejdu_ryadov",
-        text: "Ширина между рядами",
+        text: "Ширина между рядами (м)",
         description: "Расстояние между рядами",
         type: "number",
         validation: (val) => {
           if (val < 0) {
             return [false, "Ширина не может быть < 0"];
           }
-          if (val > 20) {
+          if (val > 3) {
             return [false, "Ширина не может быть > 3"];
           }
           return [true];
@@ -39,11 +40,69 @@ const rootSteps = [
 
       {
         name: "shirina_between_plant",
-        text: "Ширина между растениями",
-        type: "number",
+        text: "Ширина между растениями (м)",
+        type: "select",
+        options: [
+          {
+            name: "",
+            text: "Выберете длинну",
+          },
+
+          {
+            name: "0,1",
+            text: "0.1",
+          },
+          {
+            name: "0,2",
+            text: "0.2",
+          },
+
+          {
+            name: "0,3",
+            text: "0.3",
+          },
+
+          {
+            name: "0,4",
+            text: "0.4",
+          },
+
+          {
+            name: "0,5",
+            text: "0.5",
+          },
+
+          {
+            name: "0,6",
+            text: "0.6",
+          },
+
+          {
+            name: "0,7",
+            text: "0.7",
+          },
+
+          {
+            name: "0,8",
+            text: "0.8",
+          },
+
+          {
+            name: "0,9",
+            text: "0.9",
+          },
+
+          {
+            name: "1",
+            text: "1",
+          },
+        ],
         validation: (val) => {
           if (val < 0) {
             return [false, "Размер посадки не может быть < 0"];
+          }
+          if (val > 1) {
+            return [false, "Ширина не может быть > 1"];
           }
           return [true];
         },
@@ -69,6 +128,7 @@ const rootSteps = [
         name: Q_KOLVO_RYADOV,
         text: "Количество рядов",
         type: "number",
+        value: 2,
         validation: (val) => {
           if (val < 0) {
             return [false, "Количество не может быть < 1"];
@@ -85,7 +145,7 @@ const rootSteps = [
     text: "",
     questions: [
       {
-        name: "need_perekritie_vodi",
+        name: Q_NEED_PEREKRITIE,
         text: "Нужна ли возможность перекрытия воды к отдельным рядам?",
         type: "buttons",
         options: [
@@ -205,22 +265,11 @@ const rootSteps = [
 ];
 const beltSteps = [
   {
-    text: "Укажите характеристики",
+    text: "Размер посадки в метрах",
     questions: [
       {
-        name: "razmer_posadki",
-        text: "Размер посадки в метрах",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Размер посадки не может быть < 0"];
-          }
-          return [true];
-        },
-      },
-      {
         name: "dlina_posadki",
-        text: "Длина посадки растений",
+        text: "Длина ряда (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
         validation: (val) => {
@@ -228,15 +277,16 @@ const beltSteps = [
             return [false, "Длина не может быть < 0"];
           }
           if (val > 20) {
-            return [false, "Длина не может быть > 20"];
+            return [false, "Длина не может быть > 100"];
           }
           return [true];
         },
       },
+
       {
-        name: "shirina_posadki",
-        text: "Ширина посадки",
-        description: "Именно ширина между крайними растениями ряда",
+        name: "shirina_mejdu_ryadov",
+        text: "Ширина между рядами (м)",
+        description: "Расстояние между рядами",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -248,17 +298,88 @@ const beltSteps = [
           return [true];
         },
       },
+
       {
-        name: "shirina_ryadov",
-        text: "Ширина между рядами",
-        description: "Расстояние между рядами",
-        type: "number",
+        name: "shirina_between_plant",
+        text: "Ширина между растениями (м)",
+        type: "select",
+        options: [
+          {
+            name: "",
+            text: "Выберете длинну",
+          },
+
+          {
+            name: "0,1",
+            text: "0.1",
+          },
+          {
+            name: "0,2",
+            text: "0.2",
+          },
+
+          {
+            name: "0,3",
+            text: "0.3",
+          },
+
+          {
+            name: "0,4",
+            text: "0.4",
+          },
+
+          {
+            name: "0,5",
+            text: "0.5",
+          },
+
+          {
+            name: "0,6",
+            text: "0.6",
+          },
+
+          {
+            name: "0,7",
+            text: "0.7",
+          },
+
+          {
+            name: "0,8",
+            text: "0.8",
+          },
+
+          {
+            name: "0,9",
+            text: "0.9",
+          },
+
+          {
+            name: "1",
+            text: "1",
+          },
+        ],
         validation: (val) => {
           if (val < 0) {
-            return [false, "Ширина не может быть < 0"];
+            return [false, "Размер посадки не может быть < 0"];
+          }
+          if (val > 1) {
+            return [false, "Ширина не может быть > 1"];
+          }
+          return [true];
+        },
+      },
+
+      {
+        name: Q_KOLVO_RYADOV,
+        text: "Количество рядов",
+        type: "number",
+        value: 2,
+        validation: (val) => {
+          if (val < 0) {
+            return [false, "Количество не может быть < 1"];
           }
           if (val > 20) {
-            return [false, "Ширина не может быть > 3"];
+            return [false, "Количество не может быть > 20"];
           }
           return [true];
         },
@@ -285,28 +406,13 @@ const beltSteps = [
       },
     ],
   },
+
   {
-    text: "Количество растений",
-    questions: [
-      {
-        name: "kolvo_rasteniy",
-        text: "Укажите количество растений",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Растений не может быть < 0"];
-          }
-          return [true];
-        },
-      },
-    ],
-  },
-  {
-    text: "Расстояние до воды",
+    text: "Источник воды",
     questions: [
       {
         name: "rasstoyanie_do_vodi",
-        text: "Укажите расстояние до источника воды",
+        text: "Расстояние до источника воды",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -315,16 +421,16 @@ const beltSteps = [
           return [true];
         },
       },
-    ],
-  },
-  {
-    text: "Какое подключение к источнику воды",
-    questions: [
       {
         name: "podkluchenie_k_vode",
-        text: "Какое нужно подключение к источнику воды?",
-        type: "buttons",
+        text: "Тип подключения?",
+        type: "select",
         options: [
+          {
+            name: "",
+            text: "Выберете тип",
+          },
+
           {
             name: "1_2f",
             text: "1/2 внутренная",
@@ -335,22 +441,23 @@ const beltSteps = [
           },
           {
             name: "3_4f",
-            text: "3_4 внутренная",
+            text: "3/4 внутренная",
           },
           {
             name: "3_4m",
-            text: "3_4 внешняя",
+            text: "3/4 внешняя",
           },
         ],
       },
     ],
   },
+
   {
-    text: "Нужен фильтр",
+    text: "",
     questions: [
       {
-        name: "need_filter",
-        text: "Нужна ли фильтр для очистки воды?",
+        name: Q_NEED_FILTER,
+        text: "Нужен ли фильтр для воды?",
         type: "buttons",
         options: [
           {
@@ -366,7 +473,7 @@ const beltSteps = [
     ],
   },
   {
-    text: "Нужен таймер",
+    text: "",
     questions: [
       {
         name: "need_timer",
@@ -388,22 +495,11 @@ const beltSteps = [
 ];
 const treeSteps = [
   {
-    text: "Укажите характеристики",
+    text: "Размер посадки в метрах",
     questions: [
       {
-        name: "razmer_posadki",
-        text: "Размер посадки в метрах",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Размер посадки не может быть < 0"];
-          }
-          return [true];
-        },
-      },
-      {
         name: "dlina_posadki",
-        text: "Длина посадки растений",
+        text: "Длина ряда (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
         validation: (val) => {
@@ -411,15 +507,16 @@ const treeSteps = [
             return [false, "Длина не может быть < 0"];
           }
           if (val > 20) {
-            return [false, "Длина не может быть > 20"];
+            return [false, "Длина не может быть > 100"];
           }
           return [true];
         },
       },
+
       {
-        name: "shirina_posadki",
-        text: "Ширина посадки",
-        description: "Именно ширина между крайними растениями ряда",
+        name: "shirina_mejdu_ryadov",
+        text: "Ширина между рядами (м)",
+        description: "Расстояние между рядами",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -431,17 +528,104 @@ const treeSteps = [
           return [true];
         },
       },
+
       {
-        name: "shirina_ryadov",
-        text: "Ширина между рядами",
-        description: "Расстояние между рядами",
-        type: "number",
+        name: "shirina_between_plant",
+        text: "Ширина между растениями (м)",
+        type: "select",
+        options: [
+          {
+            name: "",
+            text: "Выберете длинну",
+          },
+
+          {
+            name: "0,1",
+            text: "0.1",
+          },
+          {
+            name: "0,2",
+            text: "0.2",
+          },
+
+          {
+            name: "0,3",
+            text: "0.3",
+          },
+
+          {
+            name: "0,4",
+            text: "0.4",
+          },
+
+          {
+            name: "0,5",
+            text: "0.5",
+          },
+
+          {
+            name: "0,6",
+            text: "0.6",
+          },
+
+          {
+            name: "0,7",
+            text: "0.7",
+          },
+
+          {
+            name: "0,8",
+            text: "0.8",
+          },
+
+          {
+            name: "0,9",
+            text: "0.9",
+          },
+
+          {
+            name: "1",
+            text: "1",
+          },
+        ],
         validation: (val) => {
           if (val < 0) {
-            return [false, "Ширина не может быть < 0"];
+            return [false, "Размер посадки не может быть < 0"];
+          }
+          if (val > 1) {
+            return [false, "Ширина не может быть > 1"];
+          }
+          return [true];
+        },
+      },
+
+      // {
+      //   name: "shirina_posadki",
+      //   text: "Ширина посадки",
+      //   description: "Именно ширина между крайними растениями ряда",
+      //   type: "number",
+      //   validation: (val) => {
+      //     if (val < 0) {
+      //       return [false, "Ширина не может быть < 0"];
+      //     }
+      //     if (val > 3) {
+      //       return [false, "Ширина не может быть > 3"];
+      //     }
+      //     return [true];
+      //   },
+      // },
+
+      {
+        name: Q_KOLVO_RYADOV,
+        text: "Количество рядов",
+        type: "number",
+        value: 2,
+        validation: (val) => {
+          if (val < 0) {
+            return [false, "Количество не может быть < 1"];
           }
           if (val > 20) {
-            return [false, "Ширина не может быть > 3"];
+            return [false, "Количество не может быть > 20"];
           }
           return [true];
         },
@@ -449,10 +633,10 @@ const treeSteps = [
     ],
   },
   {
-    text: "Возможность перекрытия воды",
+    text: "",
     questions: [
       {
-        name: "need_perekritie_vodi",
+        name: Q_NEED_PEREKRITIE,
         text: "Нужна ли возможность перекрытия воды к отдельным рядам?",
         type: "buttons",
         options: [
@@ -473,7 +657,7 @@ const treeSteps = [
     questions: [
       {
         name: "kolvo_rasteniy",
-        text: "Укажите количество растений",
+        text: "Количество растений",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -485,11 +669,11 @@ const treeSteps = [
     ],
   },
   {
-    text: "Расстояние до воды",
+    text: "Источник воды",
     questions: [
       {
         name: "rasstoyanie_do_vodi",
-        text: "Укажите расстояние до источника воды",
+        text: "Расстояние до источника воды",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -498,16 +682,16 @@ const treeSteps = [
           return [true];
         },
       },
-    ],
-  },
-  {
-    text: "Какое подключение к источнику воды",
-    questions: [
       {
         name: "podkluchenie_k_vode",
-        text: "Какое нужно подключение к источнику воды?",
-        type: "buttons",
+        text: "Тип подключения?",
+        type: "select",
         options: [
+          {
+            name: "",
+            text: "Выберете тип",
+          },
+
           {
             name: "1_2f",
             text: "1/2 внутренная",
@@ -518,22 +702,23 @@ const treeSteps = [
           },
           {
             name: "3_4f",
-            text: "3_4 внутренная",
+            text: "3/4 внутренная",
           },
           {
             name: "3_4m",
-            text: "3_4 внешняя",
+            text: "3/4 внешняя",
           },
         ],
       },
     ],
   },
+
   {
-    text: "Нужен фильтр",
+    text: "",
     questions: [
       {
-        name: "need_filter",
-        text: "Нужна ли фильтр для очистки воды?",
+        name: Q_NEED_FILTER,
+        text: "Нужен ли фильтр для воды?",
         type: "buttons",
         options: [
           {
@@ -549,7 +734,7 @@ const treeSteps = [
     ],
   },
   {
-    text: "Нужен таймер",
+    text: "",
     questions: [
       {
         name: "need_timer",

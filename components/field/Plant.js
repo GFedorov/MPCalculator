@@ -1,6 +1,11 @@
-const Plant = ({ x, y }) => {
+const Plant = ({ x, y, index, hideForOneRow, kolvoRast, kolvo_ryadov }) => {
   return (
-    <g style={{ transform: `translate(${x}px,${y}px)` }}>
+    <g
+      style={{ transform: `translate(${x}px,${y}px)` }}
+      className={`${
+        index + 1 > kolvoRast || hideForOneRow ? "hide-for-one-row" : ""
+      }`}
+    >
       <g className="root">
         <path
           className="v-1"

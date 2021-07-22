@@ -7,6 +7,10 @@ $color-dark-green: #0e1c03;
   padding-top: 70px !important;
 }
 
+h1 {
+  margin: 20px auto;
+}
+
 body {
   margin: 0;
   background-color: $color-dark-green;
@@ -153,7 +157,7 @@ body {
     position: relative;
   }
   &__question {
-    min-height: 300px;
+    min-height: 200px;
 
     display: flex;
     flex-direction: column;
@@ -324,6 +328,15 @@ body {
 #field {
   text {
     font-size: 10px;
+  }
+}
+
+.one-row {
+  #rows-number {
+    transform: translateY(-140px);
+  }
+  .hide-for-one-row {
+    display: none;
   }
 }
 

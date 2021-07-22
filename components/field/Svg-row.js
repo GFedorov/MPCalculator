@@ -2,8 +2,6 @@ import { useState } from "react";
 import Plant from "./Plant";
 import { scenario, scenarioAnswers } from "../../data/steps";
 import { Q_NEED_FILTER } from "../../data/steps";
-import { Q_KOLVO_RYADOV } from "../../data/steps";
-import { Q_NEED_PEREKRITIE } from "../../data/steps";
 
 const coords = [];
 let y = 30;
@@ -11,15 +9,13 @@ let x = 140;
 for (let i = 0; i < 4; i++) {
   for (let j = 0; j < 3; j++) {
     x = (j + 1) * 100 + 40;
-    coords.push({ x, y, hideForOneRow: i > 1 });
+    coords.push({ x, y });
   }
   y += 86;
 }
 
 const SvgField = (props) => {
   const {
-    width,
-    height,
     kolvo_rasteniy,
     kolvo_ryadov,
     need_perekritie_vodi,
@@ -34,28 +30,16 @@ const SvgField = (props) => {
 
   return (
     <svg
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      width={481}
+      height={363}
+      viewBox="0 0 481 363"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${+kolvo_ryadov === 1 ? "one-row" : ""} `}
     >
       <g id="field" className={`${!!type ? type + "-show" : "hole-show"}`}>
         {coords.map((coord, index) => {
-          return (
-            <Plant
-              x={coord.x}
-              y={coord.y}
-              key={index}
-              hideForOneRow={coord.hideForOneRow}
-              index={index}
-              kolvo_ryadov={kolvo_ryadov}
-              kolvoRast={kolvo_rasteniy}
-            />
-          );
+          return <Plant x={coord.x} y={coord.y} key={index} />;
         })}
-
         <g id="between-rows">
           <text
             id="between-rows-text"
@@ -173,7 +157,7 @@ const SvgField = (props) => {
             />
           </g>
           {need_perekritie_vodi === "yes" && (
-            <g id="perekritie" className="hide-for-one-row">
+            <g id="perekritie">
               <rect
                 id="Rectangle 40_3"
                 width="6.25179"
@@ -268,8 +252,7 @@ const SvgField = (props) => {
             fill="white"
           />
         </g>
-
-        <g id="row2" className="hide-for-one-row">
+        <g id="row2">
           <line
             id="Line 44"
             x1="111.005"
@@ -311,7 +294,6 @@ const SvgField = (props) => {
             strokeLinecap="round"
           />
         </g>
-
         <g id="row1">
           <line
             id="Line 42"
