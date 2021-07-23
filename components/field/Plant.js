@@ -3,8 +3,8 @@ const Plant = ({ x, y, index, hideForOneRow, kolvoRast, kolvo_ryadov }) => {
     <g
       style={{ transform: `translate(${x}px,${y}px)` }}
       className={`${
-        index + 1 > kolvoRast || hideForOneRow ? "hide-for-one-row" : ""
-      }`}
+        kolvo_ryadov < 2 ? (index > 5 ? "hide-for-one-row" : "") : ""
+      }${index + 1 > kolvoRast ? " hide-for-quantity" : ""}`}
     >
       <g className="root">
         <path

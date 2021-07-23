@@ -11,7 +11,7 @@ let x = 140;
 for (let i = 0; i < 4; i++) {
   for (let j = 0; j < 3; j++) {
     x = (j + 1) * 100 + 40;
-    coords.push({ x, y, hideForOneRow: i > 1 });
+    coords.push({ x, y, hideForOneRow: i < 0 });
   }
   y += 86;
 }
