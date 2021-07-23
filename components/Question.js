@@ -1,4 +1,10 @@
-const Question = ({ item, setAnswer, currentAnswer }) => {
+const Question = ({
+  item,
+  setAnswer,
+  currentAnswer,
+  setFocusedEl,
+  focusedEl,
+}) => {
   return (
     <div className="question">
       <div className={`question__text question__text_${item.type} `}>
@@ -23,12 +29,35 @@ const Question = ({ item, setAnswer, currentAnswer }) => {
         {item.type === "number" && (
           <input
             type="number"
+            id={item.id}
             //value={item.value}
             onChange={(e) => setAnswer(e.target.value)}
+            onFocus={(e) => {
+              console.log(focusedEl + " focus");
+              console.log(item.name);
+              setFocusedEl(item.name);
+              setTimeout(() => {
+                if (focusedEl === item.name) {
+                  setFocusedEl(null);
+                }
+              }, 1000);
+            }}
           />
         )}
         {item.type === "select" && (
-          <select onChange={(e) => setAnswer(e.target.value)}>
+          <select
+            onChange={(e) => setAnswer(e.target.value)}
+            onFocus={(e) => {
+              console.log(focusedEl + " focus");
+              console.log(item.name);
+              setFocusedEl(item.name);
+              setTimeout(() => {
+                if (focusedEl != item.name) {
+                  setFocusedEl(null);
+                }
+              }, 3000);
+            }}
+          >
             {item.options.map((option) => (
               <option key={option.name}>{option.text}</option>
             ))}

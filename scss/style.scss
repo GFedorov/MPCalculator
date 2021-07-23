@@ -378,3 +378,40 @@ body {
     padding: 0 10px;
   }
 }
+
+.shrink {
+  animation: shrinking 1.5s infinite linear;
+}
+@keyframes shrinking {
+  from {
+    fill: #65ac2d;
+  }
+
+  to {
+    fill: #65ac2d;
+  }
+  50% {
+    fill: red;
+  }
+}
+.strobe-stroke {
+  animation: strobe 1.5s infinite linear;
+}
+@keyframes strobe {
+  from {
+    stroke: #65ac2d;
+  }
+
+  to {
+    stroke: #65ac2d;
+  }
+  50% {
+    stroke: red;
+  }
+}
+
+@media (max-width: 500px) {
+  .page {
+    width: 90%;
+  }
+}

@@ -11,6 +11,7 @@ const rootSteps = [
         text: "Длина ряда (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
+        id: "row-length",
         validation: (val) => {
           if (val < 0) {
             return [false, "Длина не может быть < 0"];

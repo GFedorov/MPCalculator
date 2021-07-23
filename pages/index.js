@@ -20,6 +20,8 @@ const IndexPage = () => {
   // уведомление об ошибке
   const [error, setError] = useState("");
 
+  const [focusedEl, setFocusedEl] = useState(null);
+
   // переменные, в случае, если это первый экран
   let questions = [scenario];
   let chooseAnswer = (choosenScenario) => {
@@ -94,6 +96,7 @@ const IndexPage = () => {
                 choosenScenario,
                 width,
                 height,
+                focusedEl,
               }}
             />
             <div className="cart-wrapper">
@@ -138,6 +141,8 @@ const IndexPage = () => {
                           : null
                       }
                       setAnswer={(answer) => chooseAnswer(answer, index)}
+                      setFocusedEl={setFocusedEl}
+                      focusedEl={focusedEl}
                     />
                   </div>
                 );
