@@ -33,14 +33,16 @@ const Question = ({
             //value={item.value}
             onChange={(e) => setAnswer(e.target.value)}
             onFocus={(e) => {
-              console.log(focusedEl + " focus");
-              console.log(item.name);
+              console.log(new Date().getSeconds());
+
               setFocusedEl(item.name);
               setTimeout(() => {
-                if (focusedEl === item.name) {
-                  setFocusedEl(null);
-                }
-              }, 1000);
+                setFocusedEl((focusedEl) => {
+                  if (focusedEl === item.name) {
+                    return null;
+                  } else return focusedEl;
+                });
+              }, 4000);
             }}
           />
         )}
@@ -48,11 +50,10 @@ const Question = ({
           <select
             onChange={(e) => setAnswer(e.target.value)}
             onFocus={(e) => {
-              console.log(focusedEl + " focus");
-              console.log(item.name);
               setFocusedEl(item.name);
+
               setTimeout(() => {
-                if (focusedEl != item.name) {
+                if (focusedEl === item.name) {
                   setFocusedEl(null);
                 }
               }, 3000);

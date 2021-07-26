@@ -8,7 +8,7 @@ $color-dark-green: #0e1c03;
 }
 
 h1 {
-  margin: 20px auto;
+  margin: 170px auto 10px auto;
 }
 
 body {
@@ -16,6 +16,7 @@ body {
   background-color: $color-dark-green;
   color: white;
   font-family: "Montserrat", sans-serif;
+  transform: scale(1.5);
 }
 
 .cart-wrapper {
@@ -24,6 +25,7 @@ body {
   top: 30px;
   transform: translateX(100%);
 }
+
 .cart {
   min-width: 151px;
   min-height: 333px;
