@@ -8,7 +8,7 @@ $color-dark-green: #0e1c03;
 }
 
 h1 {
-  margin: 170px auto 10px auto;
+  margin: 20px auto 10px auto;
 }
 
 body {
@@ -16,7 +16,6 @@ body {
   background-color: $color-dark-green;
   color: white;
   font-family: "Montserrat", sans-serif;
-  transform: scale(1.5);
 }
 
 .cart-wrapper {
@@ -27,7 +26,7 @@ body {
 }
 
 .cart {
-  min-width: 151px;
+  min-width: 300px;
   min-height: 333px;
   background-color: #1b3209;
   padding: 16px;
@@ -48,15 +47,15 @@ body {
     font-size: 8px;
     border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
     &__img {
-      width: 25px;
-      height: 25px;
+      width: 40px;
+      height: 40px;
       background-image: url("/img/item.png");
       img {
         max-width: 100%;
       }
     }
     &__text {
-      width: 50px;
+      width: 100px;
       margin: 10px 12px;
     }
     &__pcs {
@@ -415,5 +414,51 @@ body {
 @media (max-width: 500px) {
   .page {
     width: 90%;
+  }
+}
+
+/* Popup container */
+.popup-show {
+  margin: 200px auto 0 auto;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  width: 400px;
+  height: 300px;
+  z-index: 10;
+  color: black;
+  background-color: #fff;
+  text-align: center;
+}
+
+.popup-hide {
+  display: none;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

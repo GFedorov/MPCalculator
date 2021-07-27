@@ -1,6 +1,6 @@
 import { getGoods } from "../data/goods";
 
-const Cart = ({ settings, choosenScenario }) => {
+const Cart = ({ settings, choosenScenario, setGoodsTot, goodsTot }) => {
   // const {
   //   need_perekritie_vodi = "no",
   //   need_filter = "no",
@@ -28,11 +28,17 @@ const Cart = ({ settings, choosenScenario }) => {
             </div>
             <div className="list__item__text">{good.name}</div>
             <div className="list__item__pcs">{good.count} шт</div>
+            <div className="list__item__price">{good.price} р</div>
+            <div className="list__item__subtotal">
+              {good.price * good.count} р{setGoodsTot(good.price * good.count)}
+            </div>
+            {console.log(goodsTot)}
           </div>
         ))}
 
         <div className="cart__listWrapper__item"></div>
       </div>
+      <div className="cart-total"></div>
     </div>
   );
 };

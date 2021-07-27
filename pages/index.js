@@ -2,9 +2,10 @@ import Stepper from "../components/Stepper";
 import Question from "../components/Question";
 import { useState } from "react";
 import { scenario, scenarioAnswers } from "../data/steps";
-import Debug from "../components/Debug";
+
 import Cart from "../components/Cart";
 import SvgField from "../components/field/Svg";
+import Popup from "../components/Popup";
 
 const IndexPage = () => {
   // выбранный сценарий, появляется после нажатия на первую кнопку
@@ -22,12 +23,18 @@ const IndexPage = () => {
 
   const [focusedEl, setFocusedEl] = useState(null);
 
+  const [goCart, setGoCart] = useState(false);
+
+  const [goodsTot, setGoodsTot] = useState("");
+
   // переменные, в случае, если это первый экран
   let questions = [scenario];
   let chooseAnswer = (choosenScenario) => {
     setChoosenScenario(choosenScenario);
     setSteps(scenarioAnswers[choosenScenario]);
   };
+  // popup
+  //let popup = document.getElementById("myPopup");
 
   // переход к следующему шагу заблокирован
   let disabled = true;
@@ -103,6 +110,8 @@ const IndexPage = () => {
               <Cart
                 settings={chosenSettings}
                 choosenScenario={choosenScenario}
+                setGoodsTot={setGoodsTot}
+                goodsTot={goodsTot}
               />
             </div>
           </div>
@@ -172,7 +181,8 @@ const IndexPage = () => {
                   if (!!steps[stepIndex + 1]) {
                     setStepIndex(stepIndex - 1);
                   } else {
-                    alert(" перейти в корзину");
+                    setGoCart(true);
+                    console.log(goCart);
                   }
                 }}
                 className="stepBtn"
@@ -193,7 +203,8 @@ const IndexPage = () => {
                   if (!!steps[stepIndex + 1]) {
                     setStepIndex(stepIndex + 1);
                   } else {
-                    alert(" перейти в корзину");
+                    setGoCart(true);
+                    console.log(goCart);
                   }
                 }}
                 className="stepBtn"
@@ -206,6 +217,9 @@ const IndexPage = () => {
         {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_right">
           <Debug steps={steps} scenarioInfo={scenarioInfo} />
         </div> */}
+      </div>
+      <div className={goCart == true ? "popup-show" : "popup-hide"}>
+        <Popup goodsTot={goodsTot} />
       </div>
     </div>
   );
