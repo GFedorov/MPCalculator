@@ -1,0 +1,217 @@
+.cart-wrapper {
+  display: none;
+}
+.svg-pic {
+  width: 410px;
+  max-width: 100%;
+}
+.question__btn {
+  height: 100px;
+  width: 100px;
+}
+.main {
+  width: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  &__question {
+    height: 160px;
+  }
+  &__title {
+    padding: 0 20px;
+  }
+}
+.stepper-wrapper {
+  width: 90%;
+}
+
+.grid__col-lg-6 {
+  width: 100%;
+  padding: 0 10px;
+  margin-bottom: 15px;
+}
+.question {
+  &__btn {
+    padding: 5px 15px;
+    &__desc {
+      display: none;
+    }
+    &__text {
+      font-size: 8px;
+    }
+    &_belt {
+      background-image: url("/img/beltIcon.svg");
+      background-size: 50%;
+      background-position: 50% 30%;
+    }
+    &_tree {
+      background-image: url("/img/treeIcon.svg");
+      background-size: 45%;
+      background-position: 50% 30%;
+    }
+  }
+}
+
+.mobile-top-section {
+  padding-top: 45px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.btnWrapper {
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.stepBtn {
+  &.prev {
+    display: none;
+  }
+}
+
+.top-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  .top-cart {
+    width: 71px;
+    border-radius: 35px;
+    background-color: #0c8200;
+    border-width: 0;
+    background-image: url("/img/shopping-cart1.svg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+  }
+}
+
+// .main__field {
+//   max-height: 300px !important;
+// }
+.main {
+  &__question {
+    &_title {
+      margin-top: 15px;
+      &__title {
+        padding: 0 0px;
+      }
+    }
+  }
+}
+.stepper {
+  margin-top: 0;
+}
+
+.question {
+  input {
+    font-size: 16px;
+  }
+}
+
+.mobile-cart-wrapper{
+    position: absolute;
+    z-index: 10;
+    width: 90%;
+    margin: 20px 0 0 0;
+    left: 5%;
+    display: none;
+  }
+  .mobile-cart-wrapper-show{
+    display: block;
+    margin-top: 10px;
+  }
+
+  .cart{
+    .top-wrapper{
+      display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    }
+    .close{
+        width: 20px;
+        height: 20px;
+        //background-image: url("/img/times-solid.svg");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-color: white;
+        -webkit-mask:  url("/img/times-solid.svg") no-repeat ;
+        mask: url("/img/times-solid.svg") no-repeat ; 
+      }
+    
+  }
+
+
+@media (min-width: $sm) {
+  .question__btn {
+    height: 150px;
+    width: 150px;
+  }
+  .main {
+    width: 500px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .stepper-wrapper {
+    width: 500px;
+  }
+}
+
+@media (min-width: $lg) {
+  .cart-wrapper {
+    display: block;
+  }
+  .cart {
+    width: 250px;
+  }
+  .svg-pic {
+    width: 481px;
+  }
+  .grid__col-lg-6 {
+    width: 50%;
+  }
+  .question {
+    &__btn {
+      padding: 5px 28px;
+      &__desc {
+        display: block;
+      }
+      &__text {
+        font-size: 10px;
+      }
+      &_belt {
+        background-image: url("/img/beltIcon.svg");
+        background-size: 35%;
+      }
+      &_tree {
+        background-image: url("/img/treeIcon.svg");
+        background-size: 33%;
+      }
+    }
+
+    input {
+      font-size: 12px;
+    }
+  }
+  .mobile-top-section {
+    display: none;
+  }
+  .btnWrapper {
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+
+  .stepBtn {
+    &.prev {
+      display: block;
+    }
+  }
+  .main {
+    &__question {
+      height: 200px;
+    }
+  }
+  .stepper {
+    margin-top: 20px;
+  }
+}
+@media (min-width: $xl) {
+  .cart {
+    width: 300px;
+  }
+}

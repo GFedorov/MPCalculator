@@ -1,11 +1,13 @@
 import Stepper from "../components/Stepper";
 import Question from "../components/Question";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { scenario, scenarioAnswers } from "../data/steps";
 
 import Cart from "../components/Cart";
 import SvgField from "../components/field/Svg";
 import Popup from "../components/Popup";
+import MobileCart from "../components/MobileCart";
 
 const IndexPage = () => {
   // выбранный сценарий, появляется после нажатия на первую кнопку
@@ -25,7 +27,19 @@ const IndexPage = () => {
 
   const [goCart, setGoCart] = useState(false);
 
-  const [goodsTot, setGoodsTot] = useState("");
+  const [goodsSubTot, setGoodsSubTot] = useState(0);
+
+  const [displayWidth, setDisplayWidth] = useState(0);
+  useEffect(() => {
+    setDisplayWidth(window.screen.width);
+  });
+  const [showCart, setShowCart] = useState(false);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  // const [totalId, setTotalId] = useState([]);
+  // const [totalArr, setTotalArr] = useState([]);
+  let totalId = [];
+  let totalArr = [];
 
   // переменные, в случае, если это первый экран
   let questions = [scenario];
@@ -83,16 +97,73 @@ const IndexPage = () => {
 
   return (
     <div className="page">
+      <div className="mobile-top-section">
+        <div className="top-btn-wrapper">
+          <button
+            onClick={() => {
+              if (stepIndex === 0) {
+                if (confirm(" Подтвердить возврат? ")) {
+                  setSteps([]);
+                  setChoosenScenario(null);
+                  setScenarioInfo([]);
+                  setChosenSettings({});
+                }
+                return;
+              }
+
+              if (!!steps[stepIndex + 1]) {
+                setStepIndex(stepIndex - 1);
+              } else {
+                setGoCart(true);
+                console.log(goCart);
+              }
+            }}
+            className="stepBtn"
+          >
+            <span></span> Назад
+          </button>
+          <button
+            className="top-cart"
+            onClick={() => {
+              if (showCart === false) {
+                setShowCart(true);
+              } else setShowCart(false);
+            }}
+          ></button>
+        </div>
+        <div
+          className={
+            showCart === false
+              ? "mobile-cart-wrapper"
+              : "mobile-cart-wrapper-show"
+          }
+        >
+          {/* <MobileCart
+            settings={chosenSettings}
+            choosenScenario={choosenScenario}
+            setGoodsSubTot={setGoodsSubTot}
+            goodsSubTot={goodsSubTot}
+            showCart={showCart}
+            setShowCart={setShowCart}
+          /> */}
+        </div>
+      </div>
       <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
       {/* <Stepper step={step} /> */}
       <div className="field-wrapper">
         {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_left"></div> */}
         <div className="field-wrapper__main main">
           <div
-            className="main__field "
+            className="main__field"
             style={{
               maxHeight:
-                +chosenSettings.kolvo_ryadov === 1 ? 250 + "px" : height + "px",
+                +chosenSettings.kolvo_ryadov === 1 && displayWidth < 576
+                  ? 200 + "px"
+                  : displayWidth < 576
+                  ? 300 + "px"
+                  : +chosenSettings.kolvo_ryadov === 1
+                  ? 250 + "px"
+                  : 380 + "px",
               transition: "0.3s",
             }}
           >
@@ -110,8 +181,12 @@ const IndexPage = () => {
               <Cart
                 settings={chosenSettings}
                 choosenScenario={choosenScenario}
-                setGoodsTot={setGoodsTot}
-                goodsTot={goodsTot}
+                setGoodsSubTot={setGoodsSubTot}
+                goodsSubTot={goodsSubTot}
+                totalPrice={totalPrice}
+                setTotalPrice={setTotalPrice}
+                totalId={totalId}
+                totalArr={totalArr}
               />
             </div>
           </div>
@@ -127,7 +202,6 @@ const IndexPage = () => {
             className="main__question grid"
             style={{
               order: !choosenScenario ? -1 : 1,
-              height: "200px",
             }}
           >
             {!!steps[stepIndex] && !!steps[stepIndex].text && (
@@ -140,7 +214,9 @@ const IndexPage = () => {
                 return (
                   <div
                     key={question.name ? question.name : index}
-                    className={question.type === "buttons" ? "" : "grid__col-6"}
+                    className={
+                      question.type === "buttons" ? "" : "grid__col-lg-6"
+                    }
                   >
                     <Question
                       item={question}
@@ -185,7 +261,7 @@ const IndexPage = () => {
                     console.log(goCart);
                   }
                 }}
-                className="stepBtn"
+                className="stepBtn prev"
               >
                 <span></span> Назад
               </button>
@@ -207,7 +283,7 @@ const IndexPage = () => {
                     console.log(goCart);
                   }
                 }}
-                className="stepBtn"
+                className="stepBtn next"
               >
                 Следующий шаг <span></span>
               </button>
@@ -219,7 +295,7 @@ const IndexPage = () => {
         </div> */}
       </div>
       <div className={goCart == true ? "popup-show" : "popup-hide"}>
-        <Popup goodsTot={goodsTot} />
+        <Popup goodsSubTot={goodsSubTot} totalId={totalId} />
       </div>
     </div>
   );

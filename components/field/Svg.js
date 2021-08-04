@@ -35,12 +35,12 @@ const SvgField = (props) => {
 
   return (
     <svg
-      width={width}
-      height={height}
+      // width={width}
+      // height={height}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${+kolvo_ryadov === 1 ? "one-row" : ""} svgPic`}
+      className={`${+kolvo_ryadov === 1 ? "one-row" : ""} svg-pic`}
     >
       <g id="field" className={`${!!type ? type + "-show" : "hole-show"}`}>
         {coords.map((coord, index) => {

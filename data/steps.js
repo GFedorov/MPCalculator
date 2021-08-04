@@ -1,13 +1,16 @@
 export const Q_NEED_FILTER = "need_filter";
 export const Q_KOLVO_RYADOV = "kolvo_ryadov";
 export const Q_NEED_PEREKRITIE = "need_perekritie_vodi";
+export const Q_DLINNA_POSADKI = "dlinna_posadki";
+export const Q_SHIRINA_MEJDU_RYADOV = "shirina_mejdu_ryadov";
+export const Q_SHIRINA_BETWEEN_PLANT = "shirina_between_plant";
 
 const rootSteps = [
   {
     text: "Размер посадки в метрах",
     questions: [
       {
-        name: "dlina_posadki",
+        name: Q_DLINNA_POSADKI,
         text: "Длина ряда (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
@@ -24,7 +27,7 @@ const rootSteps = [
       },
 
       {
-        name: "shirina_mejdu_ryadov",
+        name: Q_SHIRINA_MEJDU_RYADOV,
         text: "Ширина между рядами (м)",
         description: "Расстояние между рядами",
         type: "number",
@@ -33,14 +36,14 @@ const rootSteps = [
             return [false, "Ширина не может быть < 0"];
           }
           if (val > 3) {
-            return [false, "Ширина не может быть > 3"];
+            return [false, "Ширина не может быть больше 1м"];
           }
           return [true];
         },
       },
 
       {
-        name: "shirina_between_plant",
+        name: Q_SHIRINA_BETWEEN_PLANT,
         text: "Ширина между растениями (м)",
         type: "select",
         options: [
