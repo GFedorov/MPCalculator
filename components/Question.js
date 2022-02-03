@@ -18,7 +18,7 @@ const Question = ({
               key={option.name}
               className={`question__btn ${
                 !!option.extraClasses ? option.extraClasses : ""
-              } ${currentAnswer === option.name ? "question__btn_active" : ""}`}
+                } ${currentAnswer === option.name ? "question__btn_active" : ""}`}
             >
               <span className="question__btn__check"></span>
               <p className="question__btn__text">{option.text}</p>
@@ -38,7 +38,8 @@ const Question = ({
                 setFocusedEl((focusedEl) => {
                   if (focusedEl === item.name) {
                     return null;
-                  } else return focusedEl;
+                  } else return focusedEl
+                    ;
                 });
               }, 4000);
             }}
@@ -49,6 +50,7 @@ const Question = ({
             onChange={(e) => setAnswer(e.target.value)}
             onFocus={(e) => {
               setFocusedEl(item.name);
+              console.log(e.target.value)
 
               setTimeout(() => {
                 if (focusedEl === item.name) {

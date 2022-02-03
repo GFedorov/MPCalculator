@@ -7,6 +7,9 @@ const MobileCart = ({
   goodsTot,
   showCart,
   setShowCart,
+  totalId,
+  totalArr,
+  goodsSubTot,
 }) => {
   // const {
   //   need_perekritie_vodi = "no",
@@ -14,6 +17,14 @@ const MobileCart = ({
   //   need_timer = "no",
   // } = settings;
   const goods = getGoods(settings, choosenScenario);
+
+  const sum = (x) => {
+    let s = 0;
+    for (let j = 0; j < x.length; j++) {
+      s += x[j];
+    }
+    return s;
+  };
 
   return (
     <div className="cart">
@@ -40,8 +51,9 @@ const MobileCart = ({
           <div className="list__item__text">Капельница разборная</div>
           <div className="list__item__pcs">1 шт</div>
         </div> */}
-        {goods.map((good) => (
+        {goods.map((good, i) => (
           <div className="list__item" key={good.name}>
+            {totalArr.push(goods[i].price * goods[i].count)}
             <div className="list__item__img">
               <img src={good.img} />
             </div>
@@ -49,15 +61,16 @@ const MobileCart = ({
             <div className="list__item__pcs">{good.count} шт</div>
             <div className="list__item__price">{good.price} р</div>
             <div className="list__item__subtotal">
-              {setGoodsSubTot(good.price * good.count)}
+              {goods[i].price * goods[i].count}
               {goodsSubTot} р
             </div>
+            {totalId.push(goods[i].id)}
           </div>
         ))}
 
         <div className="cart__listWrapper__item"></div>
       </div>
-      <div className="cart-total"></div>
+      <div className="cart-total">Итого: {sum(totalArr)} р</div>
     </div>
   );
 };

@@ -19,20 +19,35 @@ body {
 }
 
 .cart-wrapper {
-  position: absolute;
-  right: -30px;
-  top: 30px;
-  transform: translateX(100%);
+ width: 487px;
+ overflow: auto;
+ height: 400px;
+ 
+}
+.cart-wrapper::-webkit-scrollbar {
+  width: 14px; /* ширина для вертикального скролла */
+  
+  background-color: #0c8200;
+}
+.cart-wrapper::-webkit-scrollbar-thumb {
+  background-color: #65ac2d;
+  border-radius: 9em;
+
 }
 
+
+
+
+
+
 .cart {
-  min-height: 333px;
-  background-color: #1b3209;
+  min-height: 100%;
+  background-color: rgba(35, 62, 13, 1);;
   padding: 16px;
   &__title {
     font-weight: 500;
     color: white;
-    font-size: 12px;
+    font-size: 16px;
     padding-bottom: 4px;
     border-bottom: 1px solid rgba(164, 164, 164, 1);
   }
@@ -40,21 +55,32 @@ body {
 .list {
   &__item {
     margin-top: 16px;
+    
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 8px;
+    font-size: 12px;
+    font-weight: 600;
     border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
     &__img {
+      margin-bottom:9px;
+      vertical-align: middle;
+      
       width: 40px;
       height: 40px;
-      background-image: url("/img/item.png");
+      display:flex;
+  align-items:center;
+  justify-content: center;
+      
       img {
         max-width: 100%;
+        max-height: 100%;
+        
+        
       }
     }
     &__text {
-      width: 100px;
+      width: 130px;
       margin: 10px 12px;
     }
     &__pcs {
@@ -83,9 +109,13 @@ body {
 }
 
 .field-wrapper {
-  height: 600px;
+  padding-top: 23px;
+  background: rgba(12, 130, 0, 0.2);
+
+justify-content: space-between;
   display: flex;
-  justify-content: center;
+  
+ 
   &__sidebar {
     flex: 1;
     &_left {
@@ -95,16 +125,15 @@ body {
   }
   &__main {
     width: 900px;
-
-    display: flex;
-    flex-direction: column;
+    margin: 0 auto;
   }
 }
 
 .cart-total {
-  margin: 10px 0 65% 0;
+  margin: 10px 0 20px 0;
 }
 .btnWrapper {
+  min-width: 400px;
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
@@ -148,17 +177,21 @@ body {
     margin-left: 8px;
   }
 }
-
+.field-background{
+  background-color:rgba(12, 130, 0, 0.2);
+}
 .main {
   display: flex;
   width: 500px;
-  flex-direction: column;
-  align-items: center;
+  
+  
   &__field {
+    
     flex: 1;
     position: relative;
   }
   &__question {
+    padding-top: 57px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -193,20 +226,24 @@ body {
     display: flex;
 
     input {
+      height: 22px;
       text-align: center;
-      font-size: 12px;
+      font-size: 21px;
       font-weight: 400;
       color: white;
       width: 226px;
-      margin-top: 6px;
+      margin-top: 3px;
       box-sizing: border-box;
-      background-color: rgba(14, 28, 3, 1);
+      background-color: rgba(35, 62, 13, 1)
+      ;
       border: 1px solid rgba(101, 172, 45, 1);
     }
     select {
-      margin-top: 6px;
+      height: 22px;
+      margin-top: 3px;
       text-align-last: center;
-      background-color: rgba(14, 28, 3, 1);
+      background-color: rgba(35, 62, 13, 1);
+
       color: white;
       width: 226px;
       border: 1px solid rgba(101, 172, 45, 1);
@@ -267,17 +304,22 @@ body {
     }
 
     &__text {
+      
       margin-bottom: 0;
       text-align: center;
+      
     }
     &__desc {
       margin: 0;
+      padding-top: 10px;
       text-transform: none;
       font-weight: 400;
-      font-size: 8px;
+      font-size: 14px;
     }
     &_root {
       background-image: url("/img/rootIcon.svg");
+      background-size: 30%;
+
     }
     &_belt {
       background-image: url("/img/beltIcon.svg");
@@ -285,7 +327,7 @@ body {
     }
     &_tree {
       background-image: url("/img/treeIcon.svg");
-      background-size: 33%;
+      background-size: 35%;
     }
     &:hover,
     &_active {
@@ -404,18 +446,33 @@ body {
 
 /* Popup container */
 .popup-show {
-  margin: 200px auto 0 auto;
+  margin: 0px auto 0 auto;
   position: absolute;
-  top: 0;
+  top: 40%;
   left: 50%;
   transform: translateX(-50%);
+  
   cursor: pointer;
   width: 400px;
-  height: 300px;
+  height: 200px;
   z-index: 10;
   color: black;
-  background-color: #fff;
+  background-color:rgba(255, 255, 255, 0.95);;
   text-align: center;
+  padding: 30px;
+  .popBtn{
+    font-weight: 500;
+    font-size: 12px;
+    
+    width: 184px;
+    height: 39px;
+    text-align: center;
+    color: #fff;
+    background-color: #0c8200;
+    border-radius: 35px;
+    border: 1px solid #65ac2d;
+
+  }
 }
 
 .popup-hide {

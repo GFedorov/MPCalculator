@@ -1,5 +1,6 @@
 .cart-wrapper {
   display: none;
+  
 }
 .svg-pic {
   width: 410px;
@@ -11,10 +12,16 @@
 }
 .main {
   width: auto;
-  padding-left: 15px;
+  padding-left: 10%;
   padding-right: 15px;
   &__question {
-    height: 160px;
+    height: 506px;
+    background: rgba(27, 50, 9, 0.5);
+    &_wrapper{
+      width:620px;
+      margin: 0 auto;
+    }
+
   }
   &__title {
     padding: 0 20px;
@@ -27,7 +34,7 @@
 .grid__col-lg-6 {
   width: 100%;
   padding: 0 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 .question {
   &__btn {
@@ -36,25 +43,30 @@
       display: none;
     }
     &__text {
-      font-size: 8px;
+      font-size: 12px;
     }
     &_belt {
       background-image: url("/img/beltIcon.svg");
-      background-size: 50%;
-      background-position: 50% 30%;
+      background-size: 30%;
+      background-position: 50% 20%;
     }
     &_tree {
       background-image: url("/img/treeIcon.svg");
       background-size: 45%;
-      background-position: 50% 30%;
+      background-position: 50% 10%;
+    }
+    &_root{
+      background-position: 50% 10%;
+      background-size: 25%;
+
     }
   }
 }
 
 .mobile-top-section {
   padding-top: 45px;
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 .btnWrapper {
   justify-content: space-around;
@@ -95,7 +107,7 @@
   }
 }
 .stepper {
-  margin-top: 0;
+  margin-top: 15px;
 }
 
 .question {
@@ -148,17 +160,27 @@
     padding-right: 0px;
   }
   .stepper-wrapper {
+    margin: 0 auto;
     width: 500px;
   }
 }
 
 @media (min-width: $lg) {
+  .question__btn {
+    height: 200px;
+    width: 200px;
+  }
+  .page{
+    padding: 0 10%;
+  }
+  .field-wrapper{
+    
+  }
   .cart-wrapper {
     display: block;
+    
   }
-  .cart {
-    width: 250px;
-  }
+  
   .svg-pic {
     width: 481px;
   }
@@ -172,15 +194,15 @@
         display: block;
       }
       &__text {
-        font-size: 10px;
+        font-size: 12px;
       }
       &_belt {
         background-image: url("/img/beltIcon.svg");
-        background-size: 35%;
+        background-size: 30%;
       }
       &_tree {
         background-image: url("/img/treeIcon.svg");
-        background-size: 33%;
+        background-size: 30%;
       }
     }
 
@@ -203,7 +225,7 @@
   }
   .main {
     &__question {
-      height: 200px;
+      min-height: 300px;
     }
   }
   .stepper {
@@ -212,6 +234,7 @@
 }
 @media (min-width: $xl) {
   .cart {
-    width: 300px;
+    width: 100%;
+    
   }
 }

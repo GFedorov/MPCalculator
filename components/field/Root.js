@@ -12,7 +12,7 @@ const RootField = ({ settings, choosenScenario }) => {
     rasstoyanie_do_vodi = "0",
     shirina_mejdu_ryadov = "0",
     shirina_between_plant = "0",
-    // need_filter = "no",
+    need_filter = "no",
     need_timer = "no",
   } = settings;
 

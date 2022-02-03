@@ -24,7 +24,7 @@ const SvgField = (props) => {
     kolvo_ryadov,
     need_perekritie_vodi,
     shirina_mejdu_ryadov,
-    dlina_posadki,
+    dlinna_posadki,
     shirina_between_plant,
     rasstoyanie_do_vodi,
     // need_filter,
@@ -99,13 +99,14 @@ const SvgField = (props) => {
             fill="rgba(101, 172, 45, 1)"
             id="plant-number-text"
           >
-            {dlina_posadki} м
+            {dlinna_posadki} м
           </text>
           <path
             id="Arrow 16"
             d="M130.646 17.6464C130.451 17.8417 130.451 18.1583 130.646 18.3536L133.828 21.5355C134.024 21.7308 134.34 21.7308 134.536 21.5355C134.731 21.3403 134.731 21.0237 134.536 20.8284L131.707 18L134.536 15.1716C134.731 14.9763 134.731 14.6597 134.536 14.4645C134.34 14.2692 134.024 14.2692 133.828 14.4645L130.646 17.6464ZM397.354 18.3536C397.549 18.1583 397.549 17.8417 397.354 17.6464L394.172 14.4645C393.976 14.2692 393.66 14.2692 393.464 14.4645C393.269 14.6597 393.269 14.9763 393.464 15.1716L396.293 18L393.464 20.8284C393.269 21.0237 393.269 21.3403 393.464 21.5355C393.66 21.7308 393.976 21.7308 394.172 21.5355L397.354 18.3536ZM131 18.5H397V17.5H131V18.5Z"
-            fill={focusedEl === "dlina_posadki" ? "red" : "#65AC2D"}
-            className={focusedEl === "dlina_posadki" ? "shrink" : ""}
+            fill={focusedEl === "dlinna_posadki" ? "red" : "#65AC2D"}
+
+            className={focusedEl === "dlinna_posadki" ? "shrink" : ""}
           />
         </g>
         <g id="do-vodi">

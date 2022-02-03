@@ -4,6 +4,11 @@ export const Q_NEED_PEREKRITIE = "need_perekritie_vodi";
 export const Q_DLINNA_POSADKI = "dlinna_posadki";
 export const Q_SHIRINA_MEJDU_RYADOV = "shirina_mejdu_ryadov";
 export const Q_SHIRINA_BETWEEN_PLANT = "shirina_between_plant";
+export const Q_KOLVO_RASTENIY = "kolvo_rasteniy";
+export const Q_NEED_TIMER = "need_timer";
+export const Q_RASSTOYANIE_DO_VODI = "rasstoyanie_do_vodi";
+export const Q_PODKLUCHENIE_K_VODE = "podkluchenie_k_vode";
+
 
 const rootSteps = [
   {
@@ -11,7 +16,7 @@ const rootSteps = [
     questions: [
       {
         name: Q_DLINNA_POSADKI,
-        text: "Длина ряда (м)",
+        text: "Длина грядки (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
         id: "row-length",
@@ -28,7 +33,7 @@ const rootSteps = [
 
       {
         name: Q_SHIRINA_MEJDU_RYADOV,
-        text: "Ширина между рядами (м)",
+        text: "Ширина между грядками (м)",
         description: "Расстояние между рядами",
         type: "number",
         validation: (val) => {
@@ -169,8 +174,8 @@ const rootSteps = [
     text: "Количество растений",
     questions: [
       {
-        name: "kolvo_rasteniy",
-        text: "Количество растений",
+        name: Q_KOLVO_RASTENIY,
+        text: "Общее количество растений на всех грядках",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -186,7 +191,7 @@ const rootSteps = [
     questions: [
       {
         name: "rasstoyanie_do_vodi",
-        text: "Расстояние до источника воды",
+        text: "Расстояние до источника воды (м)",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -196,7 +201,7 @@ const rootSteps = [
         },
       },
       {
-        name: "podkluchenie_k_vode",
+        name: Q_PODKLUCHENIE_K_VODE,
         text: "Тип подключения?",
         type: "select",
         options: [
@@ -250,8 +255,8 @@ const rootSteps = [
     text: "",
     questions: [
       {
-        name: "need_timer",
-        text: "Нужна ли таймер для автоматического полива?",
+        name: Q_NEED_TIMER,
+        text: "Нужен ли таймер для автоматического полива?",
         type: "buttons",
         options: [
           {
@@ -272,7 +277,7 @@ const beltSteps = [
     text: "Размер посадки в метрах",
     questions: [
       {
-        name: "dlina_posadki",
+        name: Q_DLINNA_POSADKI,
         text: "Длина ряда (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
@@ -288,7 +293,7 @@ const beltSteps = [
       },
 
       {
-        name: "shirina_mejdu_ryadov",
+        name: Q_SHIRINA_MEJDU_RYADOV,
         text: "Ширина между рядами (м)",
         description: "Расстояние между рядами",
         type: "number",
@@ -304,7 +309,7 @@ const beltSteps = [
       },
 
       {
-        name: "shirina_between_plant",
+        name: Q_SHIRINA_BETWEEN_PLANT,
         text: "Ширина между растениями (м)",
         type: "select",
         options: [
@@ -394,7 +399,7 @@ const beltSteps = [
     text: "",
     questions: [
       {
-        name: "need_perekritie_vodi",
+        name: Q_NEED_PEREKRITIE,
         text: "Нужна ли возможность перекрытия воды к отдельным рядам?",
         type: "buttons",
         options: [
@@ -415,7 +420,7 @@ const beltSteps = [
     text: "Источник воды",
     questions: [
       {
-        name: "rasstoyanie_do_vodi",
+        name: Q_RASSTOYANIE_DO_VODI,
         text: "Расстояние до источника воды",
         type: "number",
         validation: (val) => {
@@ -426,7 +431,7 @@ const beltSteps = [
         },
       },
       {
-        name: "podkluchenie_k_vode",
+        name: Q_PODKLUCHENIE_K_VODE,
         text: "Тип подключения?",
         type: "select",
         options: [
@@ -481,7 +486,7 @@ const beltSteps = [
     questions: [
       {
         name: "need_timer",
-        text: "Нужна ли таймер для автоматического полива?",
+        text: "Нужнен ли таймер для автоматического полива?",
         type: "buttons",
         options: [
           {

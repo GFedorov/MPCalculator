@@ -32,14 +32,14 @@ const IndexPage = () => {
   const [displayWidth, setDisplayWidth] = useState(0);
   useEffect(() => {
     setDisplayWidth(window.screen.width);
-  });
+  }, []);
   const [showCart, setShowCart] = useState(false);
 
   const [totalPrice, setTotalPrice] = useState(0);
-  // const [totalId, setTotalId] = useState([]);
-  // const [totalArr, setTotalArr] = useState([]);
-  let totalId = [];
-  let totalArr = [];
+  const [totalId, setTotalId] = useState([]); //возникает ошибка, бесконечное число повторов
+  const [totalArr, setTotalArr] = useState([]); //возникает ошибка, бесконечное число повторов
+  // let totalId = [];
+  // let totalArr = [];
 
   // переменные, в случае, если это первый экран
   let questions = [scenario];
@@ -64,7 +64,7 @@ const IndexPage = () => {
         prevScenarionInfo[stepIndex] = [];
       }
       prevScenarionInfo[stepIndex][index] = answer;
-      console.log(choosenScenario);
+
       setChosenSettings({
         ...chosenSettings,
         [steps[stepIndex].questions[index].name]: answer,
@@ -76,7 +76,7 @@ const IndexPage = () => {
     if (
       scenarioInfo[stepIndex] &&
       scenarioInfo[stepIndex].filter((answer) => !!answer).length ===
-        steps[stepIndex].questions.length
+      steps[stepIndex].questions.length
     ) {
       disabled = false;
     }
@@ -115,7 +115,7 @@ const IndexPage = () => {
                 setStepIndex(stepIndex - 1);
               } else {
                 setGoCart(true);
-                console.log(goCart);
+
               }
             }}
             className="stepBtn"
@@ -138,21 +138,26 @@ const IndexPage = () => {
               : "mobile-cart-wrapper-show"
           }
         >
-          {/* <MobileCart
+          <MobileCart
             settings={chosenSettings}
             choosenScenario={choosenScenario}
             setGoodsSubTot={setGoodsSubTot}
             goodsSubTot={goodsSubTot}
             showCart={showCart}
             setShowCart={setShowCart}
-          /> */}
+            totalId={totalId}
+            totalArr={totalArr}
+          />
         </div>
       </div>
-      <h1 className="main__title">ИНДИВИДУАЛЬНЫЙ ПОДБОР СИСТЕМЫ ПОЛИВА</h1>
+
       {/* <Stepper step={step} /> */}
       <div className="field-wrapper">
         {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_left"></div> */}
+
         <div className="field-wrapper__main main">
+
+
           <div
             className="main__field"
             style={{
@@ -160,10 +165,10 @@ const IndexPage = () => {
                 +chosenSettings.kolvo_ryadov === 1 && displayWidth < 576
                   ? 200 + "px"
                   : displayWidth < 576
-                  ? 300 + "px"
-                  : +chosenSettings.kolvo_ryadov === 1
-                  ? 250 + "px"
-                  : 380 + "px",
+                    ? 300 + "px"
+                    : +chosenSettings.kolvo_ryadov === 1
+                      ? 250 + "px"
+                      : 380 + "px",
               transition: "0.3s",
             }}
           >
@@ -177,19 +182,37 @@ const IndexPage = () => {
                 focusedEl,
               }}
             />
-            <div className="cart-wrapper">
-              <Cart
-                settings={chosenSettings}
-                choosenScenario={choosenScenario}
-                setGoodsSubTot={setGoodsSubTot}
-                goodsSubTot={goodsSubTot}
-                totalPrice={totalPrice}
-                setTotalPrice={setTotalPrice}
-                totalId={totalId}
-                totalArr={totalArr}
-              />
-            </div>
+
           </div>
+        </div>
+        <div className="cart-wrapper">
+          <Cart
+            settings={chosenSettings}
+            choosenScenario={choosenScenario}
+            setGoodsSubTot={setGoodsSubTot}
+            goodsSubTot={goodsSubTot}
+            totalPrice={totalPrice}
+            setTotalPrice={setTotalPrice}
+            totalId={totalId}
+            totalArr={totalArr}
+            setTotalArr={setTotalArr}
+          />
+        </div>
+      </div>
+      <div
+        className="main__question grid"
+        style={{
+          order: !choosenScenario ? -1 : 1,
+        }}
+      >
+        <div
+          className="main__question_wrapper">
+
+          {!!steps[stepIndex] && !!steps[stepIndex].text && (
+            <div className="main__question_title">
+              {steps[stepIndex].text}
+            </div>
+          )}
           <div
             className="stepper-wrapper"
             style={{
@@ -198,104 +221,95 @@ const IndexPage = () => {
           >
             <Stepper step={+stepIndex + 1} totStep={stepScenario} />
           </div>
+          <div className="grid__row grid__row_center">
+            {questions.map((question, index) => {
+              return (
+                <div
+                  key={question.name ? question.name : index}
+                  className={
+                    question.type === "buttons" ? "" : "grid__col-lg-6"
+                  }
+                >
+                  <Question
+                    item={question}
+                    currentAnswer={
+                      scenarioInfo[stepIndex]
+                        ? scenarioInfo[stepIndex][index]
+                        : null
+                    }
+                    setAnswer={(answer) => chooseAnswer(answer, index)}
+                    setFocusedEl={setFocusedEl}
+                    focusedEl={focusedEl}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          {!!error && <div className="alertError">{error}</div>}
+
           <div
-            className="main__question grid"
+            className="btnWrapper"
             style={{
-              order: !choosenScenario ? -1 : 1,
+              display: !choosenScenario ? "none" : "flex",
             }}
           >
-            {!!steps[stepIndex] && !!steps[stepIndex].text && (
-              <div className="main__question_title">
-                {steps[stepIndex].text}
-              </div>
-            )}
-            <div className="grid__row grid__row_center">
-              {questions.map((question, index) => {
-                return (
-                  <div
-                    key={question.name ? question.name : index}
-                    className={
-                      question.type === "buttons" ? "" : "grid__col-lg-6"
-                    }
-                  >
-                    <Question
-                      item={question}
-                      currentAnswer={
-                        scenarioInfo[stepIndex]
-                          ? scenarioInfo[stepIndex][index]
-                          : null
-                      }
-                      setAnswer={(answer) => chooseAnswer(answer, index)}
-                      setFocusedEl={setFocusedEl}
-                      focusedEl={focusedEl}
-                    />
-                  </div>
-                );
-              })}
-            </div>
+            <button
+              onClick={() => {
+                if (stepIndex === 0) {
+                  if (confirm(" Подтвердить возврат? ")) {
+                    setSteps([]);
+                    setChoosenScenario(null);
+                    setScenarioInfo([]);
+                    setChosenSettings({});
+                  }
+                  return;
+                }
 
-            {!!error && <div className="alertError">{error}</div>}
+                if (!!steps[stepIndex + 1]) {
+                  setStepIndex(stepIndex - 1);
+                } else {
+                  setGoCart(true);
 
-            <div
-              className="btnWrapper"
-              style={{
-                display: !choosenScenario ? "none" : "flex",
+                }
               }}
+              className="stepBtn prev"
             >
-              <button
-                onClick={() => {
-                  if (stepIndex === 0) {
-                    if (confirm(" Подтвердить возврат? ")) {
-                      setSteps([]);
-                      setChoosenScenario(null);
-                      setScenarioInfo([]);
-                      setChosenSettings({});
-                    }
-                    return;
-                  }
-
-                  if (!!steps[stepIndex + 1]) {
-                    setStepIndex(stepIndex - 1);
-                  } else {
-                    setGoCart(true);
-                    console.log(goCart);
-                  }
-                }}
-                className="stepBtn prev"
-              >
-                <span></span> Назад
+              <span></span> Назад
               </button>
 
-              <button
-                onClick={() => {
-                  // показывать кнопку всегда, но если disabled, отображать ошибку
-                  if (disabled) {
-                    setError("Пожалуйста заполните все поля");
-                    setTimeout(() => {
-                      setError("");
-                    }, 6000);
-                    return;
-                  }
-                  if (!!steps[stepIndex + 1]) {
-                    setStepIndex(stepIndex + 1);
-                  } else {
-                    setGoCart(true);
-                    console.log(goCart);
-                  }
-                }}
-                className="stepBtn next"
-              >
-                Следующий шаг <span></span>
-              </button>
-            </div>
+            <button
+              onClick={() => {
+                // показывать кнопку всегда, но если disabled, отображать ошибку
+                if (disabled) {
+                  setError("Пожалуйста заполните все поля");
+                  setTimeout(() => {
+                    setError("");
+                  }, 6000);
+                  return;
+                }
+                if (!!steps[stepIndex + 1]) {
+                  setStepIndex(stepIndex + 1);
+                } else {
+                  setGoCart(true);
+
+                }
+              }}
+              className="stepBtn next"
+            >
+              Следующий шаг <span></span>
+            </button>
           </div>
         </div>
-        {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_right">
+      </div>
+
+      {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_right">
           <Debug steps={steps} scenarioInfo={scenarioInfo} />
         </div> */}
-      </div>
+
       <div className={goCart == true ? "popup-show" : "popup-hide"}>
-        <Popup goodsSubTot={goodsSubTot} totalId={totalId} />
+        <Popup settings={chosenSettings}
+          choosenScenario={choosenScenario} />
       </div>
     </div>
   );
