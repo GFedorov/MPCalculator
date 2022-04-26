@@ -21,6 +21,9 @@ const Question = ({
                 } ${currentAnswer === option.name ? "question__btn_active" : ""}`}
             >
               <span className="question__btn__check"></span>
+              {!!option.img &&
+                <img src={option.img} className='question__btn__img' />
+              }
               <p className="question__btn__text">{option.text}</p>
 
               <p className="question__btn__desc">{option.description}</p>

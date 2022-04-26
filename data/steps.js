@@ -255,17 +255,23 @@ const rootSteps = [
     text: "",
     questions: [
       {
-        name: Q_NEED_TIMER,
+        name: "need_timer",
         text: "Нужен ли таймер для автоматического полива?",
         type: "buttons",
         options: [
           {
-            name: "yes",
-            text: "Да",
+            name: "yes1",
+            text: "Электронный",
+            img: "https://masterprof-season.ru/wp-content/uploads/2022/02/elektronnyi.png"
+          },
+          {
+            name: "yes2",
+            text: "Электронно-механический",
+            img: "https://masterprof-season.ru/wp-content/uploads/2022/02/taimer-ehanicheskii.png"
           },
           {
             name: "no",
-            text: "Нет",
+            text: "Не нужен",
           },
         ],
       },
@@ -278,7 +284,7 @@ const beltSteps = [
     questions: [
       {
         name: Q_DLINNA_POSADKI,
-        text: "Длина ряда (м)",
+        text: "Длина грядки (м)",
         description: "Длина предполагаемой грядки",
         type: "number",
         validation: (val) => {
@@ -294,7 +300,7 @@ const beltSteps = [
 
       {
         name: Q_SHIRINA_MEJDU_RYADOV,
-        text: "Ширина между рядами (м)",
+        text: "Ширина между грядками (м)",
         description: "Расстояние между рядами",
         type: "number",
         validation: (val) => {
@@ -380,7 +386,7 @@ const beltSteps = [
 
       {
         name: Q_KOLVO_RYADOV,
-        text: "Количество рядов",
+        text: "Количество грядок",
         type: "number",
         value: 2,
         validation: (val) => {
@@ -486,16 +492,22 @@ const beltSteps = [
     questions: [
       {
         name: "need_timer",
-        text: "Нужнен ли таймер для автоматического полива?",
+        text: "Нужен ли таймер для автоматического полива?",
         type: "buttons",
         options: [
           {
-            name: "yes",
-            text: "Да",
+            name: "yes1",
+            text: "Электронный",
+            img: "https://masterprof-season.ru/wp-content/uploads/2022/02/elektronnyi.png"
+          },
+          {
+            name: "yes2",
+            text: "Электронно-механический",
+            img: "https://masterprof-season.ru/wp-content/uploads/2022/02/taimer-ehanicheskii.png"
           },
           {
             name: "no",
-            text: "Нет",
+            text: "Не нужен",
           },
         ],
       },
@@ -504,12 +516,12 @@ const beltSteps = [
 ];
 const treeSteps = [
   {
-    text: "Размер посадки в метрах",
+    text: "Длина трубки необходимая чтобы соединить все деревья",
     questions: [
       {
-        name: "dlina_posadki",
-        text: "Длина ряда (м)",
-        description: "Длина предполагаемой грядки",
+        name: Q_DLINNA_POSADKI,
+        text: "Длина трубки необходимая чтобы соединить все деревья (м)",
+        description: "Длина трубки необходимая чтобы соединить все деревья (м)",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -523,9 +535,9 @@ const treeSteps = [
       },
 
       {
-        name: "shirina_mejdu_ryadov",
-        text: "Ширина между рядами (м)",
-        description: "Расстояние между рядами",
+        name: Q_RASSTOYANIE_DO_VODI,
+        text: "Длина трубки от ближайшего дерева до источника воды (м)",
+        description: "Длина трубки от ближайшего дерева до источника воды (м)",
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -539,189 +551,22 @@ const treeSteps = [
       },
 
       {
-        name: "shirina_between_plant",
-        text: "Ширина между растениями (м)",
-        type: "select",
-        options: [
-          {
-            name: "",
-            text: "Выберете длинну",
-          },
-
-          {
-            name: "0,1",
-            text: "0.1",
-          },
-          {
-            name: "0,2",
-            text: "0.2",
-          },
-
-          {
-            name: "0,3",
-            text: "0.3",
-          },
-
-          {
-            name: "0,4",
-            text: "0.4",
-          },
-
-          {
-            name: "0,5",
-            text: "0.5",
-          },
-
-          {
-            name: "0,6",
-            text: "0.6",
-          },
-
-          {
-            name: "0,7",
-            text: "0.7",
-          },
-
-          {
-            name: "0,8",
-            text: "0.8",
-          },
-
-          {
-            name: "0,9",
-            text: "0.9",
-          },
-
-          {
-            name: "1",
-            text: "1",
-          },
-        ],
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Размер посадки не может быть < 0"];
-          }
-          if (val > 1) {
-            return [false, "Ширина не может быть > 1"];
-          }
-          return [true];
-        },
-      },
-
-      // {
-      //   name: "shirina_posadki",
-      //   text: "Ширина посадки",
-      //   description: "Именно ширина между крайними растениями ряда",
-      //   type: "number",
-      //   validation: (val) => {
-      //     if (val < 0) {
-      //       return [false, "Ширина не может быть < 0"];
-      //     }
-      //     if (val > 3) {
-      //       return [false, "Ширина не может быть > 3"];
-      //     }
-      //     return [true];
-      //   },
-      // },
-
-      {
-        name: Q_KOLVO_RYADOV,
-        text: "Количество рядов",
-        type: "number",
-        value: 2,
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Количество не может быть < 1"];
-          }
-          if (val > 20) {
-            return [false, "Количество не может быть > 20"];
-          }
-          return [true];
-        },
-      },
-    ],
-  },
-  {
-    text: "",
-    questions: [
-      {
-        name: Q_NEED_PEREKRITIE,
-        text: "Нужна ли возможность перекрытия воды к отдельным рядам?",
-        type: "buttons",
-        options: [
-          {
-            name: "yes",
-            text: "Да",
-          },
-          {
-            name: "no",
-            text: "Нет",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    text: "Количество растений",
-    questions: [
-      {
-        name: "kolvo_rasteniy",
-        text: "Количество растений",
+        name: Q_KOLVO_RASTENIY,
+        text: "Количество деревьев",
+        description: "Количество деревьев",
         type: "number",
         validation: (val) => {
           if (val < 0) {
-            return [false, "Растений не может быть < 0"];
+            return [false, "Ширина не может быть < 0"];
+          }
+          if (val > 3) {
+            return [false, "Ширина не может быть > 3"];
           }
           return [true];
         },
       },
     ],
   },
-  {
-    text: "Источник воды",
-    questions: [
-      {
-        name: "rasstoyanie_do_vodi",
-        text: "Расстояние до источника воды",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Расстояние не может быть < 0"];
-          }
-          return [true];
-        },
-      },
-      {
-        name: "podkluchenie_k_vode",
-        text: "Тип подключения?",
-        type: "select",
-        options: [
-          {
-            name: "",
-            text: "Выберете тип",
-          },
-
-          {
-            name: "1_2f",
-            text: "1/2 внутренная",
-          },
-          {
-            name: "1_2m",
-            text: "1/2 внешняя",
-          },
-          {
-            name: "3_4f",
-            text: "3/4 внутренная",
-          },
-          {
-            name: "3_4m",
-            text: "3/4 внешняя",
-          },
-        ],
-      },
-    ],
-  },
-
   {
     text: "",
     questions: [
@@ -747,16 +592,22 @@ const treeSteps = [
     questions: [
       {
         name: "need_timer",
-        text: "Нужна ли таймер для автоматического полива?",
+        text: "Нужен ли таймер для автоматического полива?",
         type: "buttons",
         options: [
           {
-            name: "yes",
-            text: "Да",
+            name: "yes1",
+            text: "Электронный",
+            img: "https://masterprof-season.ru/wp-content/uploads/2022/02/elektronnyi.png"
+          },
+          {
+            name: "yes2",
+            text: "Электронно-механический",
+            img: "https://masterprof-season.ru/wp-content/uploads/2022/02/taimer-ehanicheskii.png"
           },
           {
             name: "no",
-            text: "Нет",
+            text: "Не нужен",
           },
         ],
       },

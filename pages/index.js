@@ -8,8 +8,13 @@ import Cart from "../components/Cart";
 import SvgField from "../components/field/Svg";
 import Popup from "../components/Popup";
 import MobileCart from "../components/MobileCart";
+import { getForUpdate, updateGoods } from "../data/goods";
+
+
 
 const IndexPage = () => {
+
+
   // выбранный сценарий, появляется после нажатия на первую кнопку
   const [choosenScenario, setChoosenScenario] = useState(null);
   // массив из шагов и вопросов с ответами [['1','12','yes']]
@@ -41,6 +46,9 @@ const IndexPage = () => {
   // let totalId = [];
   // let totalArr = [];
 
+  const [loaded, setLoaded] = useState(false);
+
+
   // переменные, в случае, если это первый экран
   let questions = [scenario];
   let chooseAnswer = (choosenScenario) => {
@@ -52,7 +60,7 @@ const IndexPage = () => {
 
   // переход к следующему шагу заблокирован
   let disabled = true;
-
+  console.log(chosenSettings)
   // переменные, в случае, если это уже не первый экран
   if (steps.length) {
     let step = steps[stepIndex];
@@ -90,10 +98,28 @@ const IndexPage = () => {
   } else if (choosenScenario === "belt") {
     stepScenario = 5;
   } else if (choosenScenario === "tree") {
-    stepScenario = 2;
+    stepScenario = 3;
   } else {
     stepScenario = 1;
   }
+
+
+
+  useEffect(() => {
+    updateGoods().then((goods) => {
+      setLoaded(true);
+    });
+
+    // const goods = getForUpdate()
+    // const mainIds = goods.filter(a => !!a.mainId).map(a => a.mainId)
+    // console.log(mainIds)
+    // fetch("https://masterprof-season.ru/wp-json/wc/v3/products/?include=288224,288224&oauth_consumer_key=ck_60b74e0f3db473b15752764947385768ec8cde68&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1648020918&oauth_nonce=uyOqNoTcG63&oauth_version=1.0&oauth_signature=UeEbbWkLyDKmmCauN0FyK8NLl9o=", requestOptions)
+    //   .then(response => response.json())
+    //   .then(result => console.log(result))
+
+
+  }, [])
+
 
   return (
     <div className="page">
@@ -111,11 +137,8 @@ const IndexPage = () => {
                 return;
               }
 
-              if (!!steps[stepIndex + 1]) {
+              if (!!steps[stepIndex - 1]) {
                 setStepIndex(stepIndex - 1);
-              } else {
-                setGoCart(true);
-
               }
             }}
             className="stepBtn"
@@ -266,17 +289,17 @@ const IndexPage = () => {
                   return;
                 }
 
-                if (!!steps[stepIndex + 1]) {
+                if (!!steps[stepIndex - 1]) {
                   setStepIndex(stepIndex - 1);
                 } else {
-                  setGoCart(true);
+
 
                 }
               }}
               className="stepBtn prev"
             >
               <span></span> Назад
-              </button>
+            </button>
 
             <button
               onClick={() => {

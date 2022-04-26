@@ -22,7 +22,7 @@ const Cart = ({
   //     goods[i].price * goods[i].count,
   //   ])
   // }
-  console.log(goods)
+  
 
   return (
     <div className="cart">
