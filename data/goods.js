@@ -21,7 +21,7 @@ export const sum = (x) => {
 };
 
 
-const GOODS_URL = ''
+const GOODS_URL = process.env.NEXT_PUBLIC_GOODS_URL || '';
 //get from config
 export const updateGoods = async () => {
   return new Promise((resolve, reject) => {
