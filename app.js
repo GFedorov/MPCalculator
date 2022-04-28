@@ -92,7 +92,7 @@ updateCache();
 
 app.use(cors());
 
-app.get('/api/get-products', (req, res) => {
+app.get('/api/get-products', async (req, res) => {
     try {
         // проверить время обновления кеша
         if (Date.now() - updateTime > 1000 * 60 * 60) {
