@@ -17,6 +17,12 @@ body {
   color: white;
   font-family: "Montserrat", sans-serif;
 }
+.mobile-top-section {
+  margin-top:20px;
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 10px;
+}
 
 .cart-wrapper {
  width: 487px;
@@ -148,6 +154,10 @@ justify-content: space-between;
   width: 121px;
   padding-left: 0;
 }
+.top-cart{
+  width: 121px;
+
+}
 .stepBtn:first-of-type span {
   background-image: url("/img/prev.svg");
   margin-right: 8px;
@@ -187,10 +197,7 @@ justify-content: space-between;
 .main {
   display: flex;
   width: 500px;
-  
-  
-  &__field {
-    
+  &__field {  
     flex: 1;
     position: relative;
   }
@@ -199,6 +206,10 @@ justify-content: space-between;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    &_wrapper{
+      max-width: 100%;
+      
+    }
 
     &_title {
       font-weight: bold;
@@ -266,8 +277,9 @@ justify-content: space-between;
       color: white;
     }
     &_buttons {
+      padding: 0 10px;
       font-weight: bold;
-      font-size: 21px;
+      font-size: 14px;
       color: #65ac2d;
       text-transform: uppercase;
     }
@@ -315,6 +327,7 @@ justify-content: space-between;
     }
 
     &__text {
+      font-weight: 400;
       
       margin-bottom: 0;
       text-align: center;

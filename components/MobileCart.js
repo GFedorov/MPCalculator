@@ -1,10 +1,10 @@
 import { getGoods } from "../data/goods";
 
+
 const MobileCart = ({
   settings,
   choosenScenario,
-  setGoodsTot,
-  goodsTot,
+  setMobTotalPrice,
   showCart,
   setShowCart,
   totalId,
@@ -25,6 +25,7 @@ const MobileCart = ({
     }
     return s;
   };
+  const totalPrice = sum(goods.map((x) => +x.price));
 
   return (
     <div className="cart">
@@ -41,36 +42,30 @@ const MobileCart = ({
         ></div>
       </div>
       <div className="list">
-        {/* <div className="list__item">
-          <div className="list__item__img"></div>
-          <div className="list__item__text">Капельница разборная</div>
-          <div className="list__item__pcs">1 шт</div>
-        </div>
-        <div className="list__item">
-          <div className="list__item__img"></div>
-          <div className="list__item__text">Капельница разборная</div>
-          <div className="list__item__pcs">1 шт</div>
-        </div> */}
+
         {goods.map((good, i) => (
           <div className="list__item" key={good.name}>
-            {totalArr.push(goods[i].price * goods[i].count)}
+            {/* {totalArr.push(goods[i].price * goods[i].count)} */}
+
+
             <div className="list__item__img">
               <img src={good.img} />
             </div>
             <div className="list__item__text">{good.name}</div>
             <div className="list__item__pcs">{good.count} шт</div>
-            <div className="list__item__price">{good.price} р</div>
+            <div className="list__item__price">{good.stock} р</div>
             <div className="list__item__subtotal">
-              {goods[i].price * goods[i].count}
-              {goodsSubTot} р
+              {good.price * good.count}
+              р
             </div>
-            {totalId.push(goods[i].id)}
+            {/* {totalId.push(goods[i].id)} */}
           </div>
         ))}
 
         <div className="cart__listWrapper__item"></div>
       </div>
-      <div className="cart-total">Итого: {sum(totalArr)} р</div>
+      {setMobTotalPrice(totalPrice)}
+      <div className="cart-total">Итого: {totalPrice} р</div>
     </div>
   );
 };

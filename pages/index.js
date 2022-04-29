@@ -8,7 +8,7 @@ import Cart from "../components/Cart";
 import SvgField from "../components/field/Svg";
 import Popup from "../components/Popup";
 import MobileCart from "../components/MobileCart";
-import { getForUpdate, updateGoods } from "../data/goods";
+import { checkScenario, getForUpdate, updateGoods } from "../data/goods";
 
 
 
@@ -21,6 +21,7 @@ const IndexPage = () => {
   const [scenarioInfo, setScenarioInfo] = useState([]);
   // объект из конечных ответов вида <название-настройки>-<ответ-пользователя>
   const [chosenSettings, setChosenSettings] = useState({});
+  console.log({ choosenScenario, scenarioInfo, chosenSettings });
   // все шаги выбранного сценария
   const [steps, setSteps] = useState([]);
   // выбранный шаг (номер шага)
@@ -45,6 +46,7 @@ const IndexPage = () => {
   const [totalArr, setTotalArr] = useState([]); //возникает ошибка, бесконечное число повторов
   // let totalId = [];
   // let totalArr = [];
+  const [mobTotalPrice, setMobTotalPrice] = useState(0);
 
   const [loaded, setLoaded] = useState(false);
 
@@ -54,13 +56,14 @@ const IndexPage = () => {
   let chooseAnswer = (choosenScenario) => {
     setChoosenScenario(choosenScenario);
     setSteps(scenarioAnswers[choosenScenario]);
+    console.log(checkScenario(choosenScenario));
   };
   // popup
   //let popup = document.getElementById("myPopup");
 
   // переход к следующему шагу заблокирован
   let disabled = true;
-  console.log(chosenSettings)
+
   // переменные, в случае, если это уже не первый экран
   if (steps.length) {
     let step = steps[stepIndex];
@@ -152,7 +155,7 @@ const IndexPage = () => {
                 setShowCart(true);
               } else setShowCart(false);
             }}
-          ></button>
+          >{mobTotalPrice} р</button>
         </div>
         <div
           className={
@@ -170,6 +173,7 @@ const IndexPage = () => {
             setShowCart={setShowCart}
             totalId={totalId}
             totalArr={totalArr}
+            setMobTotalPrice={setMobTotalPrice}
           />
         </div>
       </div>

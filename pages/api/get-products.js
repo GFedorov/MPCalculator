@@ -66,6 +66,8 @@ const updateCache = async () => {
             link: variation?.permalink || product?.permalink,
             price: variation?.price || product?.price,
             attributes: attributes,
+            stock_quantity: variation?.stock_quantity || product?.stock_quantity,
+            sku: variation?.sku || product?.sku,
         };
 
     }

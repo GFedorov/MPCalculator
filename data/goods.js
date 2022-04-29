@@ -21,6 +21,7 @@ export const sum = (x) => {
 };
 
 
+
 const GOODS_URL = process.env.NEXT_PUBLIC_GOODS_URL || '';
 //get from config
 export const updateGoods = async () => {
@@ -36,6 +37,8 @@ export const updateGoods = async () => {
             product.img = newProduct.img || product.img;
             product.link = newProduct.link || product.link;
             product.price = newProduct.price || product.price;
+            product.stock_quantity = newProduct.stock_quantity || product.stock_quantity;
+            product.sku = newProduct.sku || product.sku;
           }
         }
         resolve(goods);
@@ -44,28 +47,138 @@ export const updateGoods = async () => {
   });
 }
 
+export const checkScenario = (scenario) => {
+  let minScenario = minScenarios[scenario];
+  let result = true;
+  let message = '';
+  const cartGoods = getGoods(minScenario, scenario);
+  console.log({ cartGoods });
+  for (let cartGood of cartGoods) {
+    if (cartGood.count > cartGood.stock_quantity) {
+      result = false;
+      message = `Упс, мы проверили наш склад и обнаружили, что ${cartGood.name} нет в наличии, к сожалению, завершить подбор в этот раз не получится.`;
+      break;
+    }
+  }
+  return [result, message];
+}
+const minScenarios = {
+  root: {
+    "dlinna_posadki": "1",
+    "shirina_mejdu_ryadov": "1",
+    "shirina_between_plant": "0.1",
+    "kolvo_ryadov": "1",
+    "need_perekritie_vodi": "no",
+    "kolvo_rasteniy": "1",
+    "rasstoyanie_do_vodi": "0",
+    // "podkluchenie_k_vode": "1/2 внутренная",
+    "need_filter": "no",
+    "need_timer": "no"
+
+  },
+
+  belt: {
+    "dlinna_posadki": "1",
+    "shirina_mejdu_ryadov": "1",
+    "shirina_between_plant": "0.1",
+    "kolvo_ryadov": "1",
+    "need_perekritie_vodi": "no",
+    "rasstoyanie_do_vodi": "0",
+    //"podkluchenie_k_vode": "1/2 внутренная",
+    "need_filter": "no",
+    "need_timer": "no"
+  },
+
+  tree: {
+    "dlinna_posadki": "1",
+    "rasstoyanie_do_vodi": "1",
+    "kolvo_rasteniy": "1",
+    "need_filter": "no",
+    "need_timer": "no"
+  }
+}
+
 const goods = [
 
-  // {
-  //   condition: (settings) =>
-  //     settings[Q_KOLVO_RYADOV] && settings[Q_KOLVO_RYADOV] > 1,
-  //   count: (settings) => settings[Q_KOLVO_RYADOV],
-  //   name: "несколько рядов",
-  //   img:
-  //     "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-  // },
   {
-
-
     condition: (settings, choosenScenario) =>
-      settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] >
-      0 && choosenScenario === "root",
+      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+      0 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+      10 && choosenScenario === "root",
+    count: (settings) => Math.ceil(((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV])) * 0.15 / 10),
+    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 10м",
+    id: "289550",
+    price: "0",
+    stock: "instock",
+    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  },
+  {
+    condition: (settings, choosenScenario) =>
+      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+      10 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+      12 && choosenScenario === "root",
+    count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 12),
+    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 12м",
+    id: "289551",
+    price: "10",
+    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  },
+  {
+    condition: (settings, choosenScenario) =>
+      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+      12 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+      18 && choosenScenario === "root",
+    count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 18),
+    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 18м",
+    id: "289552",
+    price: "20",
+    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  },
+  {
+    condition: (settings, choosenScenario) =>
+      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+      18 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+      25 && choosenScenario === "root",
     count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 25),
-    name: "Намотка для трубки капельного полива 25м",
+    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 25м",
     id: "288419",
-    price: "799",
+    price: "30",
+    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  },
+  {
+    condition: (settings, choosenScenario) =>
+      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+      25 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+      50 && choosenScenario === "root",
+    count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 50),
+    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 50м",
+    id: "288420",
+    price: "30",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
   },
   {
@@ -635,7 +748,9 @@ export const getGoods = (settings, choosenScenario) => {
       return {
         ...item,
         count: item.count(settings, choosenScenario),
+
       };
+
     });
 };
 
