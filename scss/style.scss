@@ -58,6 +58,10 @@ body {
     border-bottom: 1px solid rgba(164, 164, 164, 1);
   }
 }
+.list__nostock{
+  border: 1px solid red;
+  
+}
 .list {
   &__item {
     margin-top: 16px;

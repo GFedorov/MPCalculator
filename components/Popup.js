@@ -1,9 +1,14 @@
 import { getGoods, sum } from "../data/goods";
+import { validateGoods } from "../data/steps";
+import Cart from "./Cart";
+import { useMainContext } from "./context/Main";
 
 
 
 const Popup = ({ settings,
   choosenScenario, }) => {
+
+  // const { required } = useMainContext();
   const goods = getGoods(settings, choosenScenario);
   // const sum = (x) => {
   //   let s = 0;
@@ -17,7 +22,11 @@ const Popup = ({ settings,
     url += (good.id + ',').repeat(good.count)
 
   }
+
   url = url.substr(0, url.length - 1)
+  const { result } = validateGoods(goods);
+
+
   return (
 
     <div className="popup">
@@ -34,8 +43,12 @@ const Popup = ({ settings,
           }
         >
           Продолжить
-      </button>
+        </button>
       </p>
+      {!result && (
+        <Cart settings={settings} choosenScenario={choosenScenario} showNoStock={true} showStock={false} />)}
+
+
     </div >
   );
 };

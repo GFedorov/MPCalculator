@@ -9,10 +9,22 @@ export const Q_NEED_TIMER = "need_timer";
 export const Q_RASSTOYANIE_DO_VODI = "rasstoyanie_do_vodi";
 export const Q_PODKLUCHENIE_K_VODE = "podkluchenie_k_vode";
 
+export const validateGoods = (goods) => {
+  let result = true;
+  const messages = [];
+  for (let good of goods) {
+    if (good.stock_quantity < good.count) {
+      result = false;
+      messages.push(` Товара "${good.name}" на складе не хватает ${good.count - good.stock_quantity} шт.`);
+    }
+  }
+  return { result, messages };
+}
 
 const rootSteps = [
   {
     text: "Размер посадки в метрах",
+    validation: validateGoods,
     questions: [
       {
         name: Q_DLINNA_POSADKI,
@@ -41,7 +53,7 @@ const rootSteps = [
             return [false, "Ширина не может быть < 0"];
           }
           if (val > 3) {
-            return [false, "Ширина не может быть больше 1м"];
+            return [false, "Ширина не может быть больше 100cм"];
           }
           return [true];
         },
@@ -149,9 +161,11 @@ const rootSteps = [
         },
       },
     ],
+
   },
   {
     text: "",
+    validation: validateGoods,
     questions: [
       {
         name: Q_NEED_PEREKRITIE,
@@ -172,6 +186,7 @@ const rootSteps = [
   },
   {
     text: "Количество растений",
+    validation: validateGoods,
     questions: [
       {
         name: Q_KOLVO_RASTENIY,
@@ -187,6 +202,7 @@ const rootSteps = [
     ],
   },
   {
+    validation: validateGoods,
     text: "Источник воды",
     questions: [
       {
@@ -233,6 +249,7 @@ const rootSteps = [
 
   {
     text: "",
+    validation: validateGoods,
     questions: [
       {
         name: Q_NEED_FILTER,
@@ -253,6 +270,7 @@ const rootSteps = [
   },
   {
     text: "",
+    validation: validateGoods,
     questions: [
       {
         name: "need_timer",

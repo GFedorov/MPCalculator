@@ -3,7 +3,7 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express')
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001;
 
 
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
@@ -72,6 +72,8 @@ const updateCache = async () => {
             link: variation?.permalink || product?.permalink,
             price: variation?.price || product?.price,
             attributes: attributes,
+            stock_quantity: variation?.stock_quantity || product?.stock_quantity,
+            sku: variation?.sku || product?.sku,
         };
 
     }
