@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { calcLength, getPipes } from '../components/helpers/cart';
 import {
   Q_NEED_FILTER,
   Q_KOLVO_RYADOV,
@@ -15,7 +16,7 @@ import {
 export const sum = (x) => {
   let s = 0;
   for (let j = 0; j < x.length; j++) {
-    s += x[j].price * x[j].count;
+    s += x[j].price * Math.min(x[j].count, x[j].stock_quantity);
   }
   return s;
 };
@@ -98,19 +99,33 @@ const minScenarios = {
   }
 }
 
+const getLength = (settings) => {
+  return ((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] || 0)) * 0.15)
+}
+
 const goods = [
 
   {
-    condition: (settings, choosenScenario) =>
-      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
-      0 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
-      10 && choosenScenario === "root",
-    count: (settings) => Math.ceil(((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV])) * 0.15 / 10),
+
+
+    // count: (settings) => Math.ceil(((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //   (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV])) * 0.15 / 10),
+    condition: (settings, choosenScenario) => {
+      // if (choosenScenario !== 'root') {
+      //   return false;
+      // }
+      const length = getLength(settings);
+      const pipes = getPipes(goods);
+      return calcLength(length, pipes).indexOf(10) !== -1;
+    },
+    count: (settings) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods);
+      return calcLength(length, pipes).filter(p => p === 10).length;
+    },
+    pipeLength: 10,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 10м",
     id: "289550",
     price: "0",
@@ -118,64 +133,114 @@ const goods = [
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
   },
   {
-    condition: (settings, choosenScenario) =>
-      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
-      10 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
-      12 && choosenScenario === "root",
-    count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 12),
+
+
+    // condition: (settings, choosenScenario) =>
+    //   (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+    //   10 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+    //   12 && choosenScenario === "root",
+    // pipeLength: 12,
+    // count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //   (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 12),
+    condition: (settings, choosenScenario) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods);
+      return calcLength(length, pipes).indexOf(12) !== -1;
+    },
+    count: (settings) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods)
+      return calcLength(length, pipes).filter(p => p === 12).length;
+    },
+    pipeLength: 12,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 12м",
     id: "289551",
     price: "10",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
   },
   {
-    condition: (settings, choosenScenario) =>
-      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
-      12 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
-      18 && choosenScenario === "root",
-    count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 18),
+    // condition: (settings, choosenScenario) =>
+    //   (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+    //   12 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+    //   18 && choosenScenario === "root",
+    // pipeLength: 18,
+    // count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //   (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 18),
+    condition: (settings, choosenScenario) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods);
+      return calcLength(length, pipes).indexOf(18) !== -1;
+    },
+    count: (settings) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods);
+      return calcLength(length, pipes).filter(p => p === 18).length;
+    },
+    pipeLength: 18,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 18м",
     id: "289552",
     price: "20",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
   },
   {
-    condition: (settings, choosenScenario) =>
-      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
-      18 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
-      25 && choosenScenario === "root",
-    count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 25),
+    // condition: (settings, choosenScenario) =>
+    //   (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+    //   18 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+    //   25 && choosenScenario === "root",
+    // pipeLength: 25,
+    // count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //   (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 25),
+    condition: (settings, choosenScenario) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods);
+
+      return calcLength(length, pipes).indexOf(25) !== -1;
+    },
+    count: (settings) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods)
+      return calcLength(length, pipes).filter(p => p === 25).length;
+    },
+    pipeLength: 25,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 25м",
     id: "288419",
     price: "30",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
   },
   {
-    condition: (settings, choosenScenario) =>
-      (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
-      25 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-        (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-          (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
-      50 && choosenScenario === "root",
-    count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) / 50),
+    // condition: (settings, choosenScenario) =>
+    //   (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) >
+    //   25 && (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //     (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    //       (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 0.15) <
+    //   50 && choosenScenario === "root",
+    // pipeLength: 50,
+    // count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    condition: (settings, choosenScenario) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods);
+      return calcLength(length, pipes).indexOf(50) !== -1;
+    },
+    count: (settings) => {
+      const length = getLength(settings);
+      const pipes = getPipes(goods)
+      return calcLength(length, pipes).filter(p => p === 50).length;
+    },
+    pipeLength: 50,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 50м",
     id: "288420",
     price: "30",

@@ -8,7 +8,9 @@ import Cart from "../components/Cart";
 import SvgField from "../components/field/Svg";
 import Popup from "../components/Popup";
 import MobileCart from "../components/MobileCart";
-import { checkScenario, getForUpdate, updateGoods } from "../data/goods";
+import { checkScenario, getForUpdate, getGoods, updateGoods } from "../data/goods";
+import { useMainContext } from "../components/context/Main";
+import { calcLength, getPipes } from "../components/helpers/cart";
 
 
 
@@ -49,6 +51,9 @@ const IndexPage = () => {
   const [mobTotalPrice, setMobTotalPrice] = useState(0);
 
   const [loaded, setLoaded] = useState(false);
+
+  const { required, setRequired } = useMainContext();
+
 
 
   // переменные, в случае, если это первый экран
@@ -113,14 +118,6 @@ const IndexPage = () => {
       setLoaded(true);
     });
 
-    // const goods = getForUpdate()
-    // const mainIds = goods.filter(a => !!a.mainId).map(a => a.mainId)
-    // console.log(mainIds)
-    // fetch("https://masterprof-season.ru/wp-json/wc/v3/products/?include=288224,288224&oauth_consumer_key=ck_60b74e0f3db473b15752764947385768ec8cde68&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1648020918&oauth_nonce=uyOqNoTcG63&oauth_version=1.0&oauth_signature=UeEbbWkLyDKmmCauN0FyK8NLl9o=", requestOptions)
-    //   .then(response => response.json())
-    //   .then(result => console.log(result))
-
-
   }, [])
 
 
@@ -178,13 +175,10 @@ const IndexPage = () => {
         </div>
       </div>
 
-      {/* <Stepper step={step} /> */}
+
       <div className="field-wrapper">
-        {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_left"></div> */}
 
         <div className="field-wrapper__main main">
-
-
           <div
             className="main__field"
             style={{
@@ -307,6 +301,19 @@ const IndexPage = () => {
 
             <button
               onClick={() => {
+
+                if (steps[stepIndex].validation && required) {
+                  const newGoods = getGoods(chosenSettings, choosenScenario);
+                  const { result, messages } = steps[stepIndex].validation(newGoods);
+                  if (!result) {
+                    if (confirm(`Продолжить частичную покупку? 
+                    ${messages.join("\n")}`)) {
+                      setRequired(false)
+                    } else {
+                      return;
+                    }
+                  }
+                }
                 // показывать кнопку всегда, но если disabled, отображать ошибку
                 if (disabled) {
                   setError("Пожалуйста заполните все поля");
@@ -329,10 +336,6 @@ const IndexPage = () => {
           </div>
         </div>
       </div>
-
-      {/* <div className="field-wrapper__sidebar field-wrapper__sidebar_right">
-          <Debug steps={steps} scenarioInfo={scenarioInfo} />
-        </div> */}
 
       <div className={goCart == true ? "popup-show" : "popup-hide"}>
         <Popup settings={chosenSettings}
