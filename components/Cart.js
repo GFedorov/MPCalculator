@@ -3,6 +3,7 @@ import { validateGoods } from "../data/steps";
 import { useMainContext } from "./context/Main";
 
 
+
 const Cart = ({
   settings,
   choosenScenario,
@@ -22,12 +23,13 @@ const Cart = ({
 
   // const { requred } = useMainContext();
   const { result } = validateGoods(goods);
-  console.log({ result, showNoStock })
+  const { required, setRequired } = useMainContext();
+
   return (
     <div className="cart">
 
       <div className="cart__title"> Корзина</div>
-      {!result && showNoStock && (
+      {!result && showNoStock && !required && (
         <div className="list__nostock">
           <span> Нет в наличии </span>
           {goods.filter((good) => {
@@ -42,11 +44,11 @@ const Cart = ({
               <div className="list__item__pcs">
                 <div className="list__item__pcs__danger"> {good.count - good.stock_quantity} шт</div>
               </div>
-              <div className="list__item__price">{good.price} р</div>
+              {/* <div className="list__item__price">{good.price} р</div> */}
 
-              <div className="list__item__subtotal">
+              {/* <div className="list__item__subtotal">
                 {good.price * (good.count - good.stock_quantity)} р
-              </div>
+              </div> */}
 
             </div>
           ))}
@@ -64,11 +66,14 @@ const Cart = ({
             </div>
             <div className="list__item__text">{good.name}</div>
             <div className="list__item__pcs">
-              {good.count} шт
               {good.stock_quantity && good.stock_quantity < good.count && (
-                <div className="list__item__pcs__warning"> доступно {good.stock_quantity} шт</div>
+                <div className="list__item__pcs__warning">  в наличии
+
+                  <br></br> {good.stock_quantity} шт из</div>
               )
               }
+              {good.count} шт
+
             </div>
             <div className="list__item__price">{good.price} р</div>
 

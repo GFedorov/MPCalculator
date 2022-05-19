@@ -16,8 +16,7 @@ const Question = ({
             <span
               onClick={() => setAnswer(option.name)}
               key={option.name}
-              className={`question__btn ${
-                !!option.extraClasses ? option.extraClasses : ""
+              className={`question__btn ${!!option.extraClasses ? option.extraClasses : ""
                 } ${currentAnswer === option.name ? "question__btn_active" : ""}`}
             >
               <span className="question__btn__check"></span>
@@ -53,7 +52,7 @@ const Question = ({
             onChange={(e) => setAnswer(e.target.value)}
             onFocus={(e) => {
               setFocusedEl(item.name);
-              console.log(e.target.value)
+
 
               setTimeout(() => {
                 if (focusedEl === item.name) {

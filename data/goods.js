@@ -32,7 +32,7 @@ export const updateGoods = async () => {
       .then((data) => {
         for (let product of goods) {
           // product это вариация продуктаа
-          const newProduct = data.d[product.id];
+          const newProduct = data.namesD[product.sku + '_' + (product.originalName || product.name)];
           if (newProduct) {
             product.name = newProduct.name || product.name;
             product.img = newProduct.img || product.img;
@@ -40,6 +40,10 @@ export const updateGoods = async () => {
             product.price = newProduct.price || product.price;
             product.stock_quantity = newProduct.stock_quantity || product.stock_quantity;
             product.sku = newProduct.sku || product.sku;
+
+          } else {
+            console.log('not found', product.sku + '_' + product.name);
+
           }
         }
         resolve(goods);
@@ -53,7 +57,7 @@ export const checkScenario = (scenario) => {
   let result = true;
   let message = '';
   const cartGoods = getGoods(minScenario, scenario);
-  console.log({ cartGoods });
+
   for (let cartGood of cartGoods) {
     if (cartGood.count > cartGood.stock_quantity) {
       result = false;
@@ -99,17 +103,14 @@ const minScenarios = {
   }
 }
 
-const getLength = (settings) => {
-  return ((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-    (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV] + (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
-      (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] || 0)) * 0.15)
+export const getLength = (settings) => {
+  return (settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
+    (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV]) * 1.15
 }
 
 const goods = [
 
   {
-
-
     // count: (settings) => Math.ceil(((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI] +
     //   (settings[Q_KOLVO_RYADOV] - 1) * settings[Q_SHIRINA_MEJDU_RYADOV])) * 0.15 / 10),
     condition: (settings, choosenScenario) => {
@@ -118,6 +119,7 @@ const goods = [
       // }
       const length = getLength(settings);
       const pipes = getPipes(goods);
+
       return calcLength(length, pipes).indexOf(10) !== -1;
     },
     count: (settings) => {
@@ -126,11 +128,13 @@ const goods = [
       return calcLength(length, pipes).filter(p => p === 10).length;
     },
     pipeLength: 10,
+    originalName: 'Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)',
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 10м",
-    id: "289550",
+    id: "290092",
     price: "0",
     stock: "instock",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+    sku: 'ДС.060106'
   },
   {
 
@@ -158,9 +162,10 @@ const goods = [
     },
     pipeLength: 12,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 12м",
-    id: "289551",
+    id: "290093",
     price: "10",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+    sku: 'ДС.060106'
   },
   {
     // condition: (settings, choosenScenario) =>
@@ -186,9 +191,10 @@ const goods = [
     },
     pipeLength: 18,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 18м",
-    id: "289552",
+    id: "290094",
     price: "20",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+    sku: 'ДС.060106'
   },
   {
     // condition: (settings, choosenScenario) =>
@@ -215,9 +221,10 @@ const goods = [
     },
     pipeLength: 25,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 25м",
-    id: "288419",
+    id: "290095",
     price: "30",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+    sku: 'ДС.060106'
   },
   {
     // condition: (settings, choosenScenario) =>
@@ -242,9 +249,10 @@ const goods = [
     },
     pipeLength: 50,
     name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) 50м",
-    id: "288420",
+    id: "290096",
     price: "30",
     img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+    sku: 'ДС.060106'
   },
   {
     condition: (settings, choosenScenario) =>
@@ -252,7 +260,7 @@ const goods = [
     count: (settings) => 1,
     name: "Заглушка для капельной трубки 2 шт",
     //name: products.filter((item) => item.sku === "ДС.060094")[0].name,
-    id: "288414",
+    id: "290079",
     price: "29",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/00551447696c11eb8c701a631b049b6a_5ca34993696c11eb8c701a631b049b6a.jpg",
   },
@@ -261,7 +269,7 @@ const goods = [
       settings[Q_KOLVO_RYADOV] > 2 && choosenScenario === "root",
     count: (settings) => Math.ceil(settings[Q_KOLVO_RYADOV] / 5),
     name: "Заглушка для капельной трубки 5 шт",
-    id: "288415",
+    id: "290080",
     price: "59",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/00551447696c11eb8c701a631b049b6a_5ca34993696c11eb8c701a631b049b6a.jpg",
   },
@@ -270,7 +278,7 @@ const goods = [
       settings[Q_KOLVO_RYADOV] < 1 && settings[Q_KOLVO_RYADOV] >= 2 && settings[Q_KOLVO_RYADOV] && choosenScenario === "root",
     count: (settings) => 1,
     name: "Тройник для капельной трубки 1 шт",
-    id: "289458",
+    id: "290081",
     mainId: "288224",
     price: "29",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/544dd98469e211eb8c701a631b049b6a_544dd98569e211eb8c701a631b049b6a.jpg",
@@ -280,7 +288,7 @@ const goods = [
       settings[Q_KOLVO_RYADOV] >= 3 && choosenScenario === "root",
     count: (settings) => Math.ceil((settings[Q_KOLVO_RYADOV] - 1) / 5),
     name: "Тройник для капельной трубки 5 шт",
-    id: "288416",
+    id: "290082",
     mainId: "288224",
     price: "29",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/544dd98469e211eb8c701a631b049b6a_544dd98569e211eb8c701a631b049b6a.jpg",
@@ -291,7 +299,7 @@ const goods = [
       settings[Q_KOLVO_RYADOV] > 1 && choosenScenario === "root",
     count: (settings) => 2,
     name: "Уголок для капельной трубки",
-    id: "289459",
+    id: "290084",
     price: "29",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/4b9e534169e311eb8c701a631b049b6a_4b9e534269e311eb8c701a631b049b6a.jpg",
   },
@@ -448,7 +456,7 @@ const goods = [
       choosenScenario === "root",
     count: (settings) => settings[Q_KOLVO_RYADOV],
     name: "Кран проходной для капельной трубки",
-    id: "289462",
+    id: "290089",
     price: "79",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
   },
@@ -458,7 +466,7 @@ const goods = [
       settings[Q_KOLVO_RASTENIY] && choosenScenario === "root",
     count: (settings) => Math.ceil(settings[Q_KOLVO_RASTENIY] / 4),
     name: "Капельницы индивидуального полива растений с трубкой и адаптером 4 шт",
-    id: "288438",
+    id: "290102",
     price: "121",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/f3a2b5fd71d711eb8c701a631b049b6a_e88f6a1871d911eb8c701a631b049b6a-scaled.jpg",
   },
@@ -467,9 +475,31 @@ const goods = [
       settings[Q_KOLVO_RASTENIY] && choosenScenario === "root",
     count: (settings) => 1,
     name: "Дырокол для установки индивидуальных капельниц",
-    id: "289463",
+    id: "290090",
     price: "29",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/4ba66fa169e811eb8c701a631b049b6a_46bb31fa69e911eb8c701a631b049b6a.jpg",
+  },
+  {
+    condition: (settings, choosenScenario) =>
+      settings[Q_PODKLUCHENIE_K_VODE] === "1/2 внутренняя" &&
+      choosenScenario === "root",
+    count: (settings) => 1,
+    name: 'Ниппель (бочонок) 1/2\" н/н (латунь) (1 шт.)',
+    id: "290087",
+    price: "129",
+    img: "https://masterprof-season.ru/wp-content/uploads/2022/02/adc2e2eb84f311ec8c95baf20bad8d43_adc2e2ec84f311ec8c95baf20bad8d43.jpg",
+    sku: "ДС.071380",
+  },
+  {
+    condition: (settings, choosenScenario) =>
+      settings[Q_PODKLUCHENIE_K_VODE] === "1/2 внутренняя" &&
+      choosenScenario === "root",
+    count: (settings) => 1,
+    name: 'Кран для капельного полива 1/2\" внутр. х 16 мм (1 шт.)',
+    id: "290087",
+    price: "159",
+    img: "https://masterprof-season.ru/wp-content/uploads/2022/05/534bdd2669e611eb8c701a631b049b6a_534bdd2769e611eb8c701a631b049b6a.jpg",
+    sku: "ДС.060098",
   },
   {
     condition: (settings, choosenScenario) =>
@@ -477,7 +507,7 @@ const goods = [
       choosenScenario === "root",
     count: (settings) => 1,
     name: 'Кран 1/2" внутр. х 16 мм',
-    id: "289460",
+    id: "290087",
     price: "129",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/534bdd2669e611eb8c701a631b049b6a_534bdd2769e611eb8c701a631b049b6a.jpg",
   },
@@ -487,7 +517,7 @@ const goods = [
     count: () => 1,
 
     name: "Фильтр для капельного полива сетчатый, линейный, 16мм",
-    id: "289503",
+    id: "290118",
     price: "399",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/11d5e1a97b5511eb8c791a631b049b6a_31855328b4b211eb8c7f1a631b049b6a.jpg",
   },
@@ -497,7 +527,7 @@ const goods = [
       settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes1" && choosenScenario === "root",
     count: (settings) => 1,
     name: "Таймер электронный програмируемый на один канал",
-    id: "289397",
+    id: "290051",
     price: "1799",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/edf42c717c0b11eb8c791a631b049b6a_044cddf77c0c11eb8c791a631b049b6a.jpg",
   },
@@ -507,7 +537,7 @@ const goods = [
       settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes2" && choosenScenario === "root",
     count: (settings) => 1,
     name: "Таймер электронно-механический програмируемый на один канал",
-    id: "289397",
+    id: "290050",
     price: "1799",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/f67a4fe97c0a11eb8c791a631b049b6a_f67a4fea7c0a11eb8c791a631b049b6a.jpg",
   },
@@ -516,7 +546,7 @@ const goods = [
       settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes1" && choosenScenario === "root",
     count: (settings) => 1,
     name: "Набор для подключения таймера капельного полива",
-    id: "289510",
+    id: "290123",
     price: "139",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/11/bf34db1d44a611ec8c92baf20bad8d43_9a9ea3ee44a711ec8c92baf20bad8d43.jpg",
   },
@@ -525,7 +555,7 @@ const goods = [
       settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes2" && choosenScenario === "root",
     count: (settings) => 1,
     name: "Набор для подключения таймера капельного полива",
-    id: "289510",
+    id: "290123",
     price: "139",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/11/bf34db1d44a611ec8c92baf20bad8d43_9a9ea3ee44a711ec8c92baf20bad8d43.jpg",
   },

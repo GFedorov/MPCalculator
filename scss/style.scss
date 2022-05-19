@@ -59,8 +59,12 @@ body {
   }
 }
 .list__nostock{
-  border: 1px solid red;
-  
+  margin-top: 10px;
+  color:red;
+  border-bottom: 1px solid red;
+    &__item{
+      justify-content: flex-start;
+      align-items: center;} 
 }
 .list {
   &__item {
@@ -96,7 +100,10 @@ body {
       font-weight: 600px;
     }
     &__pcs {
-      color: rgba(101, 172, 45, 1);
+      
+      &__warning {
+        color: red;
+      }
     }
   }
 }
@@ -120,6 +127,10 @@ body {
     color:white;
     font-size: 8px;
   }
+}
+.alertError{
+  position: absolute;
+  left:50%;
 }
 
 .field-wrapper {

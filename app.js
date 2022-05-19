@@ -15,6 +15,7 @@ const api = new WooCommerceRestApi({
     version: "wc/v3"
 });
 
+
 let updateTime = 0;
 let cache = {};
 const updateCache = async () => {
@@ -25,8 +26,8 @@ const updateCache = async () => {
         {
             per_page: 50,
             sku: 'ДС.060087,ДС.060092,ДС.060094,ДС.060095,ДС.060096,ДС.060098,ДС.060100,ДС.060101,ДС.060102,ДС.060104,ДС.060106,ДС.060129,ДС.060137,ДС.070951,ДС.070956,ДС.070957,ДС.071355,ДС.071380,ДС.071384,ДС.071643,ДС.070951,ДС.070956,ДС.070957,ДС.071355'
-        }
 
+        }
     );
 
     //составить  список ID продуктов
@@ -56,6 +57,7 @@ const updateCache = async () => {
     }
 
     const d = {};
+    const namesD = {};
     for (let variantId in variationDictionary) {
         const variation = variationDictionary[variantId];
         const product = productDictionary[variation.productId];
@@ -63,7 +65,6 @@ const updateCache = async () => {
         if (!attributes.match(/[0-9]+/gm)) {
             attributes = null;
         }
-
 
         d[variantId] = {
             id: variantId,
@@ -76,11 +77,15 @@ const updateCache = async () => {
             sku: variation?.sku || product?.sku,
         };
 
+        const name = d[variantId].sku + '_' + d[variantId].name;
+        namesD[name] = d[variantId];
+
     }
 
     //составить словарь из продуктов и вариантов с Id варианта
     updateTime = Date.now();
     newCache = {
+        namesD: namesD,
         d: d,
         updateTime: updateTime
 
@@ -90,9 +95,11 @@ const updateCache = async () => {
 
 
 }
+
 updateCache();
 
 app.use(cors());
+
 
 app.get('/api/get-products', async (req, res) => {
     try {

@@ -1,3 +1,5 @@
+import { getLength } from "./goods";
+
 export const Q_NEED_FILTER = "need_filter";
 export const Q_KOLVO_RYADOV = "kolvo_ryadov";
 export const Q_NEED_PEREKRITIE = "need_perekritie_vodi";
@@ -25,6 +27,19 @@ const rootSteps = [
   {
     text: "Размер посадки в метрах",
     validation: validateGoods,
+    alert: (settings) => {
+      let result = true;
+      const messages = [];
+      if (getLength(settings) > 105) {
+        result = false;
+        messages.push(`Для системы полива длинной более 105 метров не гарантируется сохранение давления от одного источника воды. Длинна выбранной системы ${getLength(settings) / 115 * 100} метров`);
+      } else if (settings[Q_DLINNA_POSADKI] > 20) {
+        result = false;
+        messages.push("Для грядок длинной более 20 метров не гарантируется сохранение давления в системе от одного источника воды");
+
+      }
+      return { result, messages };
+    },
     questions: [
       {
         name: Q_DLINNA_POSADKI,
@@ -228,7 +243,7 @@ const rootSteps = [
 
           {
             name: "1_2f",
-            text: "1/2 внутренная",
+            text: "1/2 внутренняя",
           },
           {
             name: "1_2m",
@@ -236,7 +251,7 @@ const rootSteps = [
           },
           {
             name: "3_4f",
-            text: "3/4 внутренная",
+            text: "3/4 внутренняя",
           },
           {
             name: "3_4m",

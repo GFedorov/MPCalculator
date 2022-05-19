@@ -61,7 +61,7 @@ const calcLength = (length, pipes) => {
     return result;
 }
 
-console.log(calcLength(length, pipes))
+
 
 
 

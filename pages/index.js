@@ -23,7 +23,7 @@ const IndexPage = () => {
   const [scenarioInfo, setScenarioInfo] = useState([]);
   // объект из конечных ответов вида <название-настройки>-<ответ-пользователя>
   const [chosenSettings, setChosenSettings] = useState({});
-  console.log({ choosenScenario, scenarioInfo, chosenSettings });
+
   // все шаги выбранного сценария
   const [steps, setSteps] = useState([]);
   // выбранный шаг (номер шага)
@@ -61,7 +61,7 @@ const IndexPage = () => {
   let chooseAnswer = (choosenScenario) => {
     setChoosenScenario(choosenScenario);
     setSteps(scenarioAnswers[choosenScenario]);
-    console.log(checkScenario(choosenScenario));
+
   };
   // popup
   //let popup = document.getElementById("myPopup");
@@ -301,7 +301,16 @@ const IndexPage = () => {
 
             <button
               onClick={() => {
-
+                if (steps[stepIndex].alert) {
+                  let { result, messages } = steps[stepIndex].alert(chosenSettings);
+                  if (!result) {
+                    if (confirm(` ${messages.join("\n")}`)) {
+                      result = true;
+                    } else {
+                      return;
+                    }
+                  }
+                }
                 if (steps[stepIndex].validation && required) {
                   const newGoods = getGoods(chosenSettings, choosenScenario);
                   const { result, messages } = steps[stepIndex].validation(newGoods);
