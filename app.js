@@ -24,7 +24,7 @@ const updateCache = async () => {
     const { data } = await api.get(
         'products',
         {
-            per_page: 50,
+            per_page: 100,
             sku: 'ДС.060087,ДС.060092,ДС.060094,ДС.060095,ДС.060096,ДС.060098,ДС.060100,ДС.060101,ДС.060102,ДС.060104,ДС.060106,ДС.060129,ДС.060137,ДС.070951,ДС.070956,ДС.070957,ДС.071355,ДС.071380,ДС.071384,ДС.071643,ДС.070951,ДС.070956,ДС.070957,ДС.071355'
 
         }
@@ -37,6 +37,7 @@ const updateCache = async () => {
     const variationDictionary = {};
 
     for (let product of data) {
+
         productDictionary[product.id] = product;
         productIds.push(product.id);
     }
@@ -45,9 +46,14 @@ const updateCache = async () => {
         const { data } = await api.get(
             `products/${productId}/variations`,
             {
-                per_page: 50
+                per_page: 70
             }
         );
+        console.log(productId, data.length)
+        if (!data.length) {
+            variationDictionary[productId] = { ...productDictionary[productId], productId: productId };
+
+        }
 
         for (let variation of data) {
             variationDictionary[variation.id] = { ...variation, productId: productId };
@@ -69,11 +75,11 @@ const updateCache = async () => {
         d[variantId] = {
             id: variantId,
             name: product.name + (attributes ? ` (${attributes})` : ''),
-            img: variation?.image[0]?.src || product?.images[0]?.src,
+            img: (variation?.image && (variation?.image[0]?.src)) || product?.images[0]?.src,
             link: variation?.permalink || product?.permalink,
             price: variation?.price || product?.price,
             attributes: attributes,
-            stock_quantity: variation?.stock_quantity || product?.stock_quantity,
+            stock_quantity: variation?.stock_quantity || product?.stock_quantity || 0,
             sku: variation?.sku || product?.sku,
         };
 

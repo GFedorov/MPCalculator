@@ -33,7 +33,10 @@ const Question = ({
             type="number"
             id={item.id}
             //value={item.value}
-            onChange={(e) => setAnswer(e.target.value)}
+            onChange={(e) => {
+              console.log(e.target.value),
+              setAnswer(e.target.value)
+            }}
             onFocus={(e) => {
               setFocusedEl(item.name);
               setTimeout(() => {

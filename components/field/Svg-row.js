@@ -1,6 +1,6 @@
-import { useState } from "react";
+
 import Plant from "./Plant";
-import { scenario, scenarioAnswers } from "../../data/steps";
+
 import { Q_NEED_FILTER } from "../../data/steps";
 
 const coords = [];

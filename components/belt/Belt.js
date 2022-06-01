@@ -1,7 +1,7 @@
 const RootField = ({ settings }) => {
   const {
     razmer_posadki = "1", //
-    dlina_posadki = "2", //длинна грядки по горизонтали
+    dlina_posadki = "2", //длина грядки по горизонтали
     shirina_posadki = "2", //высота грядки
     shirina_ryadov = "3",
     kolvo_ryadov = "1",

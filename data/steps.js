@@ -15,11 +15,16 @@ export const validateGoods = (goods) => {
   let result = true;
   const messages = [];
   for (let good of goods) {
+    if (good.id == 290073) {
+      console.log(good)
+    }
+
     if (good.stock_quantity < good.count) {
       result = false;
       messages.push(` Товара "${good.name}" на складе не хватает ${good.count - good.stock_quantity} шт.`);
     }
   }
+  console.log({ result });
   return { result, messages };
 }
 
@@ -32,10 +37,10 @@ const rootSteps = [
       const messages = [];
       if (getLength(settings) > 105) {
         result = false;
-        messages.push(`Для системы полива длинной более 105 метров не гарантируется сохранение давления от одного источника воды. Длинна выбранной системы ${getLength(settings) / 115 * 100} метров`);
+        messages.push(`Для системы полива длиной более 105 метров не гарантируется сохранение давления от одного источника воды. Длина выбранной системы ${Math.ceil(getLength(settings) / 115 * 100)} метров. Продолжить покупку?`);
       } else if (settings[Q_DLINNA_POSADKI] > 20) {
         result = false;
-        messages.push("Для грядок длинной более 20 метров не гарантируется сохранение давления в системе от одного источника воды");
+        messages.push(`Для грядок длиной более 20 метров не гарантируется сохранение давления в системе от одного источника воды.`);
 
       }
       return { result, messages };
@@ -81,7 +86,7 @@ const rootSteps = [
         options: [
           {
             name: "",
-            text: "Выберете длинну",
+            text: "Выберете длину",
           },
 
           {
@@ -181,6 +186,7 @@ const rootSteps = [
   {
     text: "",
     validation: validateGoods,
+
     questions: [
       {
         name: Q_NEED_PEREKRITIE,
@@ -313,6 +319,20 @@ const rootSteps = [
 ];
 const beltSteps = [
   {
+    validation: validateGoods,
+    alert: (settings) => {
+      let result = true;
+      const messages = [];
+      if (getLength(settings) > 105) {
+        result = false;
+        messages.push(`Для системы полива длиной более 105 метров не гарантируется сохранение давления от одного источника воды. длина выбранной системы ${Math.ceil(getLength(settings) / 115 * 100)} метров`);
+      } else if (settings[Q_DLINNA_POSADKI] > 20) {
+        result = false;
+        messages.push("Для грядок длиной более 20 метров не гарантируется сохранение давления в системе от одного источника воды при самотеке");
+
+      }
+      return { result, messages };
+    },
     text: "Размер посадки в метрах",
     questions: [
       {
@@ -354,7 +374,7 @@ const beltSteps = [
         options: [
           {
             name: "",
-            text: "Выберете длинну",
+            text: "Выберете длину",
           },
 
           {
@@ -481,7 +501,7 @@ const beltSteps = [
 
           {
             name: "1_2f",
-            text: "1/2 внутренная",
+            text: "1/2 внутренняя",
           },
           {
             name: "1_2m",
@@ -489,7 +509,7 @@ const beltSteps = [
           },
           {
             name: "3_4f",
-            text: "3/4 внутренная",
+            text: "3/4 внутренняя",
           },
           {
             name: "3_4m",
@@ -549,6 +569,20 @@ const beltSteps = [
 ];
 const treeSteps = [
   {
+    validation: validateGoods,
+    alert: (settings) => {
+      let result = true;
+      const messages = [];
+      if (getLength(settings) > 105) {
+        result = false;
+        messages.push(`Для системы полива длиной более 105 метров не гарантируется сохранение давления от одного источника воды. длина выбранной системы ${Math.ceil(getLength(settings) / 115 * 100)} метров`);
+      } else if (settings[Q_DLINNA_POSADKI] > 20) {
+        result = false;
+        messages.push("Для трубки длиной более 20 метров не гарантируется сохранение давления в системе от одного источника воды при самотеке");
+
+      }
+      return { result, messages };
+    },
     text: "Длина трубки необходимая чтобы соединить все деревья",
     questions: [
       {
@@ -581,6 +615,34 @@ const treeSteps = [
           }
           return [true];
         },
+      },
+      {
+        name: Q_PODKLUCHENIE_K_VODE,
+        text: "Тип подключения?",
+        type: "select",
+        options: [
+          {
+            name: "",
+            text: "Выберете тип",
+          },
+
+          {
+            name: "1_2f",
+            text: "1/2 внутренняя",
+          },
+          {
+            name: "1_2m",
+            text: "1/2 внешняя",
+          },
+          {
+            name: "3_4f",
+            text: "3/4 внутренняя",
+          },
+          {
+            name: "3_4m",
+            text: "3/4 внешняя",
+          },
+        ],
       },
 
       {

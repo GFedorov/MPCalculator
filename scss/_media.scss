@@ -7,8 +7,8 @@
   max-width: 100%;
 }
 .question__btn {
-  height: 100px;
-  width: 100px;
+  height: 120px;
+  width: 120px;
 }
 .main {
   width: auto;
@@ -219,6 +219,9 @@
       &_tree {
         background-image: url("/img/treeIcon.svg");
         background-size: 30%;
+      }
+      &__img{
+        width: 90%;
       }
     }
 

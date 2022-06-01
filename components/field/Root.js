@@ -3,7 +3,7 @@ import SvgField from "./Svg";
 const RootField = ({ settings, choosenScenario }) => {
   const {
     razmer_posadki = "0", //
-    dlina_posadki = "0", //длинна грядки по горизонтали
+    dlina_posadki = "0", //длина грядки по горизонтали
     shirina_posadki = "0", //высота грядки
     shirina_ryadov = "0",
     //kolvo_ryadov = "0",

@@ -29,12 +29,12 @@ const Popup = ({ settings,
 
   return (
 
-    <div className="popup">
-      {`Вы отобрали товаров на сумму`}  {<b><br /> {sum(goods)}
-        {` `} руб </b>} {`нажмите 'Продолжить' для завершения покупки.`
+    <div className="warning-popup">
+      {`Вы отобрали товаров на сумму`}  {<span className="warning-popup__b"><br /> {sum(goods)}
+        {` `} руб </span>} {`не включая доставку, нажмите 'Продолжить' для завершения покупки.`
       }
 
-      {/* </div><form action="https://masterprof-season.ru/?add-to-cart=276980" target="_blank"> */}
+
       <p>
         <button
           className="popBtn"
@@ -46,7 +46,7 @@ const Popup = ({ settings,
         </button>
       </p>
       {!result && (
-        <Cart settings={settings} choosenScenario={choosenScenario} showNoStock={true} showStock={false} />)}
+        <Cart settings={settings} choosenScenario={choosenScenario} showNoStock={true} showStock={true} />)}
 
 
     </div >

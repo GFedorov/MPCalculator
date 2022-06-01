@@ -52,7 +52,7 @@ const IndexPage = () => {
 
   const [loaded, setLoaded] = useState(false);
 
-  const { required, setRequired } = useMainContext();
+  const { required, setRequired, openWarningPopup } = useMainContext();
 
 
 
@@ -126,9 +126,10 @@ const IndexPage = () => {
       <div className="mobile-top-section">
         <div className="top-btn-wrapper">
           <button
-            onClick={() => {
+            onClick={async () => {
               if (stepIndex === 0) {
-                if (confirm(" Подтвердить возврат? ")) {
+                const success = await openWarningPopup(" Подтвердить возврат? ")
+                if (success) {
                   setSteps([]);
                   setChoosenScenario(null);
                   setScenarioInfo([]);
@@ -276,9 +277,10 @@ const IndexPage = () => {
             }}
           >
             <button
-              onClick={() => {
+              onClick={async () => {
                 if (stepIndex === 0) {
-                  if (confirm(" Подтвердить возврат? ")) {
+                  const success = await openWarningPopup(" Подтвердить возврат? ")
+                  if (success) {
                     setSteps([]);
                     setChoosenScenario(null);
                     setScenarioInfo([]);
@@ -300,13 +302,13 @@ const IndexPage = () => {
             </button>
 
             <button
-              onClick={() => {
+              onClick={async () => {
                 if (steps[stepIndex].alert) {
                   let { result, messages } = steps[stepIndex].alert(chosenSettings);
+
                   if (!result) {
-                    if (confirm(` ${messages.join("\n")}`)) {
-                      result = true;
-                    } else {
+                    const success = await openWarningPopup(` ${messages.join("\n")}`);
+                    if (!success) {
                       return;
                     }
                   }
@@ -315,8 +317,9 @@ const IndexPage = () => {
                   const newGoods = getGoods(chosenSettings, choosenScenario);
                   const { result, messages } = steps[stepIndex].validation(newGoods);
                   if (!result) {
-                    if (confirm(`Продолжить частичную покупку? 
-                    ${messages.join("\n")}`)) {
+                    const success = await openWarningPopup(`Продолжить частичную покупку? 
+                    ${messages.join("\n")}`);
+                    if (success) {
                       setRequired(false)
                     } else {
                       return;
