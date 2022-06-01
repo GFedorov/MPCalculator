@@ -28,7 +28,7 @@ const GOODS_URL = process.env.NEXT_PUBLIC_GOODS_URL || '';
 //get from config
 export const updateGoods = async () => {
   return new Promise((resolve, reject) => {
-    fetch(`${GOODS_URL}/api/ducts`)
+    fetch(`${GOODS_URL}/api/get-products`)
       .then((response) => response.json())
       .then((data) => {
         for (let product of goods) {
