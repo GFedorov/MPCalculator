@@ -11,12 +11,13 @@ import {
   Q_NEED_TIMER,
   Q_RASSTOYANIE_DO_VODI,
   Q_PODKLUCHENIE_K_VODE,
+  Q_NABOR_PODKLUCHENIYA
 } from "./steps";
 
 export const sum = (x) => {
   let s = 0;
   for (let j = 0; j < x.length; j++) {
-    console.log(x[j].price, Math.min(x[j].count, x[j].stock_quantity))
+
     s += x[j].price * Math.min(x[j].count, x[j].stock_quantity);
   }
   return s;
@@ -34,10 +35,7 @@ export const updateGoods = async () => {
         for (let product of goods) {
           // product это вариация продуктаа
           const newProduct = data.namesD[product.sku + '_' + (product.originalName || product.name)];
-          if (product.sku == "ДС.060092") {
-            console.log(product.sku + '_' + (product.originalName || product.name))
-            console.log(newProduct)
-          }
+
           if (newProduct) {
             product.id = newProduct.id;
             product.name = newProduct.name || product.name;
@@ -120,15 +118,27 @@ export const getTreeLength = (settings) => {
 
 
 const goods = [
+  {
+    condition: (settings, choosenScenario) =>
+      settings[Q_KOLVO_RYADOV] == 2 && choosenScenario === "root",
+    count: (settings) => 1,
+    name: "Редуктор давления для систем капельного полива (1,03 бар)",
+    id: "290009",
+    mainId: "290009",
+    price: "45",
+    img: "https://masterprof-season.ru/wp-content/uploads/2022/05/e50878c369ef11eb8c701a631b049b6a_90b0d61069f011eb8c701a631b049b6a.jpg",
+    sku: "ДС.060126",
+  },
 
   {
 
     condition: (settings, choosenScenario) => {
       const length = getLength(settings);
       const pipes = getPipes(goods);
-      if (choosenScenario === "root") {
-        return calcLength(length, pipes).indexOf(10) !== -1;
-      }
+
+      // if (choosenScenario === "root") {
+      return calcLength(length, pipes).indexOf(10) !== -1;
+      //}
     },
     count: (settings) => {
       const length = getLength(settings);
@@ -148,9 +158,9 @@ const goods = [
     condition: (settings, choosenScenario) => {
       const length = getLength(settings);
       const pipes = getPipes(goods);
-      if (choosenScenario === "root") {
-        return calcLength(length, pipes).indexOf(12) !== -1;
-      }
+      // if (choosenScenario === "root") {
+      return calcLength(length, pipes).indexOf(12) !== -1;
+      // }
     },
     count: (settings) => {
       const length = getLength(settings);
@@ -171,9 +181,9 @@ const goods = [
     condition: (settings, choosenScenario) => {
       const length = getLength(settings);
       const pipes = getPipes(goods);
-      if (choosenScenario === "root") {
-        return calcLength(length, pipes).indexOf(18) !== -1;
-      }
+      // if (choosenScenario === "root") {
+      return calcLength(length, pipes).indexOf(18) !== -1;
+      //}
     },
     count: (settings) => {
       const length = getLength(settings);
@@ -193,9 +203,9 @@ const goods = [
 
       const length = getLength(settings);
       const pipes = getPipes(goods);
-      if (choosenScenario === "root") {
-        return calcLength(length, pipes).indexOf(25) !== -1;
-      }
+      //if (choosenScenario === "root") {
+      return calcLength(length, pipes).indexOf(25) !== -1;
+      //}
     },
     count: (settings) => {
       const length = getLength(settings);
@@ -214,9 +224,9 @@ const goods = [
     condition: (settings, choosenScenario) => {
       const length = getLength(settings);
       const pipes = getPipes(goods);
-      if (choosenScenario === "root") {
-        return calcLength(length, pipes).indexOf(50) !== -1;
-      }
+      //if (choosenScenario === "root") {
+      return calcLength(length, pipes).indexOf(50) !== -1;
+      //}
     },
     count: (settings) => {
       const length = getLength(settings);
@@ -423,62 +433,62 @@ const goods = [
   },
   // -----------Ленточный--------------- 
 
-  {
+  // {
 
-    condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : +0)) * 1.15) <= 10 && choosenScenario === "belt",
-    count: (settings) => 1,
-    pipeLength: 10,
-    originalName: 'Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)',
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)",
-    id: "290092",
-    price: "0",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //   condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : +0)) * 1.15) <= 10 && choosenScenario === "belt",
+  //   count: (settings) => 1,
+  //   pipeLength: 10,
+  //   originalName: 'Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)',
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)",
+  //   id: "290092",
+  //   price: "0",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 12 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 10 && choosenScenario === "belt",
-    count: (settings) => 1,
-    pipeLength: 12,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 12м)",
-    id: "290093",
-    price: "10",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //   condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 12 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 10 && choosenScenario === "belt",
+  //   count: (settings) => 1,
+  //   pipeLength: 12,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 12м)",
+  //   id: "290093",
+  //   price: "10",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 18 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 12 && choosenScenario === "belt",
-    count: (settings) => 1,
-    pipeLength: 18,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 18м)",
-    id: "290094",
-    price: "20",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //   condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 18 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 12 && choosenScenario === "belt",
+  //   count: (settings) => 1,
+  //   pipeLength: 18,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 18м)",
+  //   id: "290094",
+  //   price: "20",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 25 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 18 && choosenScenario === "belt",
-    count: (settings) => 1,
-    pipeLength: 25,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 25м)",
-    id: "290095",
-    price: "30",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //   condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 25 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 18 && choosenScenario === "belt",
+  //   count: (settings) => 1,
+  //   pipeLength: 25,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 25м)",
+  //   id: "290095",
+  //   price: "30",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 50 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 25 && choosenScenario === "belt",
-    count: (settings) => 1,
-    pipeLength: 50,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 50м)",
-    id: "290096",
-    price: "30",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
+  //   condition: (settings, choosenScenario) => (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) <= 50 && (((+settings[Q_KOLVO_RYADOV] * +settings[Q_SHIRINA_MEJDU_RYADOV]) + (settings[Q_RASSTOYANIE_DO_VODI] ? +settings[Q_RASSTOYANIE_DO_VODI] : 0)) * 1.15) > 25 && choosenScenario === "belt",
+  //   count: (settings) => 1,
+  //   pipeLength: 50,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 50м)",
+  //   id: "290096",
+  //   price: "30",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
   {
     condition: (settings, choosenScenario) =>
       ((settings[Q_KOLVO_RYADOV] * settings[Q_DLINNA_POSADKI]) * 1.15) && choosenScenario === "belt",
@@ -545,115 +555,115 @@ const goods = [
 
 
   //-------Деревья----------
-  {
+  // {
 
-    condition: (settings, choosenScenario) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods);
-      if (choosenScenario === "tree") {
-        return calcLength(length, pipes).indexOf(10) !== -1;
-      }
-    },
-    count: (settings) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods);
-      return calcLength(length, pipes).filter(p => p === 10).length;
-    },
-    pipeLength: 10,
-    originalName: 'Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)',
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)",
-    id: "290092",
-    price: "0",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //   condition: (settings, choosenScenario) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods);
+  //     if (choosenScenario === "tree") {
+  //       return calcLength(length, pipes).indexOf(10) !== -1;
+  //     }
+  //   },
+  //   count: (settings) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods);
+  //     return calcLength(length, pipes).filter(p => p === 10).length;
+  //   },
+  //   pipeLength: 10,
+  //   originalName: 'Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)',
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 10м)",
+  //   id: "290092",
+  //   price: "0",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods);
-      if (choosenScenario === "tree") {
-        return calcLength(length, pipes).indexOf(12) !== -1;
-      }
-    },
-    count: (settings) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods)
+  //   condition: (settings, choosenScenario) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods);
+  //     if (choosenScenario === "tree") {
+  //       return calcLength(length, pipes).indexOf(12) !== -1;
+  //     }
+  //   },
+  //   count: (settings) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods)
 
-      return calcLength(length, pipes).filter(p => p === 12).length;
+  //     return calcLength(length, pipes).filter(p => p === 12).length;
 
-    },
-    pipeLength: 12,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 12м)",
-    id: "290093",
-    price: "10",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //   },
+  //   pipeLength: 12,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 12м)",
+  //   id: "290093",
+  //   price: "10",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods);
-      if (choosenScenario === "tree") {
-        return calcLength(length, pipes).indexOf(18) !== -1;
-      }
-    },
-    count: (settings) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods);
-      return calcLength(length, pipes).filter(p => p === 18).length;
-    },
-    pipeLength: 18,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 18м)",
-    id: "290094",
-    price: "20",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //   condition: (settings, choosenScenario) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods);
+  //     if (choosenScenario === "tree") {
+  //       return calcLength(length, pipes).indexOf(18) !== -1;
+  //     }
+  //   },
+  //   count: (settings) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods);
+  //     return calcLength(length, pipes).filter(p => p === 18).length;
+  //   },
+  //   pipeLength: 18,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 18м)",
+  //   id: "290094",
+  //   price: "20",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => {
+  //   condition: (settings, choosenScenario) => {
 
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods);
-      if (choosenScenario === "tree") {
-        return calcLength(length, pipes).indexOf(25) !== -1;
-      }
-    },
-    count: (settings) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods)
-      return calcLength(length, pipes).filter(p => p === 25).length;
-    },
-    pipeLength: 25,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 25м)",
-    id: "290095",
-    price: "30",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
-  {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods);
+  //     if (choosenScenario === "tree") {
+  //       return calcLength(length, pipes).indexOf(25) !== -1;
+  //     }
+  //   },
+  //   count: (settings) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods)
+  //     return calcLength(length, pipes).filter(p => p === 25).length;
+  //   },
+  //   pipeLength: 25,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 25м)",
+  //   id: "290095",
+  //   price: "30",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
+  // {
 
-    condition: (settings, choosenScenario) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods);
-      if (choosenScenario === "tree") {
-        return calcLength(length, pipes).indexOf(50) !== -1;
-      }
-    },
-    count: (settings) => {
-      const length = getTreeLength(settings);
-      const pipes = getPipes(goods)
-      return calcLength(length, pipes).filter(p => p === 50).length;
-    },
-    pipeLength: 50,
-    name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 50м)",
-    id: "290096",
-    price: "30",
-    img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
-    sku: 'ДС.060106'
-  },
+  //   condition: (settings, choosenScenario) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods);
+  //     if (choosenScenario === "tree") {
+  //       return calcLength(length, pipes).indexOf(50) !== -1;
+  //     }
+  //   },
+  //   count: (settings) => {
+  //     const length = getTreeLength(settings);
+  //     const pipes = getPipes(goods)
+  //     return calcLength(length, pipes).filter(p => p === 50).length;
+  //   },
+  //   pipeLength: 50,
+  //   name: "Трубка капельного полива без эмиттеров (d 16, толщина стенки 1,3 мм) (бухта 50м)",
+  //   id: "290096",
+  //   price: "30",
+  //   img: "http://masterprof-season.ru/wp-content/uploads/2021/05/a20d35eb69e711eb8c701a631b049b6a_a20d35ec69e711eb8c701a631b049b6a.jpg",
+  //   sku: 'ДС.060106'
+  // },
   {
     condition: (settings, choosenScenario) =>
       settings[Q_KOLVO_RASTENIY] < 2 && choosenScenario === "tree",

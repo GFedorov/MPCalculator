@@ -4,9 +4,11 @@ const Question = ({
   currentAnswer,
   setFocusedEl,
   focusedEl,
+  settings
 }) => {
+  console.log(settings)
   return (
-    <div className="question">
+    <div className={`question ${(item.isHidden && item.isHidden(settings)) ? "hidden" : ""}`}>
       <div className={`question__text question__text_${item.type} `}>
         {item.text}
       </div>
@@ -31,10 +33,38 @@ const Question = ({
         {item.type === "number" && (
           <input
             type="number"
+            min={0}
+            max={300}
+            step={0.1}
             id={item.id}
             //value={item.value}
             onChange={(e) => {
-              console.log(e.target.value),
+
+              setAnswer(e.target.value)
+            }}
+            onFocus={(e) => {
+              setFocusedEl(item.name);
+              setTimeout(() => {
+                setFocusedEl((focusedEl) => {
+                  if (focusedEl === item.name) {
+                    return null;
+                  } else return focusedEl
+                    ;
+                });
+              }, 4000);
+            }}
+          />
+        )}
+        {item.type === "number-int" && (
+          <input
+            type="number"
+            min={0}
+            max={300}
+            step={1}
+            id={item.id}
+            //value={item.value}
+            onChange={(e) => {
+
               setAnswer(e.target.value)
             }}
             onFocus={(e) => {

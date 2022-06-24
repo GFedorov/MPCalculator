@@ -18,6 +18,7 @@ body {
 
   font-family: "Montserrat", sans-serif;
 }
+
 .mobile-top-section {
   margin-top:20px;
   padding-left: 10%;
@@ -29,8 +30,10 @@ body {
  width: 487px;
  overflow: auto;
  height: 400px;
+ scroll-behavior: smooth;
  
 }
+
 .cart-wrapper::-webkit-scrollbar {
   width: 14px; /* ширина для вертикального скролла */
   
@@ -250,6 +253,8 @@ justify-content: space-between;
   }
 }
 
+
+
 .question {
   font-weight: bold;
   font-size: 21px;
@@ -257,6 +262,9 @@ justify-content: space-between;
   flex-direction: column;
   align-items: center;
   color: #65ac2d;
+  &.hidden{
+    opacity: 0;
+  }
   &__answer {
     color:rgba(255, 255, 255, 0.895);
 
@@ -293,6 +301,7 @@ justify-content: space-between;
   }
   &__text {
     &_number,
+    &_number-int,
     &_select {
       font-weight: 400;
       font-size: 12px;
@@ -451,6 +460,9 @@ justify-content: space-between;
 .belt-show .belt {
   display: block;
 }
+.tree-show #between-plants,.tree-show #between-rows,.tree-show #rows-number,{
+  display: none;
+}
 
 .grid {
   &__row {
@@ -560,9 +572,17 @@ justify-content: space-between;
   padding: 30px;
   font-size:15px  ;
   font-weight: 300;
+  
   &__buttons{ 
     display: flex;
     justify-content: center;
+  }
+  &__close{
+    position: relative;
+    left:95%;
+    border:1px solid white;
+    border-radius:50%;
+    width: 20px;
   }
   &__b{
     color: #0c8200;

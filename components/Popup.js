@@ -6,7 +6,7 @@ import { useMainContext } from "./context/Main";
 
 
 const Popup = ({ settings,
-  choosenScenario, }) => {
+  choosenScenario, close }) => {
 
   // const { required } = useMainContext();
   const goods = getGoods(settings, choosenScenario);
@@ -30,6 +30,7 @@ const Popup = ({ settings,
   return (
 
     <div className="warning-popup">
+      <div className="warning-popup__close" onClick={close}>Х</div>
       {`Вы отобрали товаров на сумму`}  {<span className="warning-popup__b"><br /> {sum(goods)}
         {` `} руб </span>} {`не включая доставку, нажмите 'Продолжить' для завершения покупки.`
       }
@@ -45,8 +46,20 @@ const Popup = ({ settings,
           Продолжить
         </button>
       </p>
-      {!result && (
-        <Cart settings={settings} choosenScenario={choosenScenario} showNoStock={true} showStock={true} />)}
+      <p>
+        <button
+          className="popBtn"
+          onClick={close}
+
+        >
+          Вернуться
+        </button>
+      </p>
+
+      {
+        !result && (
+          <Cart settings={settings} choosenScenario={choosenScenario} showNoStock={true} showStock={true} />)
+      }
 
 
     </div >

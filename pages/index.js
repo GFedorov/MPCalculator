@@ -89,10 +89,11 @@ const IndexPage = () => {
       // @todo: все ли вопросы текущего шага отвечены
       // если да, то setStepIndex(stepIndex+1)
     };
+
     if (
       scenarioInfo[stepIndex] &&
       scenarioInfo[stepIndex].filter((answer) => !!answer).length ===
-      steps[stepIndex].questions.length
+      steps[stepIndex].questions.filter(question => (!question.isHidden || !question.isHidden(chosenSettings))).length
     ) {
       disabled = false;
     }
@@ -120,7 +121,7 @@ const IndexPage = () => {
 
   }, [])
 
-
+  console.log({ chosenSettings })
   return (
     <div className="page">
       <div className="mobile-top-section">
@@ -207,19 +208,20 @@ const IndexPage = () => {
 
           </div>
         </div>
-        <div className="cart-wrapper">
-          <Cart
-            settings={chosenSettings}
-            choosenScenario={choosenScenario}
-            setGoodsSubTot={setGoodsSubTot}
-            goodsSubTot={goodsSubTot}
-            totalPrice={totalPrice}
-            setTotalPrice={setTotalPrice}
-            totalId={totalId}
-            totalArr={totalArr}
-            setTotalArr={setTotalArr}
-          />
-        </div>
+
+        <Cart
+          settings={chosenSettings}
+          choosenScenario={choosenScenario}
+          setGoodsSubTot={setGoodsSubTot}
+          goodsSubTot={goodsSubTot}
+          totalPrice={totalPrice}
+          setTotalPrice={setTotalPrice}
+          totalId={totalId}
+          totalArr={totalArr}
+          setTotalArr={setTotalArr}
+          stepIndex={stepIndex}
+        />
+
       </div>
       <div
         className="main__question grid"
@@ -262,6 +264,8 @@ const IndexPage = () => {
                     setAnswer={(answer) => chooseAnswer(answer, index)}
                     setFocusedEl={setFocusedEl}
                     focusedEl={focusedEl}
+                    settings={chosenSettings}
+
                   />
                 </div>
               );
@@ -351,7 +355,8 @@ const IndexPage = () => {
 
       <div className={goCart == true ? "popup-show" : "popup-hide"}>
         <Popup settings={chosenSettings}
-          choosenScenario={choosenScenario} />
+          choosenScenario={choosenScenario}
+          close={() => setGoCart(false)} />
       </div>
     </div>
   );

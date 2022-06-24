@@ -10,21 +10,21 @@ export const Q_KOLVO_RASTENIY = "kolvo_rasteniy";
 export const Q_NEED_TIMER = "need_timer";
 export const Q_RASSTOYANIE_DO_VODI = "rasstoyanie_do_vodi";
 export const Q_PODKLUCHENIE_K_VODE = "podkluchenie_k_vode";
+export const Q_NABOR_PODKLUCHENIYA = "nabor_podklucheniya";
+
 
 export const validateGoods = (goods) => {
   let result = true;
   const messages = [];
   for (let good of goods) {
-    if (good.id == 290073) {
-      console.log(good)
-    }
+
 
     if (good.stock_quantity < good.count) {
       result = false;
       messages.push(` Товара "${good.name}" на складе не хватает ${good.count - good.stock_quantity} шт.`);
     }
   }
-  console.log({ result });
+
   return { result, messages };
 }
 
@@ -91,46 +91,46 @@ const rootSteps = [
 
           {
             name: "0,1",
-            text: "0.1",
+            text: "0,1",
           },
           {
             name: "0,2",
-            text: "0.2",
+            text: "0,2",
           },
 
           {
             name: "0,3",
-            text: "0.3",
+            text: "0,3",
           },
 
           {
             name: "0,4",
-            text: "0.4",
+            text: "0,4",
           },
 
           {
             name: "0,5",
-            text: "0.5",
+            text: "0,5",
           },
 
           {
             name: "0,6",
-            text: "0.6",
+            text: "0,6",
           },
 
           {
             name: "0,7",
-            text: "0.7",
+            text: "0,7",
           },
 
           {
             name: "0,8",
-            text: "0.8",
+            text: "0,8",
           },
 
           {
             name: "0,9",
-            text: "0.9",
+            text: "0,9",
           },
 
           {
@@ -168,7 +168,7 @@ const rootSteps = [
       {
         name: Q_KOLVO_RYADOV,
         text: "Количество рядов",
-        type: "number",
+        type: "number-int",
         value: 2,
         validation: (val) => {
           if (val < 0) {
@@ -228,7 +228,7 @@ const rootSteps = [
     questions: [
       {
         name: "rasstoyanie_do_vodi",
-        text: "Расстояние до источника воды (м)",
+        text: <>Расстояние от расстений<br /> до источника воды (м)</>,
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -238,9 +238,35 @@ const rootSteps = [
         },
       },
       {
+        name: Q_NABOR_PODKLUCHENIYA,
+        text: "Требуется ли набор для подключения к водоснабжению",
+        type: "select",
+        options: [
+          // {
+          //   name: "",
+          //   text: "Выберете опцию",
+          // },
+
+          {
+            name: "no",
+            text: "Нет",
+          },
+          {
+            name: "yes_kran",
+            text: "Да, к крану (холодный полив)",
+          },
+          {
+            name: "yes_bochka",
+            text: "Да, к бочке (теплый полив)",
+          },
+
+        ],
+      },
+      {
         name: Q_PODKLUCHENIE_K_VODE,
         text: "Тип подключения?",
         type: "select",
+        isHidden: (settings) => settings[Q_NABOR_PODKLUCHENIYA] === 'Нет',
         options: [
           {
             name: "",
@@ -440,7 +466,7 @@ const beltSteps = [
       {
         name: Q_KOLVO_RYADOV,
         text: "Количество грядок",
-        type: "number",
+        type: "number-int",
         value: 2,
         validation: (val) => {
           if (val < 0) {
