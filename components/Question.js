@@ -6,7 +6,7 @@ const Question = ({
   focusedEl,
   settings
 }) => {
-  console.log(settings)
+
   return (
     <div className={`question ${(item.isHidden && item.isHidden(settings)) ? "hidden" : ""}`}>
       <div className={`question__text question__text_${item.type} `}>
@@ -82,6 +82,7 @@ const Question = ({
         )}
         {item.type === "select" && (
           <select
+
             onChange={(e) => setAnswer(e.target.value)}
             onFocus={(e) => {
               setFocusedEl(item.name);
@@ -95,7 +96,7 @@ const Question = ({
             }}
           >
             {item.options.map((option) => (
-              <option key={option.name}>{option.text}</option>
+              <option key={option.name} value={option.name}>{option.text}</option>
             ))}
           </select>
         )}
