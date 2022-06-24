@@ -90,46 +90,46 @@ const rootSteps = [
           },
 
           {
-            name: "0,1",
+            name: "0.1",
             text: "0,1",
           },
           {
-            name: "0,2",
+            name: "0.2",
             text: "0,2",
           },
 
           {
-            name: "0,3",
+            name: "0.3",
             text: "0,3",
           },
 
           {
-            name: "0,4",
+            name: "0.4",
             text: "0,4",
           },
 
           {
-            name: "0,5",
+            name: "0.5",
             text: "0,5",
           },
 
           {
-            name: "0,6",
+            name: "0.6",
             text: "0,6",
           },
 
           {
-            name: "0,7",
+            name: "0.7",
             text: "0,7",
           },
 
           {
-            name: "0,8",
+            name: "0.8",
             text: "0,8",
           },
 
           {
-            name: "0,9",
+            name: "0.9",
             text: "0,9",
           },
 
@@ -241,6 +241,7 @@ const rootSteps = [
         name: Q_NABOR_PODKLUCHENIYA,
         text: "Требуется ли набор для подключения к водоснабжению",
         type: "select",
+        default: 'no',
         options: [
           // {
           //   name: "",
@@ -266,7 +267,8 @@ const rootSteps = [
         name: Q_PODKLUCHENIE_K_VODE,
         text: "Тип подключения?",
         type: "select",
-        isHidden: (settings) => settings[Q_NABOR_PODKLUCHENIYA] === 'Нет',
+        required: false,
+        isHidden: (settings) => settings[Q_NABOR_PODKLUCHENIYA] === 'no',
         options: [
           {
             name: "",
@@ -404,47 +406,47 @@ const beltSteps = [
           },
 
           {
-            name: "0,1",
-            text: "0.1",
+            name: "0.1",
+            text: "0,1",
           },
           {
-            name: "0,2",
-            text: "0.2",
-          },
-
-          {
-            name: "0,3",
-            text: "0.3",
+            name: "0.2",
+            text: "0,2",
           },
 
           {
-            name: "0,4",
-            text: "0.4",
+            name: "0.3",
+            text: "0,3",
           },
 
           {
-            name: "0,5",
-            text: "0.5",
+            name: "0.4",
+            text: "0,4",
           },
 
           {
-            name: "0,6",
-            text: "0.6",
+            name: "0.5",
+            text: "0,5",
           },
 
           {
-            name: "0,7",
-            text: "0.7",
+            name: "0.6",
+            text: "0,6",
           },
 
           {
-            name: "0,8",
-            text: "0.8",
+            name: "0.7",
+            text: "0,7",
           },
 
           {
-            name: "0,9",
-            text: "0.9",
+            name: "0.8",
+            text: "0,8",
+          },
+
+          {
+            name: "0.9",
+            text: "0,9",
           },
 
           {

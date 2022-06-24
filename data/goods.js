@@ -332,9 +332,9 @@ const goods = [
   },
   {
     condition: (settings, choosenScenario) =>
-      settings[Q_PODKLUCHENIE_K_VODE] === "1/2 внутренняя" &&
-      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "1/2 внутренняя" &&
-      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "1/2 внутренняя" && choosenScenario === "tree",
+      settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" &&
+      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" &&
+      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" && choosenScenario === "tree",
     count: (settings) => 1,
     name: 'Ниппель (бочонок) 1/2\" н/н (латунь) (1 шт.)',
     id: "290087",
@@ -355,9 +355,9 @@ const goods = [
   },
   {
     condition: (settings, choosenScenario) =>
-      settings[Q_PODKLUCHENIE_K_VODE] === "3/4 внутренняя" &&
-      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3/4 внутренняя" &&
-      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3/4 внутренняя" && choosenScenario === "tree",
+      settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" &&
+      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" &&
+      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" && choosenScenario === "tree",
     count: (settings) => 1,
     name: 'Ниппель - переходник (бочонок) 3/4\" х 1/2\" н/н (латунь) (1 шт.)',
     id: "289559",
@@ -368,9 +368,9 @@ const goods = [
 
   {
     condition: (settings, choosenScenario) =>
-      settings[Q_PODKLUCHENIE_K_VODE] === "3/4 внешняя" &&
-      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3/4 внешняя" &&
-      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3/4 внешняя" && choosenScenario === "tree",
+      settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" &&
+      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" &&
+      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" && choosenScenario === "tree",
     count: (settings) => 1,
     name: 'Переходник с ребордой 3/4\" х 1/2\" в/н (латунь) (1 шт.)',
     id: "289560",

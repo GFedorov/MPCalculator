@@ -121,7 +121,7 @@ const IndexPage = () => {
 
   }, [])
 
-  console.log({ chosenSettings })
+  console.log({ test: scenarioInfo[stepIndex] })
   return (
     <div className="page">
       <div className="mobile-top-section">
