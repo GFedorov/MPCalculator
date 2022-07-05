@@ -28,6 +28,7 @@ export const sum = (x) => {
 const GOODS_URL = process.env.NEXT_PUBLIC_GOODS_URL || '';
 //get from config
 export const updateGoods = async () => {
+  // return []
   return new Promise((resolve, reject) => {
     fetch(`${GOODS_URL}/api/get-products`)
       .then((response) => response.json())
