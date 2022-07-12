@@ -7,17 +7,18 @@ import { useMainContext } from "./context/Main";
 
 
 const Cart = ({
-  settings,
-  choosenScenario,
   showStock = true,
   showNoStock = true,
-  stepIndex
-
 }) => {
-  const goods = getGoods(settings, choosenScenario);
-
+  const {
+    chosenSettings,
+    required,
+    openWarningPopup,
+    stepIndex,
+    choosenScenario,
+  } = useMainContext();
+  const goods = getGoods(chosenSettings, choosenScenario);
   const { result } = validateGoods(goods);
-  const { required, openWarningPopup } = useMainContext();
   const wrapperRef = useRef(null);
 
   useEffect(() => {

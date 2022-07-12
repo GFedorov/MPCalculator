@@ -6,6 +6,7 @@ const Question = ({
   focusedEl,
   settings
 }) => {
+  console.log({currentAnswer, item})
 
   return (
     <div className={`question ${(item.isHidden && item.isHidden(settings)) ? "hidden" : ""}`}>
@@ -37,7 +38,7 @@ const Question = ({
             max={300}
             step={0.1}
             id={item.id}
-            //value={item.value}
+            value={item.value}
             onChange={(e) => {
 
               setAnswer(e.target.value)
@@ -62,7 +63,7 @@ const Question = ({
             max={300}
             step={1}
             id={item.id}
-            //value={item.value}
+            value={item.value}
             onChange={(e) => {
 
               setAnswer(e.target.value)
@@ -96,7 +97,10 @@ const Question = ({
             }}
           >
             {item.options.map((option) => (
-              <option key={option.name} value={option.name}>{option.text}</option>
+              <option key={option.name} value={option.name}
+              
+                selected={currentAnswer === option.name}
+              >{option.text}</option>
             ))}
           </select>
         )}

@@ -4,6 +4,7 @@ import { scenario, scenarioAnswers } from "../../data/steps";
 import { Q_NEED_FILTER } from "../../data/steps";
 import { Q_KOLVO_RYADOV } from "../../data/steps";
 import { Q_NEED_PEREKRITIE } from "../../data/steps";
+import { useMainContext } from "../context/Main";
 
 const coords = [];
 let y = 30;
@@ -17,9 +18,9 @@ for (let i = 0; i < 4; i++) {
 }
 
 const SvgField = (props) => {
+  const { focusedEl, chosenSettings } = useMainContext();
+
   const {
-    width,
-    height,
     kolvo_rasteniy,
     kolvo_ryadov,
     need_perekritie_vodi,
@@ -27,17 +28,15 @@ const SvgField = (props) => {
     dlinna_posadki,
     shirina_between_plant,
     rasstoyanie_do_vodi,
-    // need_filter,
     need_timer,
-    type = "hole",
-    focusedEl,
-  } = props;
+    choosenScenario,
+  } = chosenSettings;
+  const type = choosenScenario || "hole";
+  
 
   return (
     <svg
-      // width={width}
-      // height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`0 0 481 363`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`${+kolvo_ryadov === 1 ? "one-row" : ""} svg-pic`}
@@ -59,7 +58,7 @@ const SvgField = (props) => {
 
         <g id="between-rows">
           <text
-            id="between-rows-text"
+            // id="between-rows-text"
             x="430"
             y="115"
             fill="rgba(101, 172, 45, 1)"
