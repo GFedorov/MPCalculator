@@ -41,7 +41,7 @@ const WarningPopup = ({
 // переход к следующему шагу заблокирован
 
 export const MainProvider = ({ children }) => {
-  
+
   const [error, setError] = useState("");
   // выбранный сценарий, появляется после нажатия на первую кнопку root | belt | tree
   const [choosenScenario, setChoosenScenario] = useState(null);
@@ -95,9 +95,9 @@ export const MainProvider = ({ children }) => {
   if (
     scenarioInfo[stepIndex] &&
     scenarioInfo[stepIndex].filter((answer) => !!answer).length ===
-      steps[stepIndex].questions.filter(
-        (question) => !question.isHidden || !question.isHidden(chosenSettings)
-      ).length
+    steps[stepIndex].questions.filter(
+      (question) => !question.isHidden || !question.isHidden(chosenSettings, scenarioInfo[stepIndex])
+    ).length
   ) {
     disabled = false;
   }
@@ -143,17 +143,20 @@ export const MainProvider = ({ children }) => {
         }
       }
     }
-    
+
     // показывать кнопку всегда, но если disabled, отображать ошибку
     if (disabled) {
       setError("Пожалуйста заполните все поля");
       setTimeout(() => {
         setError("");
-      }, 6000);
+      }, 3000);
       return;
     }
     if (!!steps[stepIndex + 1]) {
       setStepIndex(stepIndex + 1);
+      if (steps[stepIndex + 1].defaultValues && !scenarioInfo[stepIndex + 1]) {
+        setScenarioInfo([...scenarioInfo, steps[stepIndex + 1].defaultValues])
+      }
     } else {
       setGoCart(true);
     }

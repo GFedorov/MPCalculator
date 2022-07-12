@@ -149,27 +149,12 @@ const rootSteps = [
         },
       },
 
-      // {
-      //   name: "shirina_posadki",
-      //   text: "Ширина посадки",
-      //   description: "Именно ширина между крайними растениями ряда",
-      //   type: "number",
-      //   validation: (val) => {
-      //     if (val < 0) {
-      //       return [false, "Ширина не может быть < 0"];
-      //     }
-      //     if (val > 3) {
-      //       return [false, "Ширина не может быть > 3"];
-      //     }
-      //     return [true];
-      //   },
-      // },
 
       {
         name: Q_KOLVO_RYADOV,
         text: "Количество рядов",
         type: "number-int",
-        value: 2,
+        // value: 2,
         validation: (val) => {
           if (val < 0) {
             return [false, "Количество не может быть < 1"];
@@ -212,7 +197,7 @@ const rootSteps = [
       {
         name: Q_KOLVO_RASTENIY,
         text: "Общее количество растений на всех грядках",
-        type: "number",
+        type: "number-int",
         validation: (val) => {
           if (val < 0) {
             return [false, "Растений не может быть < 0"];
@@ -225,11 +210,13 @@ const rootSteps = [
   {
     validation: validateGoods,
     text: "Источник воды",
+    defaultValues: [0.1, "no", null],
     questions: [
       {
         name: "rasstoyanie_do_vodi",
         text: <>Расстояние от расстений<br /> до источника воды (м)</>,
         type: "number",
+
         validation: (val) => {
           if (val < 0) {
             return [false, "Расстояние не может быть < 0"];
@@ -268,7 +255,17 @@ const rootSteps = [
         text: "Тип подключения?",
         type: "select",
         required: false,
-        isHidden: (settings) => settings[Q_NABOR_PODKLUCHENIYA] === 'no',
+        isHidden: (settings, stepScenarioInfo) => {
+          // settings[Q_NABOR_PODKLUCHENIYA] === 'no'
+          // @TODO получать индекс по названию поля
+          if (!stepScenarioInfo) {
+            return true
+          }
+          if (stepScenarioInfo[1] === "no") {
+            return true
+          }
+          return false
+        },
         options: [
           {
             name: "",

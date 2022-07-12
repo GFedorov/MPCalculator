@@ -18,6 +18,7 @@ const Questions = () => {
 
     focusedEl, setFocusedEl,
   } = useMainContext();
+  console.log(steps[stepIndex], scenarioInfo[stepIndex])
 
   let chooseMainAnswer = (choosenScenario) => {
     setChoosenScenario(choosenScenario);
@@ -30,54 +31,55 @@ const Questions = () => {
         // очередной шаг
         steps.length
           ? questions.map((question, index) => {
-              return (
-                <div
-                  key={question.name ? question.name : index}
-                  className={
-                    question.type === "buttons" ? "" : "grid__col-lg-6"
+            return (
+              <div
+                key={question.name ? question.name : index}
+                className={
+                  question.type === "buttons" ? "" : "grid__col-lg-6"
+                }
+              >
+                <Question
+                  item={question}
+                  currentAnswer={
+                    scenarioInfo[stepIndex]
+                      ? scenarioInfo[stepIndex][index]
+                      : null
                   }
-                >
-                  <Question
-                    item={question}
-                    currentAnswer={
-                      scenarioInfo[stepIndex]
-                        ? scenarioInfo[stepIndex][index]
-                        : null
-                    }
-                    setAnswer={(answer) => chooseAnswer(answer, index)}
-                    setFocusedEl={setFocusedEl}
-                    focusedEl={focusedEl}
-                    settings={chosenSettings}
-                  />
-                </div>
-              );
-            })
+                  setAnswer={(answer) => chooseAnswer(answer, index)}
+                  setFocusedEl={setFocusedEl}
+                  focusedEl={focusedEl}
+                  settings={chosenSettings}
+                  isHidden={question.isHidden && question.isHidden(chosenSettings, scenarioInfo[stepIndex])}
+                />
+              </div>
+            );
+          })
           : // первый шаг
-            mainQuestions.map((question, index) => {
-              return (
-                <div
-                  key={question.name ? question.name : index}
-                  className={
-                    question.type === "buttons" ? "" : "grid__col-lg-6"
+          mainQuestions.map((question, index) => {
+            return (
+              <div
+                key={question.name ? question.name : index}
+                className={
+                  question.type === "buttons" ? "" : "grid__col-lg-6"
+                }
+              >
+                <Question
+                  item={question}
+                  currentAnswer={
+                    scenarioInfo[stepIndex]
+                      ? scenarioInfo[stepIndex][index]
+                      : null
                   }
-                >
-                  <Question
-                    item={question}
-                    currentAnswer={
-                      scenarioInfo[stepIndex]
-                        ? scenarioInfo[stepIndex][index]
-                        : null
-                    }
-                    setAnswer={(answer) => {
-                      chooseMainAnswer(answer, index);
-                    }}
-                    setFocusedEl={setFocusedEl}
-                    focusedEl={focusedEl}
-                    settings={chosenSettings}
-                  />
-                </div>
-              );
-            })
+                  setAnswer={(answer) => {
+                    chooseMainAnswer(answer, index);
+                  }}
+                  setFocusedEl={setFocusedEl}
+                  focusedEl={focusedEl}
+                  settings={chosenSettings}
+                />
+              </div>
+            );
+          })
       }
     </div>
   );
