@@ -4,7 +4,7 @@ import Question from "./Question";
 
 const mainQuestions = [scenario];
 
-const Questions = ({focusedEl, setFocusedEl}) => {
+const Questions = () => {
   const {
     chosenSettings,
     stepIndex,
@@ -15,6 +15,8 @@ const Questions = ({focusedEl, setFocusedEl}) => {
 
     chooseAnswer,
     setChoosenScenario,
+
+    focusedEl, setFocusedEl,
   } = useMainContext();
 
   let chooseMainAnswer = (choosenScenario) => {

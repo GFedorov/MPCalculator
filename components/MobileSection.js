@@ -3,9 +3,8 @@ import { useCart } from "./context/Cart";
 import { useMainContext } from "./context/Main";
 import MobileCart from "./MobileCart";
 
-const MobileSection = ({
-  choosenScenario,
-}) => {
+const MobileSection = () => {
+  const { choosenScenario } = useMainContext();
   const {
     setGoodsSubTot,
     goodsSubTot,
@@ -14,7 +13,7 @@ const MobileSection = ({
     totalId,
     totalArr,
   } = useCart();
-  
+
   const [mobTotalPrice, setMobTotalPrice] = useState(0);
   const { chosenSettings, goBack } = useMainContext();
 

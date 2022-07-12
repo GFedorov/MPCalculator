@@ -7,7 +7,6 @@ import { useMainContext } from "./context/Main";
 
 
 const Cart = ({
-  choosenScenario,
   showStock = true,
   showNoStock = true,
 }) => {
@@ -15,7 +14,8 @@ const Cart = ({
     chosenSettings,
     required,
     openWarningPopup,
-    stepIndex
+    stepIndex,
+    choosenScenario,
   } = useMainContext();
   const goods = getGoods(chosenSettings, choosenScenario);
   const { result } = validateGoods(goods);

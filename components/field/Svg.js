@@ -4,6 +4,7 @@ import { scenario, scenarioAnswers } from "../../data/steps";
 import { Q_NEED_FILTER } from "../../data/steps";
 import { Q_KOLVO_RYADOV } from "../../data/steps";
 import { Q_NEED_PEREKRITIE } from "../../data/steps";
+import { useMainContext } from "../context/Main";
 
 const coords = [];
 let y = 30;
@@ -17,12 +18,8 @@ for (let i = 0; i < 4; i++) {
 }
 
 const SvgField = (props) => {
-  const {
-    chosenSettings,
-    // need_filter,
-    type = "hole",
-    focusedEl,
-  } = props;
+  const { focusedEl, chosenSettings } = useMainContext();
+
   const {
     kolvo_rasteniy,
     kolvo_ryadov,
@@ -32,7 +29,10 @@ const SvgField = (props) => {
     shirina_between_plant,
     rasstoyanie_do_vodi,
     need_timer,
+    choosenScenario,
   } = chosenSettings;
+  const type = choosenScenario || "hole";
+  
 
   return (
     <svg
@@ -58,7 +58,7 @@ const SvgField = (props) => {
 
         <g id="between-rows">
           <text
-            id="between-rows-text"
+            // id="between-rows-text"
             x="430"
             y="115"
             fill="rgba(101, 172, 45, 1)"

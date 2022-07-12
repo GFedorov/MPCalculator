@@ -39,9 +39,9 @@ const WarningPopup = ({
 };
 
 // переход к следующему шагу заблокирован
-let disabled = true;
 
 export const MainProvider = ({ children }) => {
+  
   const [error, setError] = useState("");
   // выбранный сценарий, появляется после нажатия на первую кнопку root | belt | tree
   const [choosenScenario, setChoosenScenario] = useState(null);
@@ -58,6 +58,7 @@ export const MainProvider = ({ children }) => {
   const [steps, setSteps] = useState([]);
   // выбранный шаг (номер шага)
   const [stepIndex, setStepIndex] = useState(0);
+  const [focusedEl, setFocusedEl] = useState(null);
   // уведомление об ошибке
   // const [loaded, setLoaded] = useState(false);
 
@@ -90,6 +91,7 @@ export const MainProvider = ({ children }) => {
     // если да, то setStepIndex(stepIndex+1)
   };
 
+  let disabled = true;
   if (
     scenarioInfo[stepIndex] &&
     scenarioInfo[stepIndex].filter((answer) => !!answer).length ===
@@ -99,7 +101,6 @@ export const MainProvider = ({ children }) => {
   ) {
     disabled = false;
   }
-  //   }
 
   useEffect(() => {
     updateGoods().then((goods) => {
@@ -142,6 +143,7 @@ export const MainProvider = ({ children }) => {
         }
       }
     }
+    
     // показывать кнопку всегда, но если disabled, отображать ошибку
     if (disabled) {
       setError("Пожалуйста заполните все поля");
@@ -157,23 +159,21 @@ export const MainProvider = ({ children }) => {
     }
   };
 
-  const goBack = () => {
-    async () => {
-      if (stepIndex === 0) {
-        const success = await openWarningPopup(" Подтвердить возврат? ");
-        if (success) {
-          setSteps([]);
-          setChoosenScenario(null);
-          setScenarioInfo([]);
-          setChosenSettings({});
-        }
-        return;
+  const goBack = async () => {
+    if (stepIndex === 0) {
+      const success = await openWarningPopup(" Подтвердить возврат? ");
+      if (success) {
+        setSteps([]);
+        setChoosenScenario(null);
+        setScenarioInfo([]);
+        setChosenSettings({});
       }
+      return;
+    }
 
-      if (!!steps[stepIndex - 1]) {
-        setStepIndex(stepIndex - 1);
-      }
-    };
+    if (!!steps[stepIndex - 1]) {
+      setStepIndex(stepIndex - 1);
+    }
   };
 
   const value = {
@@ -195,6 +195,8 @@ export const MainProvider = ({ children }) => {
 
     error,
     setError,
+
+    focusedEl, setFocusedEl
   };
   return (
     <MainContext.Provider value={value}>

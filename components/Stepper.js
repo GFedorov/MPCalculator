@@ -1,7 +1,11 @@
 import { useMainContext } from "./context/Main";
 
 const Stepper = () => {
-  const { choosenScenario, stepIndex } = useMainContext();
+  const {
+    choosenScenario,
+    stepIndex,
+    steps,
+  } = useMainContext();
   const step = +stepIndex + 1;
   let stepScenario;
   if (choosenScenario === "root") {
@@ -14,17 +18,30 @@ const Stepper = () => {
     stepScenario = 1;
   }
   return (
-    <div className="stepper">
+    <>
+      {/* прогресс шагов */}
+      {!!steps[stepIndex] && !!steps[stepIndex].text && (
+        <div className="main__question_title">{steps[stepIndex].text}</div>
+      )}
       <div
-        className="stepper__segment"
+        className="stepper-wrapper"
         style={{
-          width: Math.round(100 / stepScenario, 2) + "%",
-          left: Math.round((100 * (step - 1)) / stepScenario, 2) + "%",
+          display: !choosenScenario ? "none" : "block",
         }}
       >
-        Шаг {step}/{stepScenario}
+        <div className="stepper">
+          <div
+            className="stepper__segment"
+            style={{
+              width: Math.round(100 / stepScenario, 2) + "%",
+              left: Math.round((100 * (step - 1)) / stepScenario, 2) + "%",
+            }}
+          >
+            Шаг {step}/{stepScenario}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

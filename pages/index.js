@@ -6,10 +6,9 @@ import { useMainContext } from "../components/context/Main";
 import { useEffect, useState } from "react";
 import MobileSection from "../components/MobileSection";
 import Questions from "../components/Questions";
+import BackForward from "../components/BackForward";
 
 const IndexPage = () => {
-  const [focusedEl, setFocusedEl] = useState(null);
-
   const [displayWidth, setDisplayWidth] = useState(0);
 
   useEffect(() => {
@@ -18,20 +17,17 @@ const IndexPage = () => {
 
   const {
     chosenSettings,
-    stepIndex,
-    steps,
-
-    goToNextStep,
-    goBack,
-
     choosenScenario,
-
-    error,
   } = useMainContext();
+
+  const fieldMaxHeight = (+chosenSettings.kolvo_ryadov === 1 && displayWidth < 576) ? 200
+    : displayWidth < 576 ? 300
+    : (+chosenSettings.kolvo_ryadov === 1)? 250
+    : 380;
 
   return (
     <div className="page">
-      <MobileSection choosenScenario={choosenScenario} />
+      <MobileSection />
 
       <div className="field-wrapper">
         {/* svg поле */}
@@ -39,29 +35,16 @@ const IndexPage = () => {
           <div
             className="main__field"
             style={{
-              maxHeight:
-                +chosenSettings.kolvo_ryadov === 1 && displayWidth < 576
-                  ? 200 + "px"
-                  : displayWidth < 576
-                  ? 300 + "px"
-                  : +chosenSettings.kolvo_ryadov === 1
-                  ? 250 + "px"
-                  : 380 + "px",
+              maxHeight: fieldMaxHeight + "px",
               transition: "0.3s",
             }}
           >
-            <SvgField
-              {...{
-                chosenSettings,
-                type: choosenScenario,
-                focusedEl,
-              }}
-            />
+            <SvgField />
           </div>
         </div>
 
         {/* корзина */}
-        <Cart choosenScenario={choosenScenario} />
+        <Cart />
       </div>
       <div
         className="main__question grid"
@@ -70,38 +53,9 @@ const IndexPage = () => {
         }}
       >
         <div className="main__question_wrapper">
-          {/* прогресс шагов */}
-          {!!steps[stepIndex] && !!steps[stepIndex].text && (
-            <div className="main__question_title">{steps[stepIndex].text}</div>
-          )}
-          <div
-            className="stepper-wrapper"
-            style={{
-              display: !choosenScenario ? "none" : "block",
-            }}
-          >
-            <Stepper />
-          </div>
-
-          <Questions {...{ focusedEl, setFocusedEl }} />
-
-          {!!error && <div className="alertError">{error}</div>}
-
-          {/* кнопки вперёд - назад */}
-          <div
-            className="btnWrapper"
-            style={{
-              display: !choosenScenario ? "none" : "flex",
-            }}
-          >
-            <button onClick={goBack} className="stepBtn prev">
-              <span></span> Назад
-            </button>
-
-            <button onClick={goToNextStep} className="stepBtn next">
-              Следующий шаг <span></span>
-            </button>
-          </div>
+          <Stepper />
+          <Questions />
+          <BackForward />
         </div>
       </div>
       <Popup />
@@ -110,33 +64,3 @@ const IndexPage = () => {
 };
 
 export default IndexPage;
-
-// const [step, setStep] = useState(1);
-// const [info, setInfo] = useState([]);
-// const item1 = {
-//   text: "Что будем поливать ?",
-//   type: "one-choice",
-//   options: [
-//     { val: 1, text: "Деревья" },
-//     { val: 2, text: "Грядки" },
-//   ],
-// };
-// const setAnswer1 = (val) => {
-//   setInfo([...info, { question: item1.text, answer: val }]);
-//   setStep(2);
-// };
-
-// const item2 = {
-//   text: "Как будем поливать ?",
-//   type: "one-choice",
-//   options: [
-//     { val: 1, text: "Быстро" },
-//     { val: 2, text: "Долго" },
-//   ],
-// };
-// const setAnswer2 = (val) => {
-//   setInfo([...info, { question: item2.text, answer: val }]);
-// };
-
-// const steps = [[], [item1, setAnswer1], [item2, setAnswer2]];
-// const [item, setAnswer] = steps[step];
