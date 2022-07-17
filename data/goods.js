@@ -16,6 +16,7 @@ import {
 
 export const sum = (x) => {
   let s = 0;
+  console.log(x)
   for (let j = 0; j < x.length; j++) {
 
     s += x[j].price * Math.min(x[j].count, x[j].stock_quantity);
@@ -119,17 +120,6 @@ export const getTreeLength = (settings) => {
 
 
 const goods = [
-  {
-    condition: (settings, choosenScenario) =>
-      settings[Q_KOLVO_RYADOV] == 2 && choosenScenario === "root",
-    count: (settings) => 1,
-    name: "Редуктор давления для систем капельного полива (1,03 бар)",
-    id: "290009",
-    mainId: "290009",
-    price: "45",
-    img: "https://masterprof-season.ru/wp-content/uploads/2022/05/e50878c369ef11eb8c701a631b049b6a_90b0d61069f011eb8c701a631b049b6a.jpg",
-    sku: "ДС.060126",
-  },
 
   {
 
@@ -303,7 +293,7 @@ const goods = [
       choosenScenario === "root" || settings[Q_NEED_PEREKRITIE] &&
       settings[Q_NEED_PEREKRITIE] === "yes" &&
       choosenScenario === "belt",
-    count: (settings) => settings[Q_KOLVO_RYADOV],
+    count: (settings) => +settings[Q_KOLVO_RYADOV],
     name: "Кран проходной для капельной трубки (1 шт.)",
     id: "290089",
     price: "109",
@@ -332,10 +322,14 @@ const goods = [
     sku: "ДС.060101"
   },
   {
-    condition: (settings, choosenScenario) =>
-      settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" &&
-      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" &&
-      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" && choosenScenario === "tree",
+    condition: (settings, choosenScenario) => {
+      if (settings[Q_NABOR_PODKLUCHENIYA] === "no") {
+        return false
+      }
+      return settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" &&
+        choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" &&
+        choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "1_2f" && choosenScenario === "tree"
+    },
     count: (settings) => 1,
     name: 'Ниппель (бочонок) 1/2\" н/н (латунь) (1 шт.)',
     id: "290087",
@@ -344,9 +338,13 @@ const goods = [
     sku: "ДС.071380",
   },
   {
-    condition: (settings, choosenScenario) =>
-      settings[Q_PODKLUCHENIE_K_VODE] &&
-      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] && choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] && choosenScenario === "tree",
+    condition: (settings, choosenScenario) => {
+      if (settings[Q_NABOR_PODKLUCHENIYA] === "no") {
+        return false
+      }
+      return settings[Q_PODKLUCHENIE_K_VODE] &&
+        choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] && choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] && choosenScenario === "tree"
+    },
     count: (settings) => 1,
     name: 'Кран для капельного полива 1/2\" внутр. х 16 мм (1 шт.)',
     id: "290087",
@@ -356,9 +354,23 @@ const goods = [
   },
   {
     condition: (settings, choosenScenario) =>
-      settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" &&
-      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" &&
-      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" && choosenScenario === "tree",
+      settings[Q_NABOR_PODKLUCHENIYA] === "yes_kran",
+    count: (settings) => 1,
+    name: 'Редуктор давления для систем капельного полива (1,03 бар) (1 шт.)',
+    id: "290907",
+    price: "100",
+    img: "https://masterprof-season.ru/wp-content/uploads/2022/05/e50878c369ef11eb8c701a631b049b6a_90b0d61069f011eb8c701a631b049b6a.jpg",
+    sku: "ДС.060126"
+  },
+  {
+    condition: (settings, choosenScenario) => {
+      if (settings[Q_NABOR_PODKLUCHENIYA] === "no") {
+        return false
+      }
+      return settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" &&
+        choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" &&
+        choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4f" && choosenScenario === "tree"
+    },
     count: (settings) => 1,
     name: 'Ниппель - переходник (бочонок) 3/4\" х 1/2\" н/н (латунь) (1 шт.)',
     id: "289559",
@@ -368,10 +380,14 @@ const goods = [
   },
 
   {
-    condition: (settings, choosenScenario) =>
-      settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" &&
-      choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" &&
-      choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" && choosenScenario === "tree",
+    condition: (settings, choosenScenario) => {
+      if (settings[Q_NABOR_PODKLUCHENIYA] === "no") {
+        return false
+      }
+      return settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" &&
+        choosenScenario === "root" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" &&
+        choosenScenario === "belt" || settings[Q_PODKLUCHENIE_K_VODE] === "3_4m" && choosenScenario === "tree"
+    },
     count: (settings) => 1,
     name: 'Переходник с ребордой 3/4\" х 1/2\" в/н (латунь) (1 шт.)',
     id: "289560",

@@ -94,7 +94,7 @@ export const MainProvider = ({ children }) => {
   let disabled = true;
   if (
     scenarioInfo[stepIndex] &&
-    scenarioInfo[stepIndex].filter((answer) => !!answer).length ===
+    scenarioInfo[stepIndex].filter((answer) => !!answer).length >=
     steps[stepIndex].questions.filter(
       (question) => !question.isHidden || !question.isHidden(chosenSettings, scenarioInfo[stepIndex])
     ).length

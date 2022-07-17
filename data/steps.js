@@ -86,7 +86,7 @@ const rootSteps = [
         options: [
           {
             name: "",
-            text: "Выберете длину",
+            text: "Выберете расстояние",
           },
 
           {
@@ -399,7 +399,7 @@ const beltSteps = [
         options: [
           {
             name: "",
-            text: "Выберете длину",
+            text: "Выберете расстояние",
           },
 
           {
