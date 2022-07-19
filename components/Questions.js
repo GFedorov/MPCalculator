@@ -12,17 +12,23 @@ const Questions = () => {
     setSteps,
     questions,
     scenarioInfo,
-
     chooseAnswer,
     setChoosenScenario,
-
     focusedEl, setFocusedEl,
+    setScenarioInfo,
   } = useMainContext();
-  console.log(steps[stepIndex], scenarioInfo[stepIndex])
+
 
   let chooseMainAnswer = (choosenScenario) => {
     setChoosenScenario(choosenScenario);
     setSteps(scenarioAnswers[choosenScenario]);
+    const newSteps = scenarioAnswers[choosenScenario];
+    if (!!newSteps[0]) {
+
+      if (newSteps[0].defaultValues && !scenarioInfo[0]) {
+        setScenarioInfo([...scenarioInfo, newSteps[0].defaultValues])
+      }
+    }
   };
 
   return (

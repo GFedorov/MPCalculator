@@ -28,6 +28,8 @@ export const validateGoods = (goods) => {
   return { result, messages };
 }
 
+
+
 const rootSteps = [
   {
     text: "Размер посадки в метрах",
@@ -466,7 +468,7 @@ const beltSteps = [
         name: Q_KOLVO_RYADOV,
         text: "Количество грядок",
         type: "number-int",
-        value: 2,
+        //value: 2,
         validation: (val) => {
           if (val < 0) {
             return [false, "Количество не может быть < 1"];
@@ -502,10 +504,11 @@ const beltSteps = [
 
   {
     text: "Источник воды",
+    defaultValues: [0.1, "no", null],
     questions: [
       {
         name: Q_RASSTOYANIE_DO_VODI,
-        text: "Расстояние до источника воды",
+        text: <>Расстояние от расстений<br /> до источника воды (м)</>,
         type: "number",
         validation: (val) => {
           if (val < 0) {
@@ -515,9 +518,47 @@ const beltSteps = [
         },
       },
       {
+        name: Q_NABOR_PODKLUCHENIYA,
+        text: "Требуется ли набор для подключения к водоснабжению",
+        type: "select",
+        default: 'no',
+        options: [
+          // {
+          //   name: "",
+          //   text: "Выберете опцию",
+          // },
+
+          {
+            name: "no",
+            text: "Нет",
+          },
+          {
+            name: "yes_kran",
+            text: "Да, к крану (холодный полив)",
+          },
+          {
+            name: "yes_bochka",
+            text: "Да, к бочке (теплый полив)",
+          },
+
+        ],
+      },
+      {
         name: Q_PODKLUCHENIE_K_VODE,
         text: "Тип подключения?",
         type: "select",
+        required: false,
+        isHidden: (settings, stepScenarioInfo) => {
+          // settings[Q_NABOR_PODKLUCHENIYA] === 'no'
+          // @TODO получать индекс по названию поля
+          if (!stepScenarioInfo) {
+            return true
+          }
+          if (stepScenarioInfo[1] === "no") {
+            return true
+          }
+          return false
+        },
         options: [
           {
             name: "",
@@ -595,6 +636,7 @@ const beltSteps = [
 const treeSteps = [
   {
     validation: validateGoods,
+
     alert: (settings) => {
       let result = true;
       const messages = [];
@@ -609,10 +651,11 @@ const treeSteps = [
       return { result, messages };
     },
     text: "Длина трубки необходимая чтобы соединить все деревья",
+    defaultValues: [1, 1, null, "no", null],
     questions: [
       {
         name: Q_DLINNA_POSADKI,
-        text: "Длина трубки необходимая чтобы соединить все деревья (м)",
+        text: "Длина трубки, необходимая чтобы соединить все деревья (м)",
         description: "Длина трубки необходимая чтобы соединить все деревья (м)",
         type: "number",
         validation: (val) => {
@@ -625,6 +668,22 @@ const treeSteps = [
           return [true];
         },
       },
+      {
+        name: Q_KOLVO_RASTENIY,
+        text: <>Количество деревьев <br /><br /></>,
+        description: "Количество деревьев",
+        type: "number",
+        validation: (val) => {
+          if (val < 0) {
+            return [false, "Ширина не может быть < 0"];
+          }
+          if (val > 3) {
+            return [false, "Ширина не может быть > 3"];
+          }
+          return [true];
+        },
+      },
+
 
       {
         name: Q_RASSTOYANIE_DO_VODI,
@@ -642,9 +701,47 @@ const treeSteps = [
         },
       },
       {
+        name: Q_NABOR_PODKLUCHENIYA,
+        text: "Требуется ли набор для подключения к водоснабжению",
+        type: "select",
+        default: 'no',
+        options: [
+          // {
+          //   name: "",
+          //   text: "Выберете опцию",
+          // },
+
+          {
+            name: "no",
+            text: "Нет",
+          },
+          {
+            name: "yes_kran",
+            text: "Да, к крану (холодный полив)",
+          },
+          {
+            name: "yes_bochka",
+            text: "Да, к бочке (теплый полив)",
+          },
+
+        ],
+      },
+      {
         name: Q_PODKLUCHENIE_K_VODE,
         text: "Тип подключения?",
         type: "select",
+        required: false,
+        isHidden: (settings, stepScenarioInfo) => {
+          // settings[Q_NABOR_PODKLUCHENIYA] === 'no'
+          // @TODO получать индекс по названию поля
+          if (!stepScenarioInfo) {
+            return true
+          }
+          if (stepScenarioInfo[3] === "no") {
+            return true
+          }
+          return false
+        },
         options: [
           {
             name: "",
@@ -670,21 +767,7 @@ const treeSteps = [
         ],
       },
 
-      {
-        name: Q_KOLVO_RASTENIY,
-        text: "Количество деревьев",
-        description: "Количество деревьев",
-        type: "number",
-        validation: (val) => {
-          if (val < 0) {
-            return [false, "Ширина не может быть < 0"];
-          }
-          if (val > 3) {
-            return [false, "Ширина не может быть > 3"];
-          }
-          return [true];
-        },
-      },
+
     ],
   },
   {

@@ -149,7 +149,7 @@ export const MainProvider = ({ children }) => {
       setError("Пожалуйста заполните все поля");
       setTimeout(() => {
         setError("");
-      }, 3000);
+      }, 2000);
       return;
     }
     if (!!steps[stepIndex + 1]) {
@@ -186,7 +186,7 @@ export const MainProvider = ({ children }) => {
     setSteps,
     questions,
     scenarioInfo,
-
+    setGoCart,
     chooseAnswer,
 
     goToNextStep,
@@ -195,6 +195,7 @@ export const MainProvider = ({ children }) => {
 
     choosenScenario,
     setChoosenScenario,
+    setScenarioInfo,
 
     error,
     setError,
