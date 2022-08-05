@@ -3,8 +3,6 @@ export const calcLength = (length, pipes) => {
     if (!length) {
         return [];
     }
-
-
     let delta = Infinity;
     let result = [];
     let startIndex = 0;
@@ -53,6 +51,22 @@ export const calcLength = (length, pipes) => {
         }
 
     }
+    // если не удалось найти в результат из наличия, устанавливаем бесконечный count
+
+    if (result.length === 0) {
+        for (let i = 0; i < pipes.length; i++) {
+            const pipe = pipes[i];
+            if (length / pipe.length >= 1) {
+                const j = Math.floor(length / pipe.length);
+                for (let k = 0; k < j; k++) {
+                    result.push(pipe.length);
+                }
+                length %= pipe.length;
+                break;
+            }
+        }
+    }
+
     return result;
 }
 

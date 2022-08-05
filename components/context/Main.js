@@ -11,30 +11,33 @@ const WarningPopup = ({
   close,
 }) => {
   return (
-    <div className="warning-popup">
-      <div className="warning-popup__text">{text}</div>
-      <p className="warning-popup__p">{subText}</p>
-      <div className="warning-popup__buttons">
-        <button
-          className="warning-popup__button"
-          onClick={() => {
-            confirm();
-            close();
-          }}
-        >
-          Да
-        </button>
-        <button
-          className="warning-popup__button"
-          onClick={() => {
-            cancel();
-            close();
-          }}
-        >
-          Нет
-        </button>
+    <>
+      <div className="warning-popup-overlay"></div>
+      <div className="warning-popup">
+        <div className="warning-popup__text">{text}</div>
+        <p className="warning-popup__p">{subText}</p>
+        <div className="warning-popup__buttons">
+          <button
+            className="warning-popup__button"
+            onClick={() => {
+              confirm();
+              close();
+            }}
+          >
+            Да
+          </button>
+          <button
+            className="warning-popup__button"
+            onClick={() => {
+              cancel();
+              close();
+            }}
+          >
+            Нет
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -164,7 +167,7 @@ export const MainProvider = ({ children }) => {
 
   const goBack = async () => {
     if (stepIndex === 0) {
-      const success = await openWarningPopup(" Подтвердить возврат? ");
+      const success = await openWarningPopup(" Подтвердить возврат?", '');
       if (success) {
         setSteps([]);
         setChoosenScenario(null);

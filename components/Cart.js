@@ -33,6 +33,7 @@ const Cart = ({
 
         <div className="cart__title"> Корзина</div>
         {!result && showNoStock && !required && (
+
           <div className="list__nostock">
             <span> Нет в наличии </span>
             {goods.filter((good) => {

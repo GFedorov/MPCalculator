@@ -20,10 +20,11 @@ const MobileSection = () => {
   return (
     <div className="mobile-top-section">
       {/* мобильные кнопки */}
-      <div className="top-btn-wrapper">
-        <button onClick={goBack} className="stepBtn">
+      <div className="top-btn-wrapper" >
+        <button onClick={goBack} className={choosenScenario ? "stepBtn" : "stepBtn invisible"} >
           <span></span> Назад
         </button>
+
         <button
           className="top-cart"
           onClick={() => {

@@ -122,7 +122,6 @@ export const getTreeLength = (settings) => {
 const goods = [
 
   {
-
     condition: (settings, choosenScenario) => {
       const length = getLength(settings);
       const pipes = getPipes(goods);
@@ -215,6 +214,7 @@ const goods = [
     condition: (settings, choosenScenario) => {
       const length = getLength(settings);
       const pipes = getPipes(goods);
+      console.log(length, pipes, calcLength(length, pipes))
       //if (choosenScenario === "root") {
       return calcLength(length, pipes).indexOf(50) !== -1;
       //}
@@ -749,6 +749,7 @@ export const getForUpdate = () => {
 }
 
 export const getGoods = (settings, choosenScenario) => {
+  console.log(settings, choosenScenario);
   return goods
     .filter((item) => {
       return item.condition(settings, choosenScenario);
