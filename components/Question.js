@@ -1,4 +1,8 @@
+import { useMainContext } from "./context/Main";
+
+
 const Question = ({
+
   item,
   setAnswer,
   currentAnswer,
@@ -7,7 +11,8 @@ const Question = ({
   settings,
   isHidden
 }) => {
-  console.log({ currentAnswer, item })
+  const { stat } = useMainContext();
+
 
   return (
     <div className={`question ${(isHidden) ? "hidden" : ""}`}>
@@ -18,7 +23,7 @@ const Question = ({
         {item.type === "buttons" &&
           item.options.map((option) => (
             <span
-              onClick={() => setAnswer(option.name)}
+              onClick={() => { setAnswer(option.name); option.name === 'root' ? stat("Прикорневой полив") : '' }}
               key={option.name}
               className={`question__btn ${!!option.extraClasses ? option.extraClasses : ""
                 } ${currentAnswer === option.name ? "question__btn_active" : ""}`}

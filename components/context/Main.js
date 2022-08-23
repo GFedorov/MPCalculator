@@ -123,6 +123,9 @@ export const MainProvider = ({ children }) => {
   };
 
   const goToNextStep = async () => {
+    if (stepIndex === 0) {
+      stat("Размер посадки в метрах")
+    }
     if (steps[stepIndex].alert) {
       let { result, messages } = steps[stepIndex].alert(chosenSettings);
 
@@ -182,6 +185,33 @@ export const MainProvider = ({ children }) => {
     }
   };
 
+  const stat = (type) => {
+    if (typeof ym === 'undefined') return;
+    switch (type) {
+      case "Прикорневой полив": {
+        console.log('ok')
+        ym(82973404, 'reachGoal', 'prikornevoy');
+        break;
+      }
+      case "Размер посадки в метрах": {
+        console.log('ok1')
+        ym(82973404, 'reachGoal', 'perekrytie');
+        break;
+      }
+      case "Нужна ли возможность перекрытия воды к отдельным рядам": {
+        console.log('ok2')
+        ym(82973404, 'reachGoal', 'kolichestvo-koren')
+        break;
+      }
+      case "Количество растений": {
+        console.log('ok3')
+        ym(82973404, 'reachGoal', 'istochnik-koren');
+        break;
+      }
+
+    }
+  }
+
   const value = {
     chosenSettings,
     stepIndex,
@@ -203,7 +233,8 @@ export const MainProvider = ({ children }) => {
     error,
     setError,
 
-    focusedEl, setFocusedEl
+    focusedEl, setFocusedEl,
+    stat
   };
   return (
     <MainContext.Provider value={value}>

@@ -1,7 +1,8 @@
 import { useMainContext } from "./context/Main";
 
 const BackForward = () => {
-  const { error, goBack, goToNextStep, choosenScenario } = useMainContext();
+  const { error, goBack, goToNextStep, choosenScenario, stat, stepIndex } = useMainContext();
+  console.log(stepIndex)
   return (
     <>
       {!!error && <div className="alertError">{error}</div>}
