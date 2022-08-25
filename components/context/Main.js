@@ -98,9 +98,9 @@ export const MainProvider = ({ children }) => {
   if (
     scenarioInfo[stepIndex] &&
     scenarioInfo[stepIndex].filter((answer) => !!answer).length >=
-    steps[stepIndex].questions.filter(
+    (steps[stepIndex]?.questions.filter(
       (question) => !question.isHidden || !question.isHidden(chosenSettings, scenarioInfo[stepIndex])
-    ).length
+    ).length || 0)
   ) {
     disabled = false;
   }
@@ -125,6 +125,12 @@ export const MainProvider = ({ children }) => {
   const goToNextStep = async () => {
     if (stepIndex === 0) {
       stat("Размер посадки в метрах")
+    }
+    if (stepIndex === 1) {
+      stat("Нужна ли возможность перекрытия воды к отдельным рядам")
+    }
+    if (stepIndex === 2) {
+      stat("Количество растений")
     }
     if (steps[stepIndex].alert) {
       let { result, messages } = steps[stepIndex].alert(chosenSettings);

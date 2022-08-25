@@ -42,11 +42,14 @@ const Question = ({
             type="number"
             min={0}
             max={300}
+            maxlength={"3"}
             step={0.1}
             id={item.id}
             value={item.value || currentAnswer}
             onChange={(e) => {
-
+              if (e.target.value.length > 3) {
+                return false
+              }
               setAnswer(e.target.value)
             }}
             onFocus={(e) => {
@@ -67,11 +70,14 @@ const Question = ({
             type="number"
             min={0}
             max={300}
+            maxlength={"3"}
             step={1}
             id={item.id}
             value={item.value || currentAnswer}
             onChange={(e) => {
-
+              if (e.target.value.length > 3) {
+                return false
+              }
               setAnswer(e.target.value)
             }}
             onFocus={(e) => {
