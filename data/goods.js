@@ -16,7 +16,7 @@ import {
 
 export const sum = (x) => {
   let s = 0;
-  console.log(x)
+
   for (let j = 0; j < x.length; j++) {
 
     s += x[j].price * Math.min(x[j].count, x[j].stock_quantity);
@@ -35,7 +35,7 @@ export const updateGoods = async () => {
       .then((response) => response.json())
       .then((data) => {
         for (let product of goods) {
-          // product это вариация продуктаа
+          // product это вариация продукта
           const newProduct = data.namesD[product.sku + '_' + (product.originalName || product.name)];
 
           if (newProduct) {
@@ -43,11 +43,13 @@ export const updateGoods = async () => {
             product.name = newProduct.name || product.name;
             product.img = newProduct.img || product.img;
             product.link = newProduct.link || product.link;
-            product.price = +newProduct.price || +product.price;
+            product.price = +newProduct.price || +product.price || 0;
             product.stock_quantity = +newProduct.stock_quantity || 0;
             product.sku = newProduct.sku || product.sku;
 
           } else {
+            product.price = 0;
+            product.stock_quantity = 1000;
             console.log('not found', product.sku + '_' + product.name);
 
           }
@@ -411,7 +413,7 @@ const goods = [
     condition: (settings, choosenScenario) =>
       settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes1" && choosenScenario === "root" || settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes1" && choosenScenario === "belt" || settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes1" && choosenScenario === "tree",
     count: (settings) => 1,
-    name: "Таймер капельного полива электронный програмируемый на один канал",
+    name: "Таймер капельного полива электронный программируемый на один канал",
     id: "290051",
     price: "1799",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/edf42c717c0b11eb8c791a631b049b6a_044cddf77c0c11eb8c791a631b049b6a.jpg",
@@ -422,7 +424,7 @@ const goods = [
     condition: (settings, choosenScenario) =>
       settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes2" && choosenScenario === "root" || settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes2" && choosenScenario === "belt" || settings[Q_NEED_TIMER] && settings[Q_NEED_TIMER] === "yes2" && choosenScenario === "tree",
     count: (settings) => 1,
-    name: "Таймер капельного полива электронно-механический програмируемый на один канал",
+    name: "Таймер капельного полива электронно-механический программируемый на один канал",
     id: "290050",
     price: "1799",
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/f67a4fe97c0a11eb8c791a631b049b6a_f67a4fea7c0a11eb8c791a631b049b6a.jpg",
@@ -724,21 +726,6 @@ const goods = [
     img: "https://masterprof-season.ru/wp-content/uploads/2021/09/4b9e534169e311eb8c701a631b049b6a_4b9e534269e311eb8c701a631b049b6a.jpg",
     sku: "ДС.060137",
   },
-  // {
-  //   condition: (settings, choosenScenario) =>
-  //     settings[Q_NEED_FILTER] && settings[Q_NEED_FILTER] === "yes" && choosenScenario === "tree",
-  //   count: () => 1,
-
-  //   name: "Фильтр для капельного полива сетчатый, линейный, 16мм",
-  //   id: "289503",
-  //   price: "399",
-  //   img: "https://masterprof-season.ru/wp-content/uploads/2021/09/11d5e1a97b5511eb8c791a631b049b6a_31855328b4b211eb8c7f1a631b049b6a.jpg",
-  // },
-
-
-
-
-
 
 
 ];
@@ -749,7 +736,7 @@ export const getForUpdate = () => {
 }
 
 export const getGoods = (settings, choosenScenario) => {
-  console.log(settings, choosenScenario);
+
   return goods
     .filter((item) => {
       return item.condition(settings, choosenScenario);

@@ -15,6 +15,17 @@ const api = new WooCommerceRestApi({
     version: "wc/v3"
 });
 
+const patchCount1000 = ({ namesD, d, updateTime }) => {
+    const newD = {}
+    for (let key in d) {
+        newD[key] = { ...d[key], stock_quantity: 1000 }
+    }
+    const newNamesD = {}
+    for (let key in namesD) {
+        newNamesD[key] = { ...namesD[key], stock_quantity: 1000 }
+    }
+    return { namesD: newNamesD, d: newD, updateTime }
+}
 
 let updateTime = 0;
 let cache = {};
@@ -29,9 +40,7 @@ const updateCache = async () => {
 
         }
     );
-
     //составить  список ID продуктов
-
     const productDictionary = {};
     const productIds = [];
     const variationDictionary = {};
@@ -59,9 +68,7 @@ const updateCache = async () => {
             variationDictionary[variation.id] = { ...variation, productId: productId };
 
         }
-
     }
-
     const d = {};
     const namesD = {};
     for (let variantId in variationDictionary) {
@@ -97,15 +104,10 @@ const updateCache = async () => {
 
     };
     //записать в кеш
-    cache = newCache;
-
-
+    cache = patchCount1000(newCache);
 }
-
 updateCache();
-
 app.use(cors());
-
 
 app.get('/api/get-products', async (req, res) => {
     try {
@@ -125,3 +127,4 @@ app.get('/api/get-products', async (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
